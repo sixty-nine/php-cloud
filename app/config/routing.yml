@@ -1,0 +1,10 @@
+sixty_nine_cloud:
+    resource: "@SixtyNineCloudBundle/Resources/config/routing.xml"
+    prefix:   /cloud
+
+app:
+    resource: '@AppBundle/Controller/'
+    type: annotation
+
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"

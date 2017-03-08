@@ -1,0 +1,11 @@
+{{ form_start(form) }}
+        {{ form_widget(form) }}
+<div class="pull-right">
+    <a href="#" class="btn btn-default">{{ 'Cancel' | trans }}</a>
+    <input type="submit" class="btn btn-primary" value="{{ 'Create' | trans }}" />
+</div>
+{{ form_end(form) }}
+
+<div id="cloud">
+    <img src="data:image/png;base64,{{ image }}"/>
+</div>

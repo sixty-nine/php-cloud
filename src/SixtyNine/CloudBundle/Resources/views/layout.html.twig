@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html lang="en" class="ie8 no-js"><![endif]-->
+<!--[if IE 9]><html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8"/>
+    <title>
+        PHP Cloud{% if pageTitle is defined and pageTitle != '' %} | {% endif %}{{ pageTitle | default('') }}
+    </title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+
+    {% stylesheets
+        'http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all'
+    filter='cssrewrite' %}
+    <link rel="stylesheet" href="{{ asset_url }}" type="text/css"/>
+    {% endstylesheets %}
+
+    {% stylesheets filter="scssphp" output="css/style.css"
+        '@SixtyNineCloudBundle/Resources/scss/main.scss'
+    %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+
+    {% block stylesheets %}{% endblock %}
+
+    <link rel="shortcut icon" href="favicon.ico"/>
+</head>
+
+<body>
+    <h1 class="page-title">
+        {{ pageHeader | default('') }}
+        <small>{{ pageSubHeader | default('') }}</small>
+    </h1>
+
+    {%  block body %}{% endblock %}
+
+    {% block javascripts %}{% endblock %}
+
+</body>
+</html>
