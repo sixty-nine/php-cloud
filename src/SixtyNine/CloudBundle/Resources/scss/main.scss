@@ -1,6 +1,10 @@
 @import "_variables";
 @import "_functions";
 
+body {
+  margin-top: 50px;
+}
+
 h1.page-header {
   margin-top: 0;
   small {
@@ -38,7 +42,7 @@ section.list-words {
     display: inline-block;
     position: relative;
     border: 1px solid black;
-    padding: 0.5em;
+    padding: 0.5em 2em 0.5em 0.75em;
     @include rounded();
     margin: 0 5px 5px 0;
 
@@ -48,6 +52,13 @@ section.list-words {
 
     span.text {
       font-weight: bold;
+    }
+
+    span.remove {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: x-small;
     }
 
     span.color {

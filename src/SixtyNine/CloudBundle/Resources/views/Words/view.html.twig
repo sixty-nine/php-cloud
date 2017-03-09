@@ -53,12 +53,12 @@
     {% for word in list.words %}
         <div class="word" data-id="{{ word.id }}">
             <span class="color" style="background-color: {{ word.color }};"></span>
-            <span class="text">{{ word.text }}</span>
-            <span class="count">{{ word.count }}</span>
             <span class="orientation">
                 <i class="glyphicon glyphicon-option-{% if word.orientation == 'horiz' %}horizontal{% else %}vertical{% endif %}"></i>
-
             </span>
+            <span class="text">{{ word.text }}</span>
+            <span class="count">{{ word.count }}</span>
+            <span class="remove glyphicon glyphicon-remove" data-url="{{ path('sn_words_remove_word', {'id': 9999}) }}"></span>
         </div>
     {% endfor %}
 
