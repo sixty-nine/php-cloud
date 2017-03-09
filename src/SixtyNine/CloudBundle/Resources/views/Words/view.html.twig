@@ -49,38 +49,54 @@
 
 {% block body %}
     <section class="list-words">
-        <table class="words">
-            <thead><tr>
-                <th>{{ 'Text' | trans }}</th>
-                <th>{{ 'Count' | trans }}</th>
-                <th>{{ 'Orientation' | trans }}</th>
-                <th>{{ 'Color' | trans }}</th>
-                <th>{{ 'Actions' | trans }}</th>
-            </tr></thead>
-            <tbody>
-            {% for word in list.words %}
-            <tr>
-                <td>{{ word.text }}</td>
-                <td>{{ word.count }}</td>
-                <td>
-                    {% if word.orientation == 'horiz' %}
-                    <span data-id="{{ word.id }}" class="label label-primary">Horizontal</span>
-                    {% else %}
-                    <span data-id="{{ word.id }}" class="label label-info">Vertical</span>
-                    {% endif %}
-                </td>
-                <td>
-                    <div class="color-box mini" style="background-color: {{ word.color }};"></div>
-                </td>
-                <td>
-                    <a href="{{ path('sn_words_increase_word', {'id': word.list.id, 'wordId': word.id}) }}"><i class="glyphicon glyphicon-plus"></i></a>
-                    <a href="{{ path('sn_words_decrease_word', {'id': word.list.id, 'wordId': word.id}) }}"><i class="glyphicon glyphicon-minus"></i></a>
-                    <a href="{{ path('sn_words_remove_word', {'id': word.id}) }}"><i class="glyphicon glyphicon-remove"></i></a>
-                </td>
-            </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+
+    {% for word in list.words %}
+        <div class="word" data-id="{{ word.id }}">
+            <span class="color" style="background-color: {{ word.color }};"></span>
+            <span class="text">{{ word.text }}</span>
+            <span class="count">{{ word.count }}</span>
+            <span class="orientation">
+                <i class="glyphicon glyphicon-option-{% if word.orientation == 'horiz' %}horizontal{% else %}vertical{% endif %}"></i>
+
+            </span>
+        </div>
+    {% endfor %}
+
+
+        {#
+                <table class="words">
+                    <thead><tr>
+                        <th>{{ 'Text' | trans }}</th>
+                        <th>{{ 'Count' | trans }}</th>
+                        <th>{{ 'Orientation' | trans }}</th>
+                        <th>{{ 'Color' | trans }}</th>
+                        <th>{{ 'Actions' | trans }}</th>
+                    </tr></thead>
+                    <tbody>
+                    {% for word in list.words %}
+                    <tr>
+                        <td>{{ word.text }}</td>
+                        <td>{{ word.count }}</td>
+                        <td>
+                            {% if word.orientation == 'horiz' %}
+                            <span data-id="{{ word.id }}" class="label label-primary">Horizontal</span>
+                            {% else %}
+                            <span data-id="{{ word.id }}" class="label label-info">Vertical</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <div class="color-box mini" style="background-color: {{ word.color }};"></div>
+                        </td>
+                        <td>
+                            <a href="{{ path('sn_words_increase_word', {'id': word.list.id, 'wordId': word.id}) }}"><i class="glyphicon glyphicon-plus"></i></a>
+                            <a href="{{ path('sn_words_decrease_word', {'id': word.list.id, 'wordId': word.id}) }}"><i class="glyphicon glyphicon-minus"></i></a>
+                            <a href="{{ path('sn_words_remove_word', {'id': word.id}) }}"><i class="glyphicon glyphicon-remove"></i></a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+        #}
     </section>
 
     <section class="row add-words">
