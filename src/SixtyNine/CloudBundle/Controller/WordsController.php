@@ -291,4 +291,28 @@ class WordsController extends Controller
         ;
         return $this->redirectToRoute('sn_words_view', array('id' => $list->getId()));
     }
+
+    public function randomizeColorsAction(WordsList $list, $type, $paletteId)
+    {
+        $palette = $this
+            ->getDoctrine()
+            ->getRepository('SixtyNineCloudBundle:Palette')
+            ->find($paletteId)
+        ;
+
+        if (!$palette) {
+            throw new NotFoundHttpException('Palette not found');
+        }
+
+        if (!in_array($type, array('cycle', 'random'))) {
+            throw new NotFoundHttpException('Type not found');
+        }
+
+        $this
+            ->getDoctrine()
+            ->getRepository('SixtyNineCloudBundle:WordsList')
+            ->randomizeWordsColors($list, $palette, $type)
+        ;
+        return $this->redirectToRoute('sn_words_view', array('id' => $list->getId()));
+    }
 }

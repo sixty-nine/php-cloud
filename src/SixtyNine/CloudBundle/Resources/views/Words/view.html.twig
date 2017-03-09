@@ -30,8 +30,8 @@
             {{ 'Color' | trans }} <span class="caret"></span>
         </button>
         <ul class="dropdown-menu">
-            <li><a href="#">{{ 'Cycle' | trans }}</a></li>
-            <li><a href="#">{{ 'Random' | trans }}</a></li>
+            <li><a data-type="palette-type" href="{{ path('sn_words_random_color', {'id': list.id, 'paletteId': '9999', 'type': 'cycle'}) }}">{{ 'Cycle' | trans }}</a></li>
+            <li><a data-type="palette-type" href="{{ path('sn_words_random_color', {'id': list.id, 'paletteId': '9999', 'type': 'random'}) }}">{{ 'Random' | trans }}</a></li>
         </ul>
     </div>
     <div class="btn-group">
@@ -40,7 +40,7 @@
         </button>
         <ul class="dropdown-menu">
             {% for palette in palettes %}
-            <li><a href="#{{ palette.id }}">{{ palette.name }}</a></li>
+            <li><a href="#" data-type="palette" data-id="{{ palette.id }}">{{ palette.name }}</a></li>
             {% endfor %}
         </ul>
     </div>
@@ -64,9 +64,9 @@
                 <td>{{ word.count }}</td>
                 <td>
                     {% if word.orientation == 'horiz' %}
-                    <span class="label label-primary">Horizontal</span>
+                    <span data-id="{{ word.id }}" class="label label-primary">Horizontal</span>
                     {% else %}
-                    <span class="label label-info">Vertical</span>
+                    <span data-id="{{ word.id }}" class="label label-info">Vertical</span>
                     {% endif %}
                 </td>
                 <td>
@@ -136,7 +136,10 @@
         });
     </script>
     {% javascripts output='app.js'
-        'bundles/sixtyninecloud/js/app.js' %}
+        'bundles/sixtyninecloud/js/namespace.js'
+        'bundles/sixtyninecloud/js/Views/*.js'
+        'bundles/sixtyninecloud/js/app.js'
+    %}
     <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
 

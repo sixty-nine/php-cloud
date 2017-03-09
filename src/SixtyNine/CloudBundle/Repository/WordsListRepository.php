@@ -2,11 +2,14 @@
 
 namespace SixtyNine\CloudBundle\Repository;
 
+use SixtyNine\Cloud\Color\RandomColorGenerator;
+use SixtyNine\Cloud\Color\RotateColorGenerator;
 use SixtyNine\Cloud\Model\Text;
 use SixtyNine\Cloud\Model\Words;
 use SixtyNine\CloudBundle\Builder\CloudBuilder;
 use SixtyNine\CloudBundle\Entity\Account;
 use SixtyNine\CloudBundle\Entity\Cloud;
+use SixtyNine\CloudBundle\Entity\Palette;
 use SixtyNine\CloudBundle\Entity\Word;
 use SixtyNine\CloudBundle\Entity\WordsList;
 
@@ -75,6 +78,22 @@ class WordsListRepository extends \Doctrine\ORM\EntityRepository
             ;
 
             $word->setOrientation($orientation);
+        }
+
+        $this->_em->flush();
+    }
+
+    public function randomizeWordsColors(WordsList $list, Palette $palette, $type)
+    {
+
+        $colorGenerator = $type == 'random'
+            ? new RandomColorGenerator($palette->getColors())
+            : new RotateColorGenerator($palette->getColors())
+        ;
+
+        /** @var \SixtyNine\CloudBundle\Entity\Word $word */
+        foreach ($list->getWords() as $word) {
+            $word->setColor('#' . $colorGenerator->getNextColor());
         }
 
         $this->_em->flush();
