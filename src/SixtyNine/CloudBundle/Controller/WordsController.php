@@ -12,7 +12,7 @@ use SixtyNine\Cloud\TextListFilter\OrientationVisitor;
 use SixtyNine\CloudBundle\Entity\Word;
 use SixtyNine\CloudBundle\Entity\WordsList;
 use SixtyNine\CloudBundle\Repository\WordsListRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use SixtyNine\CoreBundle\Controller\Controller;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,10 +29,7 @@ class WordsController extends Controller
     {
         parent::setContainer($container);
 
-        $this->listRepo = $this
-            ->getDoctrine()
-            ->getRepository('SixtyNineCloudBundle:WordsList')
-        ;
+        $this->listRepo = $this->getRepository('SixtyNineCloudBundle:WordsList');
     }
 
     public function indexAction()
@@ -285,7 +282,6 @@ class WordsController extends Controller
     public function randomizeOrientationsAction(WordsList $list, $orientation)
     {
         $this
-            ->getDoctrine()
             ->getRepository('SixtyNineCloudBundle:WordsList')
             ->randomizeWordsOrientation($list, (int)$orientation)
         ;
@@ -295,7 +291,6 @@ class WordsController extends Controller
     public function randomizeColorsAction(WordsList $list, $type, $paletteId)
     {
         $palette = $this
-            ->getDoctrine()
             ->getRepository('SixtyNineCloudBundle:Palette')
             ->find($paletteId)
         ;
@@ -309,7 +304,6 @@ class WordsController extends Controller
         }
 
         $this
-            ->getDoctrine()
             ->getRepository('SixtyNineCloudBundle:WordsList')
             ->randomizeWordsColors($list, $palette, $type)
         ;

@@ -20,6 +20,7 @@ class AppKernel extends Kernel
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
 
             new SixtyNine\CloudBundle\SixtyNineCloudBundle(),
+            new SixtyNine\CoreBundle\SixtyNineCoreBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {
