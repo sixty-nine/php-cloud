@@ -5,28 +5,12 @@ namespace SixtyNine\CloudBundle\Controller;
 use SixtyNine\Cloud\Config\Config;
 use SixtyNine\Cloud\TextListFilter\OrientationVisitor;
 use SixtyNine\CloudBundle\Builder\CloudBuilder;
+use SixtyNine\CloudBundle\Entity\Cloud;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends Controller
 {
-    public function indexAction(Request $request)
-    {
-        $form = $this->createForm('SixtyNine\CloudBundle\Form\Forms\CreateCloudFormType');
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-
-        }
-
-        return $this->render(
-            'SixtyNineCloudBundle:Default:index.html.twig',
-            array(
-                'form' => $form->createView(),
-            )
-        );
-    }
-
     public function blaAction(Request $request)
     {
         $data = array(

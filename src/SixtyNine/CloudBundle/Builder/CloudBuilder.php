@@ -33,6 +33,28 @@ class CloudBuilder
 {
     use StopwatchAware;
 
+    /**
+     * @param $text
+     * @param Filters $filters
+     * @return Words
+     */
+    public function createWords($text, Filters $filters = null)
+    {
+        $filters = $filters ? $filters : new Filters();
+        $words = new Words($filters);
+        $words->addText($text);
+        return $words;
+    }
+
+    public function createWordsFromUrl($url, Filters $filters = null)
+    {
+        $filters = $filters ? $filters : new Filters();
+        $words = new Words($filters);
+        $html = file_get_contents($url);
+        $words->addHtml($html);
+        return $words;
+    }
+
     public function createImage(Config $config, $data)
     {
         $this->stopwatchOpenSection();

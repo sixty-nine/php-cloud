@@ -82,3 +82,10 @@ assetic:
         cssrewrite: ~
         scssphp:
             formatter: 'Leafo\ScssPhp\Formatter\Compressed'
+
+# Doctrine Extensions Configuration
+stof_doctrine_extensions:
+    orm:
+        default:
+            timestampable: true
+            blameable: true

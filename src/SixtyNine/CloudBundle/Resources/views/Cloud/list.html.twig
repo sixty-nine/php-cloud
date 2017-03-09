@@ -1,0 +1,49 @@
+{% extends 'SixtyNineCloudBundle::layout.html.twig' %}
+
+{% set curPage = 'admins' %}
+{% set pageTitle = 'View cloud' | trans %}
+{% set pageHeader = 'Cloud' | trans %}
+{% set pageSubHeader = 'View' | trans %}
+{% set breadcrumb = [
+    { title: 'Home' | trans , url: path('sn_cloud_home') },
+    { title: 'Clouds' | trans }
+] %}
+
+{% block body %}
+
+    <table class="cloud-list">
+        <thead>
+        <tr>
+            <th>{{ 'Name' | trans }}</th>
+            <th>{{ 'Word count' | trans }}</th>
+            <th>{{ 'Actions' | trans }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for cloud in clouds %}
+            <tr>
+                <td>{{ cloud.name }}</td>
+                <td>{{ cloud.words.count }}</td>
+                <td>
+                    <a href="{{ path('sn_cloud_view', {'id': cloud.id}) }}" class="btn btn-info btn-xs">
+                        {{ 'Words' | trans }}
+                    </a>
+                    <a href="{{ path('sn_cloud_remove', {'id': cloud.id }) }}" class="btn btn-danger btn-xs">
+                        {{ 'Remove' | trans }}
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+
+{% block javascripts %}
+
+    <script type="text/javascript">
+        $(function () {
+            $('table.cloud-list').dataTable();
+        });
+    </script>
+
+{% endblock %}

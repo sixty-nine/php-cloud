@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<routes xmlns="http://symfony.com/schema/routing"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
+
+    <route id="sn_cloud_list" path="/" methods="GET">
+        <default key="_controller">SixtyNineCloudBundle:Cloud:list</default>
+    </route>
+
+    <route id="sn_cloud_new" path="/create" methods="GET">
+        <default key="_controller">SixtyNineCloudBundle:Cloud:new</default>
+    </route>
+
+    <route id="sn_cloud_create" path="/create" methods="POST">
+        <default key="_controller">SixtyNineCloudBundle:Cloud:create</default>
+    </route>
+
+    <route id="sn_cloud_view" path="/{id}" methods="GET">
+        <default key="_controller">SixtyNineCloudBundle:Cloud:view</default>
+        <requirement key="id">\d+</requirement>
+    </route>
+
+    <route id="sn_cloud_remove" path="/{id}/delete" methods="GET">
+        <default key="_controller">SixtyNineCloudBundle:Cloud:delete</default>
+        <requirement key="id">\d+</requirement>
+    </route>
+
+    <route id="sn_cloud_add_words" path="/{id}/words/add" methods="POST">
+        <default key="_controller">SixtyNineCloudBundle:Cloud:addWords</default>
+        <requirement key="id">\d+</requirement>
+    </route>
+
+    <route id="sn_cloud_import_url" path="/{id}/words/import" methods="POST">
+        <default key="_controller">SixtyNineCloudBundle:Cloud:importWords</default>
+        <requirement key="id">\d+</requirement>
+    </route>
+
+    <route id="sn_cloud_remove_word" path="/{id}/words/remove" methods="GET">
+        <default key="_controller">SixtyNineCloudBundle:Cloud:removeWord</default>
+        <requirement key="id">\d+</requirement>
+    </route>
+
+    <route id="sn_cloud_increase_word" path="/{id}/words/increase" methods="GET">
+        <default key="_controller">SixtyNineCloudBundle:Cloud:increaseWord</default>
+        <requirement key="id">\d+</requirement>
+    </route>
+
+    <route id="sn_cloud_decrease_word" path="/{id}/words/decrease" methods="GET">
+        <default key="_controller">SixtyNineCloudBundle:Cloud:decreaseWord</default>
+        <requirement key="id">\d+</requirement>
+    </route>
+
+</routes>

@@ -14,7 +14,8 @@
     <meta content="width=device-width, initial-scale=1" name="viewport"/>
 
     {% stylesheets
-        'http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all'
+        'assets/vendor/bootstrap/dist/css/bootstrap.min.css'
+        'assets/vendor/datatables/media/css/jquery.dataTables.css'
     filter='cssrewrite' %}
     <link rel="stylesheet" href="{{ asset_url }}" type="text/css"/>
     {% endstylesheets %}
@@ -31,12 +32,48 @@
 </head>
 
 <body>
-    <h1 class="page-title">
-        {{ pageHeader | default('') }}
-        <small>{{ pageSubHeader | default('') }}</small>
-    </h1>
 
-    {%  block body %}{% endblock %}
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">PHP Cloud</a>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div><!--/.nav-collapse -->
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <h1 class="page-title">
+            {{ pageHeader | default('') }}
+            <small>{{ pageSubHeader | default('') }}</small>
+        </h1>
+
+        {%- include 'SixtyNineCloudBundle:Components:breadcrumb.html.twig' -%}
+
+        {%  block body %}{% endblock %}
+
+    </div><!-- /.container -->
+
+    {% javascripts output='vendors.js'
+        'assets/vendor/jquery/dist/jquery.min.js'
+        'assets/vendor/bootstrap/dist/js/bootstrap.min.js'
+        'assets/vendor/datatables/media/js/jquery.dataTables.js'
+    %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 
     {% block javascripts %}{% endblock %}
 

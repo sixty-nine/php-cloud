@@ -2,6 +2,12 @@
 
 namespace SixtyNine\CloudBundle\Repository;
 
+use SixtyNine\Cloud\Model\Words;
+use SixtyNine\CloudBundle\Builder\CloudBuilder;
+use SixtyNine\CloudBundle\Entity\Account;
+use SixtyNine\CloudBundle\Entity\Cloud;
+use SixtyNine\CloudBundle\Entity\Word;
+
 /**
  * CloudRepository
  *
@@ -10,4 +16,59 @@ namespace SixtyNine\CloudBundle\Repository;
  */
 class CloudRepository extends \Doctrine\ORM\EntityRepository
 {
+    /**
+     * @param Account $user
+     * @param string $cloudName
+     * @return Cloud
+     */
+    public function createCloud(Account $user, $cloudName)
+    {
+        $cloud = new Cloud();
+        $cloud
+            ->setName($cloudName)
+            ->setUser($user)
+        ;
+
+        $this->_em->persist($cloud);
+        $this->_em->flush($cloud);
+
+        return $cloud;
+    }
+
+    public function deleteCloud(Cloud $cloud)
+    {
+        $this->_em->remove($cloud);
+        $this->_em->flush();
+    }
+
+    public function importWords(Cloud $cloud, Words $words)
+    {
+        /** @var $word \SixtyNine\Cloud\Model\Word */
+        foreach ($words->getWords() as $word) {
+
+            $entity = $cloud->getWordForText($word->getText());
+
+            if (!$entity) {
+                $entity = new Word();
+                $entity
+                    ->setCloud($cloud)
+                    ->setText($word->getText())
+                    ->setUser($cloud->getUser())
+                ;
+                $cloud->addWord($entity);
+            }
+
+            $entity->setCount($entity->getCount() + $word->getCount());
+
+            $this->_em->persist($entity);
+            $this->_em->flush();
+        }
+    }
+
+    public function removeWord(Word $word)
+    {
+        $this->_em->remove($word);
+        $this->_em->flush();
+    }
 }
+

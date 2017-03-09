@@ -1,0 +1,17 @@
+{% extends 'SixtyNineCloudBundle::layout.html.twig' %}
+
+{% set curPage = 'admins' %}
+{% set pageTitle = 'Home' | trans %}
+{% set pageHeader = 'Cloud' | trans %}
+{% set pageSubHeader = 'Home' | trans %}
+{% set breadcrumb = [
+    { title: 'Home' }
+] %}
+
+{% block body %}
+    <a href="{{ path('sn_cloud_create') }}" class="btn btn-default"> {{ 'Create a new cloud' | trans }} </a>
+    <a href="{{ path('sn_cloud_list') }}" class="btn btn-default"> {{ 'View my clouds' | trans }} </a>
+{% endblock %}
+
+{% block javascripts %}
+{% endblock %}

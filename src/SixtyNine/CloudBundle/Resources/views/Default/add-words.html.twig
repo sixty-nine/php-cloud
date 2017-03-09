@@ -1,0 +1,22 @@
+{% extends 'SixtyNineCloudBundle::layout.html.twig' %}
+
+{% set curPage = 'admins' %}
+{% set pageTitle = 'Add words' | trans  %}
+{% set pageHeader = 'Words' | trans  %}
+{% set pageSubHeader = 'Add' | trans  %}
+{% set breadcrumb = [
+    { title: 'Home' | trans , url: path('sn_cloud_home') },
+    { title: 'Create words' | trans }
+] %}
+
+{% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
+
+{% block body %}
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <div class="pull-right">
+        <a href="#" class="btn btn-default">{{ 'Cancel' | trans }}</a>
+        <input type="submit" class="btn btn-primary" value="{{ 'Create' | trans }}" />
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

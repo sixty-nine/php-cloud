@@ -1,0 +1,93 @@
+{% extends 'SixtyNineCloudBundle::layout.html.twig' %}
+
+{% set curPage = 'admins' %}
+{% set pageTitle = 'View cloud' | trans %}
+{% set pageHeader = 'Cloud' | trans %}
+{% set pageSubHeader = 'Words' | trans %}
+{% set breadcrumb = [
+    { title: 'Home' | trans , url: path('sn_cloud_home') },
+    { title: 'Clouds' | trans, url: path('sn_cloud_list') },
+    { title: 'Cloud words' | trans }
+] %}
+
+{% form_theme addWordsForm 'bootstrap_3_layout.html.twig' %}
+{% form_theme filtersForm 'bootstrap_3_layout.html.twig' %}
+
+{% block body %}
+    <section class="cloud-words">
+        <table class="cloud-words">
+            <thead><tr>
+                <th>Text</th>
+                <th>Count</th>
+                <th>Actions</th>
+            </tr></thead>
+            <tbody>
+            {% for word in cloud.words %}
+            <tr>
+                <td>{{ word.text }}</td>
+                <td>{{ word.count }}</td>
+                <td>
+                    <a href="{{ path('sn_cloud_increase_word', {'id': word.id}) }}"><i class="glyphicon glyphicon-plus"></i></a>
+                    <a href="{{ path('sn_cloud_decrease_word', {'id': word.id}) }}"><i class="glyphicon glyphicon-minus"></i></a>
+                    <a href="{{ path('sn_cloud_remove_word', {'id': word.id}) }}"><i class="glyphicon glyphicon-remove"></i></a>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </section>
+
+    <section class="row add-words">
+        {{ form_start(addWordsForm, {'action': path('sn_cloud_add_words', {'id': cloud.id}), 'method': 'post'}) }}
+        <div class="col-sm-10">
+            {{ form_widget(addWordsForm) }}
+        </div>
+        <div class="col-sm-2">
+            <input type="submit" class="btn btn-primary" value="{{ 'Add words' | trans }}" />
+        </div>
+        {{ form_end(addWordsForm) }}
+    </section>
+
+    <section class="row import-words">
+        <div class="col-sm-10">
+        </div>
+        <div class="cold-sm-3">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                {{ 'Import URL' | trans }}
+            </button>
+        </div>
+    </section>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        {{ form_start(filtersForm, {'action': path('sn_cloud_import_url', {'id': cloud.id}), 'method': 'post'}) }}
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Import filters</h4>
+                </div>
+                <div class="modal-body">
+                    {{ form_widget(filtersForm) }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">
+                        {{ 'Import' | trans }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    {{ form_end(filtersForm) }}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+
+    <script type="text/javascript">
+        $(function () {
+            $('table.cloud-words').dataTable();
+        });
+    </script>
+
+{% endblock %}

@@ -1,8 +1,38 @@
 @import "_variables";
 @import "_functions";
 
-h1 {
-  small {
-
-  }
+body {
+  padding-top: 50px;
 }
+
+.page-breadcrumb {
+  display: inline-block;
+  float: left;
+  padding: 8px;
+  margin: 0;
+  list-style: none;
+
+  > li {
+    display: inline-block;
+  }
+
+  > li > a,
+  > li > span {
+    color: #888;
+    font-size: 14px;
+    text-shadow: none;
+  }
+
+  > li > i {
+    color: #aaa;
+    font-size: 14px;
+    text-shadow: none;
+  }
+
+  > li > i[class^="icon-"],
+  > li > i[class*="icon-"] {
+    color: gray;
+  }
+
+}
+

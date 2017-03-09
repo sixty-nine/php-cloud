@@ -1,0 +1,22 @@
+{
+  "name": "php-cloud",
+  "authors": [
+    "Daniele Barsotti"
+  ],
+  "description": "Generate word clouds",
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "web/assets/vendor/",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "datatables": "^1.10.13"
+  }
+}

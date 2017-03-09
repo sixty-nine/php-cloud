@@ -19,7 +19,6 @@ class AppKernel extends Kernel
             new FOS\UserBundle\FOSUserBundle(),
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
 
-            new AppBundle\AppBundle(),
             new SixtyNine\CloudBundle\SixtyNineCloudBundle(),
         );
 
