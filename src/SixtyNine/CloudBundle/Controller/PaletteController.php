@@ -2,14 +2,13 @@
 
 namespace SixtyNine\CloudBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use SixtyNine\CoreBundle\Controller\Controller;
 
 class PaletteController extends Controller
 {
     public function indexAction()
     {
         $palettes = $this
-            ->getDoctrine()
             ->getRepository('SixtyNineCloudBundle:Palette')
             ->getPalettes($this->getUser())
         ;
