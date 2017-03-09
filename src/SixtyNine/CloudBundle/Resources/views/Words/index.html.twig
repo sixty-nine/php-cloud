@@ -1,0 +1,17 @@
+{% extends 'SixtyNineCloudBundle::layout.html.twig' %}
+
+{% set curPage = 'words' %}
+{% set pageTitle = 'Words lists' | trans %}
+{% set pageHeader = 'Words Lists' | trans %}
+{% set pageSubHeader = 'Home' | trans %}
+{% set breadcrumb = [
+    { title: 'Home' }
+] %}
+
+{% block body %}
+    <a href="{{ path('sn_words_create') }}" class="btn btn-default"> {{ 'Create a new list' | trans }} </a>
+    <a href="{{ path('sn_words_list') }}" class="btn btn-default"> {{ 'View my lists' | trans }} </a>
+{% endblock %}
+
+{% block javascripts %}
+{% endblock %}

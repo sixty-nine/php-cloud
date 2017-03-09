@@ -10,10 +10,10 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
 /**
  * Cloud
  *
- * @ORM\Table(name="cloud")
- * @ORM\Entity(repositoryClass="SixtyNine\CloudBundle\Repository\CloudRepository")
+ * @ORM\Table(name="words_list")
+ * @ORM\Entity(repositoryClass="SixtyNine\CloudBundle\Repository\WordsListRepository")
  */
-class Cloud
+class WordsList
 {
     use TimestampableEntity;
     use BlameableEntity;
@@ -39,6 +39,20 @@ class Cloud
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
      */
     protected $user;
+
+    /**
+     * @var ArrayCollection
+     * @ORM\OneToMany(targetEntity="Word", mappedBy="list")
+     */
+    protected $words;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->words = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -86,5 +100,51 @@ class Cloud
         return $this->user;
     }
 
+    /**
+     * Check if a Word with the same text already exists in the Cloud
+     * @param string $text
+     * @return null|Word
+     */
+    public function getWordForText($text)
+    {
+        /** @var Word $word */
+        foreach ($this->words as $word) {
+            if ($word->getText() === $text) {
+                return $word;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * @param Word $word
+     * @return $this
+     */
+    public function addWord(Word $word)
+    {
+        if ($this->words->contains($word)) {
+            $this->words->add($word);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param Word $word
+     * @return $this
+     */
+    public function removeWord(Word $word)
+    {
+        $this->words->remove($word);
+        return $this;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getWords()
+    {
+        return $this->words;
+    }
 }
 

@@ -5,9 +5,7 @@
     xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
     <import resource="@SixtyNineCloudBundle/Resources/config/routing/cloud.xml" prefix="/cloud" />
-
-    <route id="sn_cloud_home" path="/" methods="GET">
-        <default key="_controller">SixtyNineCloudBundle:Cloud:index</default>
-    </route>
+    <import resource="@SixtyNineCloudBundle/Resources/config/routing/words.xml" prefix="/words" />
+    <import resource="@SixtyNineCloudBundle/Resources/config/routing/palettes.xml" prefix="/palettes" />
 
 </routes>

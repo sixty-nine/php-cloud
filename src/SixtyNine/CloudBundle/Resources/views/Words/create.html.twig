@@ -1,11 +1,11 @@
 {% extends 'SixtyNineCloudBundle::layout.html.twig' %}
 
-{% set curPage = 'admins' %}
-{% set pageTitle = 'Create cloud' | trans  %}
-{% set pageHeader = 'Cloud' | trans  %}
+{% set curPage = 'words' %}
+{% set pageTitle = 'Create words list' | trans  %}
+{% set pageHeader = 'Words List' | trans  %}
 {% set pageSubHeader = 'Create' | trans  %}
 {% set breadcrumb = [
-    { title: 'Home' | trans , url: path('sn_cloud_home') }
+    { title: 'Home' | trans , url: path('sn_words_home') }
 ] %}
 
 {% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}

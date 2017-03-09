@@ -1,0 +1,28 @@
+{% extends 'SixtyNineCloudBundle::layout.html.twig' %}
+
+{% set curPage = 'palette' %}
+{% set pageTitle = 'Palettes' | trans %}
+{% set pageHeader = 'Palettes' | trans %}
+{% set pageSubHeader = 'Home' | trans %}
+{% set breadcrumb = [
+{ title: 'Palettes Home' }
+] %}
+
+{% block body %}
+    <div class="row palettes">
+        {% for palette in palettes %}
+            <div class="palette">
+                <div class="name">{{ palette.name }}</div>
+                <div class="colors">
+                    {% for color in palette.colors %}
+                        <div style="background-color: #{{ color }};"></div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+{% endblock %}

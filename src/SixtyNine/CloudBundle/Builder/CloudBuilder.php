@@ -28,11 +28,10 @@ use SixtyNine\Cloud\Usher\CircularUsher;
 use SixtyNine\Cloud\Usher\LinearUsher;
 use SixtyNine\Cloud\Usher\VerticalUsher;
 use SixtyNine\Cloud\Usher\WordleUsher;
+use SixtyNine\CloudBundle\Entity\WordsList;
 
 class CloudBuilder
 {
-    use StopwatchAware;
-
     /**
      * @param $text
      * @param Filters $filters
@@ -55,32 +54,18 @@ class CloudBuilder
         return $words;
     }
 
-    public function createImage(Config $config, $data)
+    public function buildWordsFromWordsList(WordsList $list)
     {
-        $this->stopwatchOpenSection();
-
-        $url = $data['url'];
-
-        $filters =new Filters();
-        $filters->addFilters(array(
-            new RemoveNumbers(),
-            new RemoveCharacters(),
-            new RemoveTrailingCharacters(),
-            new RemoveByLength(4),
-//            new RemoveFrontCharacters(),
-            new ChangeCase(ChangeCase::LOWERCASE),
-        ));
-
-        $words = new Words($filters);
-        if (isset($data['text'])) {
-            $words->addText($data['text']);
-        } else {
-            $this->stopwatchStart('fetch document');
-            $html = @file_get_contents($url);
-            $this->stopwatchStop('fetch document');
-            $words->addHtml($html);
+        $words = new Words(new Filters());
+        /** @var \SixtyNine\CloudBundle\Entity\Word $word */
+        foreach ($list->getWords() as $word) {
+            $words->addWord($word->getText(), $word->getCount());
         }
+        return $words;
+    }
 
+    public function createImage(Words $words, Config $config, $data)
+    {
         $font = new Font(__DIR__ . '/../Resources/fonts/' . $data['font']);
         $factory = new PaletteFactory($config);
 
@@ -105,10 +90,6 @@ class CloudBuilder
                     $usher = new WordleUsher($imgWidth, $imgHeight);
                     break;
             }
-        }
-
-        if ($this->stopwatch) {
-            $usher->setStopwatch($this->stopwatch);
         }
 
         $sortBy = null;
@@ -154,16 +135,12 @@ class CloudBuilder
 //        die;
 
         $renderer = new Renderer();
-        $this->stopwatchStart('rendering');
         $image = $renderer->createImage($imgWidth, $imgHeight);
         $renderer->render($image, $list, $data['frame']);
-        $this->stopwatchStop('rendering');
 
         if (isset($data['debugUsher']) && $data['debugUsher']) {
             $renderer->drawUsher($image, $usher, (new Color())->setHex('FF0000'), 250);
         }
-
-        $this->stopwatchStopSection('cloud building');
 
         return $image;
     }

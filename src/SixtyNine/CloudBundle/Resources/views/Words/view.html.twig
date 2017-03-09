@@ -1,0 +1,143 @@
+{% extends 'SixtyNineCloudBundle::layout.html.twig' %}
+
+{% set curPage = 'words' %}
+{% set pageTitle = 'View Words' | trans %}
+{% set pageHeader = 'Words List' | trans %}
+{% set pageSubHeader = 'Words' | trans %}
+{% set breadcrumb = [
+    { title: 'Home' | trans , url: path('sn_words_home') },
+    { title: 'Word Lists' | trans, url: path('sn_words_list') },
+    { title: 'Words' | trans }
+] %}
+
+{% form_theme addWordsForm 'bootstrap_3_layout.html.twig' %}
+{% form_theme filtersForm 'bootstrap_3_layout.html.twig' %}
+
+{% block buttons %}
+
+    <div class="btn-group">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {{ 'Orientation' | trans }} <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+            {% for key, orientation in orientations %}
+            <li><a href="{{ path('sn_words_random_orientation', {'id': list.id, 'orientation': key}) }}">{{ orientation }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="btn-group">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {{ 'Color' | trans }} <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+            <li><a href="#">{{ 'Cycle' | trans }}</a></li>
+            <li><a href="#">{{ 'Random' | trans }}</a></li>
+        </ul>
+    </div>
+    <div class="btn-group">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {{ 'Palette' | trans }} <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+            {% for palette in palettes %}
+            <li><a href="#{{ palette.id }}">{{ palette.name }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+
+{% endblock %}
+
+{% block body %}
+    <section class="list-words">
+        <table class="words">
+            <thead><tr>
+                <th>{{ 'Text' | trans }}</th>
+                <th>{{ 'Count' | trans }}</th>
+                <th>{{ 'Orientation' | trans }}</th>
+                <th>{{ 'Color' | trans }}</th>
+                <th>{{ 'Actions' | trans }}</th>
+            </tr></thead>
+            <tbody>
+            {% for word in list.words %}
+            <tr>
+                <td>{{ word.text }}</td>
+                <td>{{ word.count }}</td>
+                <td>
+                    {% if word.orientation == 'horiz' %}
+                    <span class="label label-primary">Horizontal</span>
+                    {% else %}
+                    <span class="label label-info">Vertical</span>
+                    {% endif %}
+                </td>
+                <td>
+                    <div class="color-box mini" style="background-color: {{ word.color }};"></div>
+                </td>
+                <td>
+                    <a href="{{ path('sn_words_increase_word', {'id': word.list.id, 'wordId': word.id}) }}"><i class="glyphicon glyphicon-plus"></i></a>
+                    <a href="{{ path('sn_words_decrease_word', {'id': word.list.id, 'wordId': word.id}) }}"><i class="glyphicon glyphicon-minus"></i></a>
+                    <a href="{{ path('sn_words_remove_word', {'id': word.id}) }}"><i class="glyphicon glyphicon-remove"></i></a>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </section>
+
+    <section class="row add-words">
+        {{ form_start(addWordsForm, {'action': path('sn_words_add_words', {'id': list.id}), 'method': 'post'}) }}
+        <div class="col-sm-10">
+            {{ form_widget(addWordsForm) }}
+        </div>
+        <div class="col-sm-2">
+            <input type="submit" class="btn btn-primary" value="{{ 'Add words' | trans }}" />
+        </div>
+        {{ form_end(addWordsForm) }}
+    </section>
+
+    <section class="row import-words">
+        <div class="col-sm-10">
+        </div>
+        <div class="cold-sm-3">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                {{ 'Import URL' | trans }}
+            </button>
+        </div>
+    </section>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        {{ form_start(filtersForm, {'action': path('sn_words_import_url', {'id': list.id}), 'method': 'post'}) }}
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Import filters</h4>
+                </div>
+                <div class="modal-body">
+                    {{ form_widget(filtersForm) }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">
+                        {{ 'Import' | trans }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    {{ form_end(filtersForm) }}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+
+    <script type="text/javascript">
+        $(function () {
+            $('table.words').dataTable();
+        });
+    </script>
+    {% javascripts output='app.js'
+        'bundles/sixtyninecloud/js/app.js' %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+{% endblock %}

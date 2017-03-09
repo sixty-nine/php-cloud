@@ -40,14 +40,6 @@ class CloudStyleFormType extends AbstractType
         );
 
         $builder
-            ->add('text', 'textarea', array(
-                'required' => false,
-                'attr' => array('placeholder' => 'Text')
-            ))
-            ->add('url', 'text', array(
-                'required' => false,
-                'attr' => array('placeholder' => 'URL')
-            ))
             ->add('palette', 'choice', array(
                 'label' => 'Colors',
                 'choices' => array(

@@ -23,8 +23,8 @@ class RemoveByLength extends AbstractFilter implements FilterInterface
      */
     public function __construct($minLength = false, $maxLength = false)
     {
-        $this->minLength = $minLength;
-        $this->maxLength = $maxLength;
+        $this->minLength = $minLength ? (int)$minLength : false;
+        $this->maxLength = $maxLength ? (int)$maxLength : false;
     }
 
     /** {@inheritdoc} */

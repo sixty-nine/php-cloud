@@ -11,10 +11,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends Controller
 {
-    public function blaAction(Request $request)
+    public function indexAction(Request $request)
     {
         $data = array(
-            'url' => 'https://en.wikipedia.org/wiki/Wikipedia',
             'palette' => 'aqua',
             'font' => 'Arial.ttf',
             'orientation' => OrientationVisitor::WORDS_MAINLY_HORIZONTAL,
@@ -34,8 +33,10 @@ class DefaultController extends Controller
             $data = $styleForm->getData();
         }
 
+        $list = $this->getDoctrine()->getRepository('SixtyNineCloudBundle:WordsList')->find(1);
         $builder = new CloudBuilder();
-        $image = $builder->createImage(new Config(), $data);
+        $words = $builder->buildWordsFromWordsList($list);
+        $image = $builder->createImage($words, new Config(), $data);
 
         return $this->render(
             'SixtyNineCloudBundle:Default:bla.html.twig',

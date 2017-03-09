@@ -40,35 +40,5 @@ class CloudRepository extends \Doctrine\ORM\EntityRepository
         $this->_em->remove($cloud);
         $this->_em->flush();
     }
-
-    public function importWords(Cloud $cloud, Words $words)
-    {
-        /** @var $word \SixtyNine\Cloud\Model\Word */
-        foreach ($words->getWords() as $word) {
-
-            $entity = $cloud->getWordForText($word->getText());
-
-            if (!$entity) {
-                $entity = new Word();
-                $entity
-                    ->setCloud($cloud)
-                    ->setText($word->getText())
-                    ->setUser($cloud->getUser())
-                ;
-                $cloud->addWord($entity);
-            }
-
-            $entity->setCount($entity->getCount() + $word->getCount());
-
-            $this->_em->persist($entity);
-            $this->_em->flush();
-        }
-    }
-
-    public function removeWord(Word $word)
-    {
-        $this->_em->remove($word);
-        $this->_em->flush();
-    }
 }
 

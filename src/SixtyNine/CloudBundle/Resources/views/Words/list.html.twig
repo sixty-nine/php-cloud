@@ -1,17 +1,17 @@
 {% extends 'SixtyNineCloudBundle::layout.html.twig' %}
 
-{% set curPage = 'admins' %}
-{% set pageTitle = 'View cloud' | trans %}
-{% set pageHeader = 'Cloud' | trans %}
+{% set curPage = 'words' %}
+{% set pageTitle = 'View Words Lists' | trans %}
+{% set pageHeader = 'Words List' | trans %}
 {% set pageSubHeader = 'View' | trans %}
 {% set breadcrumb = [
-    { title: 'Home' | trans , url: path('sn_cloud_home') },
-    { title: 'Clouds' | trans }
+    { title: 'Home' | trans , url: path('sn_words_home') },
+    { title: 'Words Lists' | trans }
 ] %}
 
 {% block body %}
 
-    <table class="cloud-list">
+    <table class="words-list">
         <thead>
         <tr>
             <th>{{ 'Name' | trans }}</th>
@@ -20,15 +20,15 @@
         </tr>
         </thead>
         <tbody>
-        {% for cloud in clouds %}
+        {% for list in lists %}
             <tr>
-                <td>{{ cloud.name }}</td>
-                <td>{{ cloud.words.count }}</td>
+                <td>{{ list.name }}</td>
+                <td>{{ list.words.count }}</td>
                 <td>
-                    <a href="{{ path('sn_cloud_view', {'id': cloud.id}) }}" class="btn btn-info btn-xs">
+                    <a href="{{ path('sn_words_view', {'id': list.id }) }}" class="btn btn-info btn-xs">
                         {{ 'Words' | trans }}
                     </a>
-                    <a href="{{ path('sn_cloud_remove', {'id': cloud.id }) }}" class="btn btn-danger btn-xs">
+                    <a href="{{ path('sn_words_remove', {'id': list.id }) }}" class="btn btn-danger btn-xs">
                         {{ 'Remove' | trans }}
                     </a>
                 </td>
@@ -42,7 +42,7 @@
 
     <script type="text/javascript">
         $(function () {
-            $('table.cloud-list').dataTable();
+            $('table.words-list').dataTable();
         });
     </script>
 

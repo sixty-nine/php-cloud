@@ -1,11 +1,11 @@
 {% extends 'SixtyNineCloudBundle::layout.html.twig' %}
 
-{% set curPage = 'admins' %}
+{% set curPage = 'words' %}
 {% set pageTitle = 'View cloud' | trans %}
 {% set pageHeader = 'Cloud' | trans %}
 {% set pageSubHeader = 'View' | trans %}
 {% set breadcrumb = [
-    { title: 'Home' | trans , url: path('sn_cloud_home') },
+    { title: 'Home' | trans , url: path('sn_words_home') },
     { title: 'Clouds' | trans }
 ] %}
 
@@ -25,10 +25,10 @@
                 <td>{{ cloud.name }}</td>
                 <td>{{ cloud.words.count }}</td>
                 <td>
-                    <a href="{{ path('sn_cloud_view', {'id': cloud.id}) }}" class="btn btn-info btn-xs">
+                    <a href="{{ path('sn_words_view', {'id': cloud.id}) }}" class="btn btn-info btn-xs">
                         {{ 'Words' | trans }}
                     </a>
-                    <a href="{{ path('sn_cloud_remove', {'id': cloud.id }) }}" class="btn btn-danger btn-xs">
+                    <a href="{{ path('sn_words_remove', {'id': cloud.id }) }}" class="btn btn-danger btn-xs">
                         {{ 'Remove' | trans }}
                     </a>
                 </td>

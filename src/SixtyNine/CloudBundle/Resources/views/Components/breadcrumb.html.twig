@@ -1,7 +1,7 @@
 {%  if breadcrumb is defined %}
-<ul class="page-breadcrumb">
+<ol class="breadcrumb">
     {% for item in breadcrumb %}
-        <li>
+        <li {% if loop.last %}class="active"{% endif %}>
             {% if item.url is defined %}
             <a href="{{ item.url }}">
             {% endif %}
@@ -9,10 +9,7 @@
             {% if item.url is defined %}
             </a>
             {% endif %}
-            {%  if not loop.last %}
-                <i class="fa fa-circle"></i>
-            {% endif %}
         </li>
     {% endfor %}
-</ul>
+</ol>
 {% endif %}

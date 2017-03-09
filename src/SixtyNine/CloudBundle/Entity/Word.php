@@ -5,6 +5,7 @@ namespace SixtyNine\CloudBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Blameable\Traits\BlameableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use SixtyNine\Cloud\Model\Text;
 
 /**
  * Word
@@ -39,6 +40,18 @@ class Word
     protected $count;
 
     /**
+     * @var string
+     * @ORM\Column(type="string")
+     */
+    protected $orientation = Text::DIR_HORIZONTAL;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string")
+     */
+    protected $color = '000000';
+
+    /**
      * @var Account
      * @ORM\ManyToOne(targetEntity="Account")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
@@ -46,11 +59,11 @@ class Word
     protected $user;
 
     /**
-     * @var Cloud
-     * @ORM\ManyToOne(targetEntity="Cloud", inversedBy="words")
-     * @ORM\JoinColumn(name="cloud_id", referencedColumnName="id", nullable=false)
+     * @var WordsList
+     * @ORM\ManyToOne(targetEntity="WordsList", inversedBy="words")
+     * @ORM\JoinColumn(name="list_id", referencedColumnName="id", nullable=false)
      */
-    protected $cloud;
+    protected $list;
 
     /**
      * Get id
@@ -63,21 +76,21 @@ class Word
     }
 
     /**
-     * @param \SixtyNine\CloudBundle\Entity\Cloud $cloud
+     * @param \SixtyNine\CloudBundle\Entity\WordsList $list
      * @return $this
      */
-    public function setCloud($cloud)
+    public function setList($list)
     {
-        $this->cloud = $cloud;
+        $this->list = $list;
         return $this;
     }
 
     /**
-     * @return \SixtyNine\CloudBundle\Entity\Cloud
+     * @return \SixtyNine\CloudBundle\Entity\wordsList
      */
-    public function getCloud()
+    public function getList()
     {
-        return $this->cloud;
+        return $this->list;
     }
 
     /**
@@ -133,5 +146,42 @@ class Word
     {
         return $this->user;
     }
+
+    /**
+     * @param string $color
+     * @return $this
+     */
+    public function setColor($color)
+    {
+        $this->color = $color;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getColor()
+    {
+        return $this->color;
+    }
+
+    /**
+     * @param string $orientation
+     * @return $this
+     */
+    public function setOrientation($orientation)
+    {
+        $this->orientation = $orientation;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOrientation()
+    {
+        return $this->orientation;
+    }
+
 }
 

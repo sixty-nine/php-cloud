@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraints\Date;
 use Symfony\Component\Validator\Constraints\GreaterThan;
 use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 
-class CreateCloudFormType extends AbstractType
+class CreateWordsListFormType extends AbstractType
 {
     /** {@inheritdoc} */
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -21,7 +21,7 @@ class CreateCloudFormType extends AbstractType
         $builder
             ->add('name', TextType::class, array(
                 'required' => true,
-                'attr' => array('placeholder' => 'Cloud name')
+                'attr' => array('placeholder' => 'Words list name')
             ))
         ;
     }

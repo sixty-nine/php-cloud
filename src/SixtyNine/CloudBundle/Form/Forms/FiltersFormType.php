@@ -50,7 +50,7 @@ class FiltersFormType extends AbstractType
                 'required' => false,
             ))
             ->add('removeByLengthEnabled', CheckboxType::class, array(
-                'label'    => 'Enable remove characters ny length filter?',
+                'label'    => 'Enable remove characters by length filter?',
                 'required' => false,
             ))
             ->add('minLength', TextType::class, array(

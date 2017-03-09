@@ -2,18 +2,17 @@
 
 namespace SixtyNine\CloudBundle\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Blameable\Traits\BlameableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
- * Cloud
+ * Palette
  *
- * @ORM\Table(name="cloud")
- * @ORM\Entity(repositoryClass="SixtyNine\CloudBundle\Repository\CloudRepository")
+ * @ORM\Table(name="palette")
+ * @ORM\Entity(repositoryClass="SixtyNine\CloudBundle\Repository\PaletteRepository")
  */
-class Cloud
+class Palette
 {
     use TimestampableEntity;
     use BlameableEntity;
@@ -34,11 +33,18 @@ class Cloud
     protected $name;
 
     /**
+     * @var string
+     * @ORM\Column(type="array")
+     */
+    protected $colors;
+
+    /**
      * @var Account
      * @ORM\ManyToOne(targetEntity="Account")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true)
      */
     protected $user;
+
 
     /**
      * Get id
@@ -86,5 +92,22 @@ class Cloud
         return $this->user;
     }
 
+    /**
+     * @param string $colors
+     * @return $this
+     */
+    public function setColors($colors)
+    {
+        $this->colors = $colors;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getColors()
+    {
+        return $this->colors;
+    }
 }
 

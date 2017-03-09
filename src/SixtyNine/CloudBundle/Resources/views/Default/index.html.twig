@@ -5,17 +5,10 @@
 {% set pageHeader = 'Cloud' | trans  %}
 {% set pageSubHeader = 'Create' | trans  %}
 {% set breadcrumb = [
-    { title: 'Home' | trans , url: path('sn_cloud_home') }
+    { title: 'Home' | trans , url: path('sn_words_home') }
 ] %}
 
-{% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
 
 {% block body %}
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <div class="pull-right">
-        <a href="#" class="btn btn-default">{{ 'Cancel' | trans }}</a>
-        <input type="submit" class="btn btn-primary" value="{{ 'Create' | trans }}" />
-    </div>
-    {{ form_end(form) }}
+
 {% endblock %}
