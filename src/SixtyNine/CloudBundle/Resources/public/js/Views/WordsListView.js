@@ -6,13 +6,11 @@ SnCloud.Views.WordsList = Backbone.View.extend({
 
     events: {
         'click span.orientation': 'toggleOrientation',
-//        'click a[data-type="palette"]': 'setPalette',
-//        'click a[data-type="palette-type"]': 'changeColors',
+        'click #colorModal button[type="submit"]': 'changeColors',
         'click span.remove': 'removeWord'
     },
 
     initialize: function() {
-        this.curPalette = $('a[data-type="palette"]:first').data('id');
     },
 
     removeWord: function (e) {
@@ -33,16 +31,16 @@ SnCloud.Views.WordsList = Backbone.View.extend({
         console.log('toggle', wordId);
     },
 
-    setPalette: function (e) {
-        this.curPalette = $(e.currentTarget).data('id');
-    },
-
     changeColors: function (e) {
         e.preventDefault();
+
+        var paletteId = $('#colorModal select :selected').val();
+
+        $('#colorModal').modal('hide');
         SnCloud.Views.showSpinner();
         location.href = $(e.currentTarget)
-            .attr('href')
-            .replace('9999', this.curPalette)
+            .data('url')
+            .replace('9999', paletteId)
         ;
     }
 });

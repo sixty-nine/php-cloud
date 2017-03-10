@@ -4,13 +4,10 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-    <!--
     <services>
-        <service id="sixty_nine_core.example" class="SixtyNine\CoreBundle\Example">
-            <argument type="service" id="service_id" />
-            <argument>plain_value</argument>
-            <argument>%parameter_name%</argument>
+        <service id="sixty_nine_core.twig.extension" class="SixtyNine\CoreBundle\Twig\SixtyNineExtension">
+            <tag name="twig.extension" />
         </service>
     </services>
-    -->
+
 </container>
