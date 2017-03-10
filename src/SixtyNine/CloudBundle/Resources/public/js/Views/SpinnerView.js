@@ -11,7 +11,6 @@ void function () {
 
         initialize: function() {
             $('body').append(this.render().el);
-            console.log('ok', this.el);
         },
 
         render: function() {
