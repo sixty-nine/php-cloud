@@ -79,6 +79,23 @@ class ListsController extends FOSRestController
     }
 
     /**
+     * @FOS\Delete("/lists/{id}/words/{wordId}")
+     */
+    public function deleteWordAction($id, $wordId)
+    {
+        $list = $this->listsManager->getList($id);
+        $word = $this->listsManager->getWord($wordId);
+
+        $this->checkObject(array($list, $word));
+        $this->checkUserCanAccessList($list);
+        $this->checkWordBelongsToList($word, $list);
+
+        $this->listsManager->deleteWord($word);
+
+        return $this->handleView($this->view(null, 204));
+    }
+
+    /**
      * @FOS\Get("/lists/{id}/words/{wordId}/toggle-orientation")
      */
     public function toggleWordOrientationAction($id, $wordId)
