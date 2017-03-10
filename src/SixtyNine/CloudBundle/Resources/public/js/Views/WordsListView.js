@@ -3,17 +3,20 @@ void function (config) {
 
     'use strict';
 
-    SnCloud.Views.WordsList = Backbone.View.extend({
+    SnCloud.Views.WordsList = Mn.View.extend({
 
         el: 'div.container',
+        template: false,
 
-        events: {
-            'click span.orientation': 'toggleOrientation',
-            'click #colorModal button[type="submit"]': 'changeColors',
-            'click span.remove': 'removeWord'
+        ui: {
+            orientationToggle: 'span.orientation',
+            colorsSubmitButton: '#colorModal button[type="submit"]'
         },
 
-        initialize: function () {
+        events: {
+            'click @ui.orientationToggle': 'toggleOrientation',
+            'click @ui.colorsSubmitButton': 'changeColors',
+            'click span.remove': 'removeWord'
         },
 
         removeWord: function (e) {
