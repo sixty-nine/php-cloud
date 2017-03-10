@@ -94,3 +94,9 @@ stof_doctrine_extensions:
 fos_rest:
     routing_loader:
         default_format: json
+
+# FOSJsRouting Configuration
+fos_js_routing:
+    routes_to_expose:
+        - sn_words_view
+        - "^cloud_api_.*"

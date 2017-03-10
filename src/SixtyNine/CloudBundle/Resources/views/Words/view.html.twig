@@ -35,6 +35,7 @@
 
 {% block body %}
     <section class="list-words">
+{#
         {% for word in list.words %}
         <div class="word" data-id="{{ word.id }}">
             <span class="color" style="background-color: {{ word.color }};"></span>
@@ -46,6 +47,7 @@
             <span class="remove glyphicon glyphicon-remove" data-url="{{ path('sn_words_remove_word', {'id': list.id, 'wordId': 9999}) }}"></span>
         </div>
         {% endfor %}
+#}
     </section>
 
     <!-- AddWords Modal -->
@@ -150,10 +152,36 @@
 
     {%- include 'SixtyNineCloudBundle:Components:js-startup.html.twig' -%}
 
+    <script type="text/template" id="sn-cloud-words-item-template">
+        <span class="color" style="background-color: <%= color %>;"></span>
+        <span class="orientation">
+            <i class="glyphicon glyphicon-option-<%= orientation === 'horiz' ? 'horizontal' : 'vertical' %>"></i>
+        </span>
+        <span class="text"><%= text %></span>
+        <span class="count"><%= count %></span>
+        <span class="remove glyphicon glyphicon-remove"></span>
+    </script>
+
     <script type="text/javascript">
+
+        SnCloud.showSpinner();
+
         $(function () {
+
             new SnCloud.Views.WordsList().render();
+
+            var collection = new SnCloud.Models.WordCollection([], {listId: {{ list.id }} });
+            collection.fetch().then(function () {
+
+                SnCloud.hideSpinner();
+
+                new SnCloud.Views.WordsView({
+                    collection: collection
+                }).render();
+
+            });
         });
+
     </script>
 
 {% endblock %}

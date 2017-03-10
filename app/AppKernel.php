@@ -19,6 +19,7 @@ class AppKernel extends Kernel
             new JMS\SerializerBundle\JMSSerializerBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new FOS\RestBundle\FOSRestBundle(),
+            new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
 
             new SixtyNine\CloudBundle\SixtyNineCloudBundle(),

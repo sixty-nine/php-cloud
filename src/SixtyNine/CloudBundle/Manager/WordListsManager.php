@@ -58,6 +58,7 @@ class WordListsManager
     public function deleteList(WordsList $list)
     {
         $this->em->remove($list);
+        $this->em->flush();
     }
 
     public function toggleWordOrientation(Word $word)

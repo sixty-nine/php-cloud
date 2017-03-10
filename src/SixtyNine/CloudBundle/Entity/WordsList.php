@@ -46,7 +46,7 @@ class WordsList
 
     /**
      * @var ArrayCollection
-     * @ORM\OneToMany(targetEntity="Word", mappedBy="list")
+     * @ORM\OneToMany(targetEntity="Word", mappedBy="list", cascade={"remove"})
      */
     protected $words;
 
@@ -149,6 +149,16 @@ class WordsList
     public function getWords()
     {
         return $this->words;
+    }
+
+    /**
+     * @return int
+     * @JMS\VirtualProperty
+     * @JMS\SerializedName("count")
+     */
+    public function getWordsCount()
+    {
+        return $this->words->count();
     }
 }
 

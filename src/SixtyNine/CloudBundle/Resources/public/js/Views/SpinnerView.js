@@ -16,13 +16,13 @@ void function (config) {
 
     var spinner = false;
 
-    SnCloud.Views.showSpinner = function () {
+    SnCloud.showSpinner = function () {
         if (!spinner) {
             spinner = new SpinnerView();
         }
     };
 
-    SnCloud.Views.hideSpinner = function () {
+    SnCloud.hideSpinner = function () {
         if (spinner) {
             spinner.remove();
             spinner = false;

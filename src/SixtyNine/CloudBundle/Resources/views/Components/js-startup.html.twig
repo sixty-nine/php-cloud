@@ -2,13 +2,26 @@
 
     var SnCloud = {
         Models: {},
-        Views: {}
+        Views: {},
+        config: {}
     };
 
+    {#SnCloud.config.routes = {#}
+        {#viewWords: '{{ path('sn_words_view', {'id': '0'}) }}',#}
+        {#api: {#}
+            {#getLists: '{{ path('cloud_api_get_lists') }}',#}
+            {#getList: '{{ path('cloud_api_get_list', {'id': '-1'}) }}',#}
+            {#getWords: '{{ path('cloud_api_get_words', {'id': '-1', 'wordId': '-2'}) }}'#}
+        {#}#}
+    {#};#}
 
-    SnCloud.config = {
-        routes: {
-            wordLists: '{{ path('cloud_api_get_lists') }}'
+    SnCloud.config.translations = {
+        areYouSure: '{{ 'Are you sure ?' | trans }}'
+    };
+
+    SnCloud.fn = {
+        confirm: function (message) {
+            return confirm(message);
         }
     };
 

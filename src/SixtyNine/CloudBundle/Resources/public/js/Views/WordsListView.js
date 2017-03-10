@@ -21,10 +21,9 @@ void function (config) {
 
         removeWord: function (e) {
 
-            // TODO: do it better :)
-            if (!confirm('Are you sure ?')) return;
+            if (!SnCloud.fn.confirm(config.translations.areYouSure)) return;
 
-            SnCloud.Views.showSpinner();
+            SnCloud.showSpinner();
 
             var url = $(e.currentTarget).data('url'),
                 id = $(e.currentTarget).parent().data('id');
@@ -33,7 +32,7 @@ void function (config) {
         },
 
         toggleOrientation: function (e) {
-            SnCloud.Views.showSpinner();
+            SnCloud.showSpinner();
             location.href = $(e.currentTarget).data('url');
         },
 
@@ -43,12 +42,21 @@ void function (config) {
             var paletteId = $('#colorModal select :selected').val();
 
             $('#colorModal').modal('hide');
-            SnCloud.Views.showSpinner();
+            SnCloud.showSpinner();
             location.href = $(e.currentTarget)
                 .data('url')
                 .replace('9999', paletteId)
             ;
         }
+    });
+
+    SnCloud.Views.WordView = Mn.View.extend({
+        className: 'word',
+        template: '#sn-cloud-words-item-template'
+    });
+    SnCloud.Views.WordsView = Mn.CollectionView.extend({
+        el: 'section.list-words',
+        childView: SnCloud.Views.WordView
     });
 
 }(SnCloud.config);

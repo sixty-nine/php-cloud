@@ -9,7 +9,7 @@ void function (config) {
 
     SnCloud.Models.ListCollection = Backbone.Collection.extend({
         model: SnCloud.Models.ListModel,
-        url: config.routes.wordLists
+        url: Routing.generate('cloud_api_get_lists')
     });
 
 }(SnCloud.config);

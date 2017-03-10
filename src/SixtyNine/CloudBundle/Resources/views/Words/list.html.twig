@@ -11,30 +11,15 @@
 
 {% block body %}
 
-    <table class="words-list">
+    <table class="table table-striped table-condensed words-list">
         <thead>
-        <tr>
-            <th>{{ 'Name' | trans }}</th>
-            <th>{{ 'Word count' | trans }}</th>
-            <th>{{ 'Actions' | trans }}</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for list in lists %}
             <tr>
-                <td>{{ list.name }}</td>
-                <td>{{ list.words.count }}</td>
-                <td>
-                    <a href="{{ path('sn_words_view', {'id': list.id }) }}" class="btn btn-info btn-xs">
-                        {{ 'Words' | trans }}
-                    </a>
-                    <a href="{{ path('sn_words_remove', {'id': list.id }) }}" class="btn btn-danger btn-xs">
-                        {{ 'Remove' | trans }}
-                    </a>
-                </td>
+                <th>{{ 'Name' | trans }}</th>
+                <th>{{ 'Word count' | trans }}</th>
+                <th></th>
             </tr>
-        {% endfor %}
-        </tbody>
+        </thead>
+        <tbody></tbody>
     </table>
 {% endblock %}
 
@@ -42,20 +27,39 @@
 
     {%- include 'SixtyNineCloudBundle:Components:js-startup.html.twig' -%}
 
-    <script type="text/javascript">
-        $(function () {
-            var collection = new SnCloud.Models.ListCollection();
-            collection.fetch().then(function () {
-                collection.each(function (item) {
-                    console.log(item);
-                });
-            });
-        });
+    <script type="text/template" id="sn-cloud-word-list-item-template">
+        <td><%= name %></td>
+        <td><%= count %></td>
+        <td>
+            <button data-role="view-words" class="btn btn-default btn-xs" title="{{ 'View words' | trans }}">
+                <i class="glyphicon glyphicon-align-justify"></i>
+            </button>
+            <button data-role="remove-list" class="btn btn-danger btn-xs" title="{{ 'Remove list' | trans }}">
+                <i class="glyphicon glyphicon-remove"></i>
+            </button>
+            <button data-role="duplicate" class="btn btn-default btn-xs" title="{{ 'Duplicate list' | trans }}">
+                <i class="glyphicon glyphicon-duplicate"></i>
+            </button>
+        </td>
     </script>
 
     <script type="text/javascript">
+
+        SnCloud.showSpinner();
+
         $(function () {
-            $('table.words-list').dataTable();
+
+            var collection = new SnCloud.Models.ListCollection();
+            collection.fetch().then(function () {
+
+                SnCloud.hideSpinner();
+
+                new SnCloud.Views.ListsView({
+                    collection: collection
+                }).render();
+
+            });
+
         });
     </script>
 
