@@ -1,47 +1,51 @@
-'use strict';
+/*global SnCloud, Backbone */
+void function (config) {
 
-SnCloud.Views.WordsList = Backbone.View.extend({
+    'use strict';
 
-    el: 'div.container',
+    SnCloud.Views.WordsList = Backbone.View.extend({
 
-    events: {
-        'click span.orientation': 'toggleOrientation',
-        'click #colorModal button[type="submit"]': 'changeColors',
-        'click span.remove': 'removeWord'
-    },
+        el: 'div.container',
 
-    initialize: function() {
-    },
+        events: {
+            'click span.orientation': 'toggleOrientation',
+            'click #colorModal button[type="submit"]': 'changeColors',
+            'click span.remove': 'removeWord'
+        },
 
-    removeWord: function (e) {
+        initialize: function () {
+        },
 
-        // TODO: do it better :)
-        if (!confirm('Are you sure ?')) return;
+        removeWord: function (e) {
 
-        SnCloud.Views.showSpinner();
+            // TODO: do it better :)
+            if (!confirm('Are you sure ?')) return;
 
-        var url = $(e.currentTarget).data('url'),
-            id = $(e.currentTarget).parent().data('id');
+            SnCloud.Views.showSpinner();
 
-        location.href = url.replace('9999', id);
-    },
+            var url = $(e.currentTarget).data('url'),
+                id = $(e.currentTarget).parent().data('id');
 
-    toggleOrientation: function (e) {
-        SnCloud.Views.showSpinner();
-        location.href = $(e.currentTarget).data('url');
-    },
+            location.href = url.replace('9999', id);
+        },
 
-    changeColors: function (e) {
-        e.preventDefault();
+        toggleOrientation: function (e) {
+            SnCloud.Views.showSpinner();
+            location.href = $(e.currentTarget).data('url');
+        },
 
-        var paletteId = $('#colorModal select :selected').val();
+        changeColors: function (e) {
+            e.preventDefault();
 
-        $('#colorModal').modal('hide');
-        SnCloud.Views.showSpinner();
-        location.href = $(e.currentTarget)
-            .data('url')
-            .replace('9999', paletteId)
-        ;
-    }
-});
+            var paletteId = $('#colorModal select :selected').val();
 
+            $('#colorModal').modal('hide');
+            SnCloud.Views.showSpinner();
+            location.href = $(e.currentTarget)
+                .data('url')
+                .replace('9999', paletteId)
+            ;
+        }
+    });
+
+}(SnCloud.config);

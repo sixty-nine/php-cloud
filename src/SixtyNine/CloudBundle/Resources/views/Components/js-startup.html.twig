@@ -1,0 +1,22 @@
+<script type="text/javascript">
+
+    var SnCloud = {
+        Models: {},
+        Views: {}
+    };
+
+
+    SnCloud.config = {
+        routes: {
+            wordLists: '{{ path('cloud_api_get_lists') }}'
+        }
+    };
+
+</script>
+
+{% javascripts output='app.js'
+    'bundles/sixtyninecloud/js/Models/*.js'
+    'bundles/sixtyninecloud/js/Views/*.js'
+%}
+<script src="{{ asset_url }}"></script>
+{% endjavascripts %}

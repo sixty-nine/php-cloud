@@ -148,12 +148,12 @@
 
 {% block javascripts %}
 
-    {% javascripts output='app.js'
-        'bundles/sixtyninecloud/js/namespace.js'
-        'bundles/sixtyninecloud/js/Views/*.js'
-        'bundles/sixtyninecloud/js/app.js'
-    %}
-    <script src="{{ asset_url }}"></script>
-    {% endjavascripts %}
+    {%- include 'SixtyNineCloudBundle:Components:js-startup.html.twig' -%}
+
+    <script type="text/javascript">
+        $(function () {
+            new SnCloud.Views.WordsList().render();
+        });
+    </script>
 
 {% endblock %}

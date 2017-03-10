@@ -1,5 +1,0 @@
-var SnCloud = {
-    Views: {
-
-    }
-};

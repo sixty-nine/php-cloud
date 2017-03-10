@@ -40,6 +40,19 @@
 
 {% block javascripts %}
 
+    {%- include 'SixtyNineCloudBundle:Components:js-startup.html.twig' -%}
+
+    <script type="text/javascript">
+        $(function () {
+            var collection = new SnCloud.Models.ListCollection();
+            collection.fetch().then(function () {
+                collection.each(function (item) {
+                    console.log(item);
+                });
+            });
+        });
+    </script>
+
     <script type="text/javascript">
         $(function () {
             $('table.words-list').dataTable();
