@@ -27,8 +27,8 @@ SnCloud.Views.WordsList = Backbone.View.extend({
     },
 
     toggleOrientation: function (e) {
-        var wordId = $(e.currentTarget).parent().data('id');
-        console.log('toggle', wordId);
+        SnCloud.Views.showSpinner();
+        location.href = $(e.currentTarget).data('url');
     },
 
     changeColors: function (e) {

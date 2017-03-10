@@ -8,6 +8,7 @@ use SixtyNine\Cloud\Filters\RemoveByLength;
 use SixtyNine\Cloud\Filters\RemoveCharacters;
 use SixtyNine\Cloud\Filters\RemoveNumbers;
 use SixtyNine\Cloud\Filters\RemoveTrailingCharacters;
+use SixtyNine\Cloud\Model\Text;
 use SixtyNine\Cloud\TextListFilter\OrientationVisitor;
 use SixtyNine\CloudBundle\Entity\Word;
 use SixtyNine\CloudBundle\Entity\WordsList;
@@ -281,6 +282,18 @@ class WordsController extends Controller
             ->randomizeWordsOrientation($list, (int)$orientation)
         ;
         return $this->redirectToRoute('sn_words_view', array('id' => $list->getId()));
+    }
+
+    public function toggleOrientationAction(Word $word)
+    {
+        $word->setOrientation(
+            $word->getOrientation() === Text::DIR_VERTICAL
+                ? Text::DIR_HORIZONTAL
+                : Text::DIR_VERTICAL
+        );
+        $this->getDoctrine()->getEntityManager()->flush();
+
+        return $this->redirectToRoute('sn_words_view', array('id' => $word->getList()->getId()));
     }
 
     public function randomizeColorsAction(WordsList $list, $type, $paletteId)

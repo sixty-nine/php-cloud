@@ -15,6 +15,10 @@
 
 {% block buttons %}
 
+    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#addWordsModal">
+        {{ 'Add words' | trans }}
+    </button>
+
     <button type="button" class="btn btn-default" data-toggle="modal" data-target="#importModal">
         {{ 'Import URL' | trans }}
     </button>
@@ -34,7 +38,7 @@
         {% for word in list.words %}
         <div class="word" data-id="{{ word.id }}">
             <span class="color" style="background-color: {{ word.color }};"></span>
-            <span class="orientation">
+            <span class="orientation" data-url="{{ path('sn_words_toggle_orientation', {'id': word.id}) }}">
                 <i class="glyphicon glyphicon-option-{% if word.orientation == 'horiz' %}horizontal{% else %}vertical{% endif %}"></i>
             </span>
             <span class="text">{{ word.text }}</span>
@@ -44,16 +48,27 @@
         {% endfor %}
     </section>
 
-    <section class="row add-words">
-        {{ form_start(addWordsForm, {'action': path('sn_words_add_words', {'id': list.id}), 'method': 'post'}) }}
-        <div class="col-sm-10">
+    <!-- AddWords Modal -->
+    {{ form_start(addWordsForm, {'action': path('sn_words_add_words', {'id': list.id}), 'method': 'post'}) }}
+    {% modal addWordsModal %}
+        {% header %}
+            <h4 class="modal-title" id="importModalLabel">
+                {{ 'Import words from URL' | trans }}
+            </h4>
+        {% endheader %}
+        {% body %}
             {{ form_widget(addWordsForm) }}
-        </div>
-        <div class="col-sm-2">
-            <input type="submit" class="btn btn-primary" value="{{ 'Add words' | trans }}" />
-        </div>
-        {{ form_end(addWordsForm) }}
-    </section>
+        {% endbody %}
+        {% footer %}
+            <button type="button" class="btn btn-default" data-dismiss="modal">
+                {{ 'Cancel' | trans }}
+            </button>
+            <button type="submit" class="btn btn-primary">
+                {{ 'Add words' | trans }}
+            </button>
+        {% endfooter %}
+    {% endmodal %}
+    {{ form_end(addWordsForm) }}
 
     <!-- Import Modal -->
     {{ form_start(filtersForm, {'action': path('sn_words_import_url', {'id': list.id}), 'method': 'post'}) }}

@@ -64,6 +64,11 @@
         <requirement key="orientation">\d+</requirement>
     </route>
 
+    <route id="sn_words_toggle_orientation" path="/{id}/orientation/toggle" methods="GET">
+        <default key="_controller">SixtyNineCloudBundle:Words:toggleOrientation</default>
+        <requirement key="id">\d+</requirement>
+    </route>
+
     <route id="sn_words_random_color" path="/{id}/colors/{paletteId}/{type}" methods="GET">
         <default key="_controller">SixtyNineCloudBundle:Words:randomizeColors</default>
         <requirement key="id">\d+</requirement>
