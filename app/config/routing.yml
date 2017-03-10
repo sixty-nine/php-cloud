@@ -2,5 +2,9 @@ sixty_nine_cloud:
     resource: "@SixtyNineCloudBundle/Resources/config/routing.xml"
     prefix:   /
 
+sixty_nine_cloud_api:
+    resource: "@SixtyNineCloudApiBundle/Resources/config/routing.xml"
+    prefix:   /api
+
 fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/all.xml"

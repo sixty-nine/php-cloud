@@ -4,12 +4,13 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
+    <!--
     <services>
-        <service id="sn_cloud.cloud_builder" class="SixtyNine\CloudBundle\Builder\CloudBuilder" />
-
-        <service id="sn_cloud.word_lists_manager" class="SixtyNine\CloudBundle\Manager\WordListsManager">
-            <argument type="service" id="doctrine.orm.entity_manager"/>
+        <service id="sixty_nine_cloud_api.example" class="SixtyNine\CloudApiBundle\Example">
+            <argument type="service" id="service_id" />
+            <argument>plain_value</argument>
+            <argument>%parameter_name%</argument>
         </service>
     </services>
-
+    -->
 </container>

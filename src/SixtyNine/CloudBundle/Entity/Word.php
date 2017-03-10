@@ -5,6 +5,7 @@ namespace SixtyNine\CloudBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Blameable\Traits\BlameableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use JMS\Serializer\Annotation as JMS;
 use SixtyNine\Cloud\Model\Text;
 
 /**
@@ -12,6 +13,7 @@ use SixtyNine\Cloud\Model\Text;
  *
  * @ORM\Table(name="word")
  * @ORM\Entity(repositoryClass="SixtyNine\CloudBundle\Repository\WordRepository")
+ * @JMS\ExclusionPolicy("all")
  */
 class Word
 {
@@ -24,30 +26,35 @@ class Word
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @JMS\Expose
      */
     private $id;
 
     /**
      * @var string
      * @ORM\Column(type="string")
+     * @JMS\Expose
      */
     protected $text;
 
     /**
      * @var int
      * @ORM\Column(type="integer")
+     * @JMS\Expose
      */
     protected $count;
 
     /**
      * @var string
      * @ORM\Column(type="string")
+     * @JMS\Expose
      */
     protected $orientation = Text::DIR_HORIZONTAL;
 
     /**
      * @var string
      * @ORM\Column(type="string")
+     * @JMS\Expose
      */
     protected $color = '000000';
 

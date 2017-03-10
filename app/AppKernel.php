@@ -23,6 +23,7 @@ class AppKernel extends Kernel
 
             new SixtyNine\CloudBundle\SixtyNineCloudBundle(),
             new SixtyNine\CoreBundle\SixtyNineCoreBundle(),
+            new SixtyNine\CloudApiBundle\SixtyNineCloudApiBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {
