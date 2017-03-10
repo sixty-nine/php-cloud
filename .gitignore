@@ -11,5 +11,7 @@
 /bin/
 /composer.phar
 
+web/assets/vendor/
+
 src/SixtyNine/CloudBundle/Resources/fonts
 
