@@ -28,6 +28,7 @@ class FiltersFormType extends AbstractType
             ->add('changeCaseEnabled', CheckboxType::class, array(
                 'label'    => 'Enable change case filter?',
                 'required' => false,
+                'attr' => array('checked'   => 'checked'),
             ))
             ->add('case', ChoiceType::class, array(
                 'label' => false,
@@ -40,14 +41,17 @@ class FiltersFormType extends AbstractType
             ->add('removeNumbersEnabled', CheckboxType::class, array(
                 'label'    => 'Enable remove numbers filter?',
                 'required' => false,
+                'attr' => array('checked' => 'checked'),
             ))
             ->add('removeUnwantedCharEnabled', CheckboxType::class, array(
                 'label'    => 'Enable remove unwanted characters filter?',
                 'required' => false,
+                'attr' => array('checked' => 'checked'),
             ))
             ->add('removeTrailingCharEnabled', CheckboxType::class, array(
                 'label'    => 'Enable remove trailing characters filter?',
                 'required' => false,
+                'attr' => array('checked' => 'checked'),
             ))
             ->add('removeByLengthEnabled', CheckboxType::class, array(
                 'label'    => 'Enable remove characters by length filter?',
