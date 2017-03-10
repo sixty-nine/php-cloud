@@ -40,9 +40,10 @@
         <requirement key="id">\d+</requirement>
     </route>
 
-    <route id="sn_words_remove_word" path="/{id}/words/remove" methods="GET">
+    <route id="sn_words_remove_word" path="/{id}/words/{wordId}/remove" methods="GET">
         <default key="_controller">SixtyNineCloudBundle:Words:removeWord</default>
         <requirement key="id">\d+</requirement>
+        <requirement key="wordId">\d+</requirement>
     </route>
 
     <route id="sn_words_increase_word" path="/{id}/words/{wordId}/increase" methods="GET">

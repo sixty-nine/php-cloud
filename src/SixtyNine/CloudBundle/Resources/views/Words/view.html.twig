@@ -58,7 +58,7 @@
             </span>
             <span class="text">{{ word.text }}</span>
             <span class="count">{{ word.count }}</span>
-            <span class="remove glyphicon glyphicon-remove" data-url="{{ path('sn_words_remove_word', {'id': 9999}) }}"></span>
+            <span class="remove glyphicon glyphicon-remove" data-url="{{ path('sn_words_remove_word', {'id': list.id, 'wordId': 9999}) }}"></span>
         </div>
     {% endfor %}
 

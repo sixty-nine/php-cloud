@@ -20,6 +20,8 @@ SnCloud.Views.WordsList = Backbone.View.extend({
         // TODO: do it better :)
         if (!confirm('Are you sure ?')) return;
 
+        SnCloud.Views.showSpinner();
+
         var url = $(e.currentTarget).data('url'),
             id = $(e.currentTarget).parent().data('id');
 
@@ -37,8 +39,11 @@ SnCloud.Views.WordsList = Backbone.View.extend({
 
     changeColors: function (e) {
         e.preventDefault();
-        var url = $(e.currentTarget).attr('href').replace('9999', this.curPalette);
-        location.href = url;
+        SnCloud.Views.showSpinner();
+        location.href = $(e.currentTarget)
+            .attr('href')
+            .replace('9999', this.curPalette)
+        ;
     }
 });
 

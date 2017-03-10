@@ -238,11 +238,7 @@ class WordsController extends Controller
 
     public function increaseWordAction(WordsList $list, $wordId)
     {
-        $word = $this
-            ->getDoctrine()
-            ->getRepository('SixtyNineCloudBundle:Word')
-            ->find($wordId)
-        ;
+        $word = $this->getRepository('SixtyNineCloudBundle:Word')->find($wordId);
         $word->setCount($word->getCount() + 1);
         $this->getDoctrine()->getEntityManager()->flush();
         return $this->redirectToRoute('sn_words_view', array('id' => $word->getList()->getId()));
@@ -250,11 +246,7 @@ class WordsController extends Controller
 
     public function decreaseWordAction(WordsList $list, $wordId)
     {
-        $word = $this
-            ->getDoctrine()
-            ->getRepository('SixtyNineCloudBundle:Word')
-            ->find($wordId)
-        ;
+        $word = $this->getRepository('SixtyNineCloudBundle:Word')->find($wordId);
         if ($word->getCount() > 1) {
             $word->setCount($word->getCount() - 1);
         }
@@ -264,13 +256,16 @@ class WordsController extends Controller
 
     /**
      * Remove a word from a list.
-     * @param Word $word
+     * @param \SixtyNine\CloudBundle\Entity\WordsList $list
+     * @param $wordId
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      * @return RedirectResponse
      */
-    public function removeWordAction(Word $word)
+    public function removeWordAction(WordsList $list, $wordId)
     {
-        if ($this->getUser() !== $word->getList()->getUser()) {
+        $word = $this->getRepository('SixtyNineCloudBundle:Word')->find($wordId);
+
+        if ($this->getUser() !== $list->getUser()) {
             throw new NotFoundHttpException();
         }
 
