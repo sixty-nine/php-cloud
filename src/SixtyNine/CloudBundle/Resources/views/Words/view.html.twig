@@ -23,6 +23,10 @@
         {{ 'Import URL' | trans }}
     </button>
 
+    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#sortModal">
+        {{ 'Sort' | trans }}
+    </button>
+
     <button type="button" class="btn btn-default" data-toggle="modal" data-target="#orientationModal">
         {{ 'Orientation' | trans }}
     </button>
@@ -34,21 +38,8 @@
 {% endblock %}
 
 {% block body %}
-    <section class="list-words">
-{#
-        {% for word in list.words %}
-        <div class="word" data-id="{{ word.id }}">
-            <span class="color" style="background-color: {{ word.color }};"></span>
-            <span class="orientation" data-url="{{ path('sn_words_toggle_orientation', {'id': word.id}) }}">
-                <i class="glyphicon glyphicon-option-{% if word.orientation == 'horiz' %}horizontal{% else %}vertical{% endif %}"></i>
-            </span>
-            <span class="text">{{ word.text }}</span>
-            <span class="count">{{ word.count }}</span>
-            <span class="remove glyphicon glyphicon-remove" data-url="{{ path('sn_words_remove_word', {'id': list.id, 'wordId': 9999}) }}"></span>
-        </div>
-        {% endfor %}
-#}
-    </section>
+
+    <section class="list-words"></section>
 
     <!-- AddWords Modal -->
     {{ form_start(addWordsForm, {'action': path('sn_words_add_words', {'id': list.id}), 'method': 'post'}) }}
@@ -113,6 +104,35 @@
         {% endfooter %}
     {% endmodal %}
 
+    <!-- Sort modal -->
+    {% modal sortModal %}
+        {% header %}
+        <h4 class="modal-title">
+            {{ 'Sort the words' | trans }}
+        </h4>
+        {% endheader %}
+        {% body %}
+            <select class="form-control sort-by">
+                <option value="alpha">{{ 'Alphabeticaly' | trans }}</option>
+                <option value="angle">{{ 'By angle' | trans }}</option>
+                <option value="count">{{ 'By occurrence' | trans }}</option>
+            </select>
+
+            <select class="form-control order">
+                <option value="asc">{{ 'Ascending' | trans }}</option>
+                <option value="desc">{{ 'Descending' | trans }}</option>
+            </select>
+        {% endbody %}
+        {% footer %}
+            <button type="button" class="btn btn-default" data-dismiss="modal">
+                {{ 'Cancel' | trans }}
+            </button>
+            <button type="submit" class="btn btn-primary" data-dismiss="modal">
+                {{ 'Sort' | trans }}
+            </button>
+        {% endfooter %}
+    {% endmodal %}
+
     <!-- Color modal -->
     {% modal colorModal %}
         {% header %}
@@ -168,14 +188,18 @@
 
         $(function () {
 
-            new SnCloud.Views.WordsList().render();
-
             var collection = new SnCloud.Models.WordCollection([], {listId: {{ list.id }} });
             collection.fetch().then(function () {
 
                 SnCloud.hideSpinner();
 
                 new SnCloud.Views.WordsView({
+                    collection: collection
+                }).render();
+
+                collection.sortWords('alpha', 'desc');
+
+                new SnCloud.Views.WordsList({
                     collection: collection
                 }).render();
 

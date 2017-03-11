@@ -14,7 +14,25 @@ void function (config) {
         },
         initialize: function (models, options) {
             this.listId = options.listId;
+            this.listenTo(this.collection, 'reset', this.render);
+        },
+        sortWords: function (sortBy, order) {
+
+            var self = this;
+            var deferred = $.Deferred();
+
+            $.post({
+                url: Routing.generate('cloud_api_sort_words', {id: self.listId}),
+                data: { sortBy: sortBy, order: order }
+            }).then(function (data) {
+                self.fetch().then(function () {
+                    deferred.resolve(self);
+                });
+            });
+
+            return deferred;
         }
+
     });
 
 }(SnCloud.config);

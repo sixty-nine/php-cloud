@@ -9,17 +9,22 @@ void function (config) {
         template: false,
 
         ui: {
-            colorsSubmitButton: '#colorModal button[type="submit"]'
+            colorsSubmitButton: '#colorModal button[type="submit"]',
+            colorsPalette: '#colorModal select',
+            sortSubmitButton: '#sortModal button[type="submit"]',
+            sortModalSortBy: '#sortModal select.sort-by',
+            sortModalOrder: '#sortModal select.order'
         },
 
         events: {
-            'click @ui.colorsSubmitButton': 'changeColors'
+            'click @ui.colorsSubmitButton': 'changeColors',
+            'click @ui.sortSubmitButton': 'sortWords'
         },
 
         changeColors: function (e) {
             e.preventDefault();
 
-            var paletteId = $('#colorModal select :selected').val();
+            var paletteId = this.ui.colorsPalette.find(':selected').val();
 
             $('#colorModal').modal('hide');
             SnCloud.showSpinner();
@@ -27,6 +32,21 @@ void function (config) {
                 .data('url')
                 .replace('9999', paletteId)
             ;
+        },
+
+        sortWords: function (e) {
+            e.preventDefault();
+
+            SnCloud.showSpinner();
+
+            this.collection
+                .sortWords(
+                    this.ui.sortModalSortBy.find(':selected').val(),
+                    this.ui.sortModalOrder.find(':selected').val()
+                )
+                .then(function () {
+                    SnCloud.hideSpinner();
+                });
         }
     });
 
@@ -67,7 +87,6 @@ void function (config) {
                 self.model.set('orientation', data.orientation);
             });
         }
-
     });
 
     SnCloud.Views.WordsView = Mn.CollectionView.extend({

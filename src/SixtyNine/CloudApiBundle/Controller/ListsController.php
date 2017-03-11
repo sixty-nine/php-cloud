@@ -7,6 +7,7 @@ use FOS\RestBundle\Controller\FOSRestController;
 use SixtyNine\CloudBundle\Entity\Word;
 use SixtyNine\CloudBundle\Entity\WordsList;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @FOS\NamePrefix("cloud_api_")
@@ -61,6 +62,24 @@ class ListsController extends FOSRestController
         $this->checkUserCanAccessList($list);
 
         return $this->handleView($this->view($list->getWords(), 200));
+    }
+
+    /**
+     * @FOS\Post("/lists/{id}/words/sort")
+     */
+    public function sortWordsAction(Request $request, $id)
+    {
+
+        $list = $this->listsManager->getList($id);
+        $sortBy = $request->get('sortBy');
+        $order = $request->get('order');
+
+        $this->checkObject($list);
+        $this->checkUserCanAccessList($list);
+
+        $list = $this->listsManager->sortWords($list, $sortBy, $order);
+
+        return $this->handleView($this->view($list, 200));
     }
 
     /**

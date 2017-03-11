@@ -46,6 +46,22 @@ class WordListsManager
         return $this->wordRepo->find($id);
     }
 
+    public function sortWords(WordsList $list, $sortBy, $order)
+    {
+        $words = $this->wordRepo->getWordsOrdered($list, $sortBy, $order);
+        $counter = 1;
+
+        /** @var Word $word */
+        foreach ($words as $word) {
+            $word->setPosition($counter);
+            $counter++;
+        }
+
+        $this->em->flush();
+
+        return $words;
+    }
+
     /**
      * @param Account $user
      * @return mixed

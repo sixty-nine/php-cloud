@@ -1,6 +1,7 @@
 <?php
 
 namespace SixtyNine\CloudBundle\Repository;
+use SixtyNine\CloudBundle\Entity\WordsList;
 
 /**
  * WordRepository
@@ -10,4 +11,30 @@ namespace SixtyNine\CloudBundle\Repository;
  */
 class WordRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getWordsOrdered(WordsList $list, $sortBy, $order = 'ASC')
+    {
+        if (!in_array(strtoupper($order), array('ASC', 'DESC'))) {
+            $order = 'ASC';
+        }
+
+        $qb = $this
+            ->createQueryBuilder('w')
+            ->andWhere('w.list = :list')
+            ->setParameter('list', $list)
+        ;
+
+        switch (true) {
+            case 'alpha' === $sortBy:
+                $qb->addOrderBy('w.text', $order);
+                break;
+            case 'count' === $sortBy:
+                $qb->addOrderBy('w.count', $order);
+                break;
+            case 'angle' === $sortBy:
+                $qb->addOrderBy('w.orientation', $order);
+                break;
+        }
+
+        return $qb->getQuery()->execute();
+    }
 }
