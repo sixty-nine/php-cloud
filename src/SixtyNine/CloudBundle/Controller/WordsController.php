@@ -174,12 +174,7 @@ class WordsController extends Controller
             return $this->redirectToRoute('sn_words_view', array('id' => $list->getId()));
         }
 
-        return $this->render(
-            'SixtyNineCloudBundle:Default:add-words.html.twig',
-            array(
-                'form' => $form->createView(),
-            )
-        );
+        return $this->createNotFoundException();
     }
 
     /**

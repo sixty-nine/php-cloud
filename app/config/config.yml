@@ -89,6 +89,7 @@ stof_doctrine_extensions:
         default:
             timestampable: true
             blameable: true
+            sortable: true
 
 # FOSRestBundle Configuration
 fos_rest:

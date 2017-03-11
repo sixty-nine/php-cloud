@@ -47,6 +47,7 @@ class WordsList
     /**
      * @var ArrayCollection
      * @ORM\OneToMany(targetEntity="Word", mappedBy="list", cascade={"remove"})
+     * @ORM\OrderBy({"position" = "ASC"})
      */
     protected $words;
 

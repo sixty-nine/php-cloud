@@ -59,7 +59,7 @@ class CloudBuilder
         $words = new Words(new Filters());
         /** @var \SixtyNine\CloudBundle\Entity\Word $word */
         foreach ($list->getWords() as $word) {
-            $words->addWord($word->getText(), $word->getCount());
+            $entity = $words->addWord($word->getText(), $word->getCount());
         }
         return $words;
     }

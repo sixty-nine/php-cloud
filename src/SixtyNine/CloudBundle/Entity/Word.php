@@ -4,6 +4,7 @@ namespace SixtyNine\CloudBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Blameable\Traits\BlameableEntity;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use JMS\Serializer\Annotation as JMS;
 use SixtyNine\Cloud\Model\Text;
@@ -57,6 +58,13 @@ class Word
      * @JMS\Expose
      */
     protected $color = '000000';
+
+    /**
+     * @var int
+     * @ORM\Column(name="position", type="integer")
+     * @Gedmo\SortablePosition
+     */
+    protected $position;
 
     /**
      * @var Account
