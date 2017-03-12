@@ -68,6 +68,10 @@ void function (config) {
             this.listenTo(this.model, 'change', this.render);
         },
 
+        onRender: function () {
+            this.$el.attr('data-id', this.model.get('id'));
+        },
+
         removeWord: function (e) {
             if (SnCloud.fn.confirm(config.translations.areYouSure)) {
                 this.model.destroy({wait: true});
@@ -91,7 +95,31 @@ void function (config) {
 
     SnCloud.Views.WordsView = Mn.CollectionView.extend({
         el: 'section.list-words',
-        childView: SnCloud.Views.WordView
+        childView: SnCloud.Views.WordView,
+        childViewEvents: {
+            'event:render': 'render'
+        },
+
+        onRender: function () {
+
+            var source,
+                self = this;
+
+            this.$el.sortable({
+                items: 'div.word',
+                classes: {
+                    'ui-sortable-helper': 'drag-source'
+                },
+                start: function(e, ui) {
+                    source = ui.item.index();
+                },
+                update: function( event, ui ) {
+                    var destination = ui.item.index();
+                    self.collection.swapPositions(source, destination);
+                }
+            });
+        }
+
     });
 
 }(SnCloud.config);

@@ -39,12 +39,18 @@ div.palettes {
 section.list-words {
 
   div.word {
+
     display: inline-block;
     position: relative;
     border: 1px solid lightgray;
     padding: 0.5em 2em 0.5em 0.75em;
     @include rounded();
     margin: 0 5px 5px 0;
+
+    &.drag-source {
+      background-color: white;
+      z-index: 99;
+    }
 
     span.count {
       color: #505050;

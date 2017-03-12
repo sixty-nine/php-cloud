@@ -77,6 +77,20 @@ class WordListsManager
         $this->em->flush();
     }
 
+    public function saveWord(Word $word, $data)
+    {
+        $word
+            ->setText($data['text'])
+            ->setCount($data['count'])
+            ->setOrientation($data['orientation'])
+            ->setColor($data['color'])
+            ->setPosition($data['position'])
+        ;
+
+        $this->em->flush();
+        return $word;
+    }
+
     public function deleteWord(Word $word)
     {
         $this->em->remove($word);

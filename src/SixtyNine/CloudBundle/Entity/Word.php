@@ -63,6 +63,7 @@ class Word
      * @var int
      * @ORM\Column(name="position", type="integer")
      * @Gedmo\SortablePosition
+     * @JMS\Expose
      */
     protected $position;
 

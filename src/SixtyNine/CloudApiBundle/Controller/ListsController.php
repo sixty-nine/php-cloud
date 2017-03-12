@@ -4,10 +4,12 @@ namespace SixtyNine\CloudApiBundle\Controller;
 
 use FOS\RestBundle\Controller\Annotations as FOS;
 use FOS\RestBundle\Controller\FOSRestController;
+use SixtyNine\CloudApiBundle\Form\Type\WordFormType;
 use SixtyNine\CloudBundle\Entity\Word;
 use SixtyNine\CloudBundle\Entity\WordsList;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * @FOS\NamePrefix("cloud_api_")
@@ -17,10 +19,15 @@ class ListsController extends FOSRestController
     /** @var \SixtyNine\CloudBundle\Manager\WordListsManager */
     protected $listsManager;
 
+    /** @var \Symfony\Component\Form\FormFactory */
+    protected $formFactory;
+
     public function setContainer(ContainerInterface $container = null)
     {
         parent::setContainer($container);
+        // TODO DI would be better, but then the controller needs to be a service
         $this->listsManager = $this->get('sn_cloud.word_lists_manager');
+        $this->formFactory = $this->get('form.factory');
     }
 
     public function cgetListsAction()
@@ -95,6 +102,22 @@ class ListsController extends FOSRestController
         $this->checkWordBelongsToList($word, $list);
 
         return $this->handleView($this->view($word, 200));
+    }
+
+    /**
+     * @FOS\Put("/lists/{id}/words/{wordId}")
+     */
+    public function putWordAction(Request $request, $id, $wordId)
+    {
+        $word = $this->getMyWord($id, $wordId);
+        $data = json_decode($request->getContent(), true);
+
+        if ($this->isValidData(new WordFormType(), $data, $request)) {
+            $this->listsManager->saveWord($word, $data);
+            return $this->handleView($this->view($word, 200));
+        }
+
+        throw new BadRequestHttpException();
     }
 
     /**
@@ -205,5 +228,42 @@ class ListsController extends FOSRestController
         if ($word->getList()->getId() !== $list->getId()) {
             throw $this->createAccessDeniedException();
         }
+    }
+
+    protected function getMyList($id)
+    {
+        if (null === $list = $this->listsManager->getList($id)) {
+            throw $this->createNotFoundException('List not found');
+        }
+
+        if ($list->getUser() !== $this->getUser()) {
+            throw $this->createAccessDeniedException();
+        }
+
+        return $list;
+    }
+
+    protected function getMyWord($listId, $wordId)
+    {
+        if (null === $word = $this->listsManager->getWord($wordId)) {
+            throw $this->createNotFoundException('Word not found');
+        }
+
+        if ((int)$listId !== $word->getList()->getId()) {
+            throw new BadRequestHttpException('Mismatch');
+        }
+
+        if ($word->getUser() !== $this->getUser()) {
+            throw $this->createAccessDeniedException();
+        }
+
+        return $word;
+    }
+
+    public function isValidData($formType, $data, Request $request)
+    {
+        $form = $this->formFactory->create($formType, $data, array('method' => $request->getMethod()));
+        $form->submit($request->get($form->getName()));
+        return $form->isValid();
     }
 }

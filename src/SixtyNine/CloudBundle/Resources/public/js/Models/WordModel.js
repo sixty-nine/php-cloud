@@ -16,6 +16,23 @@ void function (config) {
             this.listId = options.listId;
             this.listenTo(this.collection, 'reset', this.render);
         },
+        swapPositions: function (sourceIdx, destinationIdx) {
+
+            var sourceModel = this.at(sourceIdx),
+                destModel = this.at(destinationIdx),
+                tmpPosition = destModel.get('position');
+
+            destModel.set('position', sourceModel.get('position'));
+            sourceModel.set('position', tmpPosition);
+
+            this.moveModelAfter(sourceModel, destModel);
+            sourceModel.save();
+            destModel.save();
+        },
+        moveModelAfter : function(model1, model2) {
+            this.remove(model1);
+            this.add(model1, { at: this.indexOf(model2) + 1 });
+        },
         sortWords: function (sortBy, order) {
 
             var self = this;
