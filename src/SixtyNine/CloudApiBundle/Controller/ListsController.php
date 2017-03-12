@@ -4,6 +4,7 @@ namespace SixtyNine\CloudApiBundle\Controller;
 
 use FOS\RestBundle\Controller\Annotations as FOS;
 use FOS\RestBundle\Controller\FOSRestController;
+use FOS\RestBundle\View\View;
 use SixtyNine\CloudApiBundle\Form\Type\WordFormType;
 use SixtyNine\CloudBundle\Entity\Word;
 use SixtyNine\CloudBundle\Entity\WordsList;
@@ -38,23 +39,14 @@ class ListsController extends FOSRestController
 
     public function getListAction($id)
     {
-        $list = $this->listsManager->getList($id);
-
-        $this->checkObject($list);
-        $this->checkUserCanAccessList($list);
-
+        $list = $this->getMyList($id);
         return $this->handleView($this->view($list, 200));
     }
 
     public function deleteListAction($id)
     {
-        $list = $this->listsManager->getList($id);
-
-        $this->checkObject($list);
-        $this->checkUserCanAccessList($list);
-
+        $list = $this->getMyList($id);
         $this->listsManager->deleteList($list);
-
         return $this->handleView($this->view(null, 204));
     }
 
@@ -63,11 +55,7 @@ class ListsController extends FOSRestController
      */
     public function getWordsAction($id)
     {
-        $list = $this->listsManager->getList($id);
-
-        $this->checkObject($list);
-        $this->checkUserCanAccessList($list);
-
+        $list = $this->getMyList($id);
         return $this->handleView($this->view($list->getWords(), 200));
     }
 
@@ -77,15 +65,10 @@ class ListsController extends FOSRestController
     public function sortWordsAction(Request $request, $id)
     {
 
-        $list = $this->listsManager->getList($id);
+        $list = $this->getMyList($id);
         $sortBy = $request->get('sortBy');
         $order = $request->get('order');
-
-        $this->checkObject($list);
-        $this->checkUserCanAccessList($list);
-
         $list = $this->listsManager->sortWords($list, $sortBy, $order);
-
         return $this->handleView($this->view($list, 200));
     }
 
@@ -94,13 +77,7 @@ class ListsController extends FOSRestController
      */
     public function getWordAction($id, $wordId)
     {
-        $list = $this->listsManager->getList($id);
-        $word = $this->listsManager->getWord($wordId);
-
-        $this->checkObject(array($list, $word));
-        $this->checkUserCanAccessList($list);
-        $this->checkWordBelongsToList($word, $list);
-
+        $word = $this->getMyWord($id, $wordId);
         return $this->handleView($this->view($word, 200));
     }
 
@@ -125,15 +102,8 @@ class ListsController extends FOSRestController
      */
     public function deleteWordAction($id, $wordId)
     {
-        $list = $this->listsManager->getList($id);
-        $word = $this->listsManager->getWord($wordId);
-
-        $this->checkObject(array($list, $word));
-        $this->checkUserCanAccessList($list);
-        $this->checkWordBelongsToList($word, $list);
-
+        $word = $this->getMyWord($id, $wordId);
         $this->listsManager->deleteWord($word);
-
         return $this->handleView($this->view(null, 204));
     }
 
@@ -142,15 +112,8 @@ class ListsController extends FOSRestController
      */
     public function toggleWordOrientationAction($id, $wordId)
     {
-        $list = $this->listsManager->getList($id);
-        $word = $this->listsManager->getWord($wordId);
-
-        $this->checkObject(array($list, $word));
-        $this->checkUserCanAccessList($list);
-        $this->checkWordBelongsToList($word, $list);
-
+        $word = $this->getMyWord($id, $wordId);
         $this->listsManager->toggleWordOrientation($word);
-
         return $this->handleView($this->view($word, 200));
     }
 
@@ -159,15 +122,8 @@ class ListsController extends FOSRestController
      */
     public function increaseWordCountAction($id, $wordId)
     {
-        $list = $this->listsManager->getList($id);
-        $word = $this->listsManager->getWord($wordId);
-
-        $this->checkObject(array($list, $word));
-        $this->checkUserCanAccessList($list);
-        $this->checkWordBelongsToList($word, $list);
-
+        $word = $this->getMyWord($id, $wordId);
         $this->listsManager->increaseWordCount($word);
-
         return $this->handleView($this->view($word, 200));
     }
 
@@ -176,60 +132,21 @@ class ListsController extends FOSRestController
      */
     public function decreaseWordCountAction($id, $wordId)
     {
-        $list = $this->listsManager->getList($id);
-        $word = $this->listsManager->getWord($wordId);
-
-        $this->checkObject(array($list, $word));
-        $this->checkUserCanAccessList($list);
-        $this->checkWordBelongsToList($word, $list);
-
+        $word = $this->getMyWord($id, $wordId);
         $this->listsManager->decreaseWordCount($word);
-
         return $this->handleView($this->view($word, 200));
     }
 
     /**
-     * Throw a not found exception if the $objects resolves to false.
-     * If $objects is an array then perform the same check for each item of the array.
-     * @param mixed|array $objects
+     * Get the WordsList given by $id.
+     * Throws an exception if the list does not exist or the current user
+     * is not the owner of the list.
+     *
+     * @param int $id
+     * @return null|WordsList
+     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
-    protected function checkObject($objects)
-    {
-        $objects = is_array($objects) ? $objects : array($objects);
-
-        foreach ($objects as $object) {
-            if (!$object) {
-                throw $this->createNotFoundException();
-            }
-        }
-    }
-
-    /**
-     * Throw an access denied exception if the $list does not belong to the logged-in user.
-     * @param WordsList $list
-     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
-     */
-    protected function checkUserCanAccessList(WordsList $list)
-    {
-        if ($list->getUser() !== $this->getUser()) {
-            throw $this->createAccessDeniedException();
-        }
-    }
-
-    /**
-     * Throw an access denied exception if the $word does not belong to the $list.
-     * @param Word $word
-     * @param WordsList $list
-     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
-     */
-    protected function checkWordBelongsToList(Word $word, WordsList $list)
-    {
-        if ($word->getList()->getId() !== $list->getId()) {
-            throw $this->createAccessDeniedException();
-        }
-    }
-
     protected function getMyList($id)
     {
         if (null === $list = $this->listsManager->getList($id)) {
@@ -243,6 +160,18 @@ class ListsController extends FOSRestController
         return $list;
     }
 
+    /**
+     * Get the Word given by $wordId then check it belongs to the WordsList given
+     * by $listId.
+     * Throws an exception if the word does not exist or the current user is not
+     * the owner of the list containing the word.
+     * @param int $listId
+     * @param int $wordId
+     * @return null|Word
+     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
+     * @throws \Symfony\Component\HttpKernel\Exception\BadRequestHttpException
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     */
     protected function getMyWord($listId, $wordId)
     {
         if (null === $word = $this->listsManager->getWord($wordId)) {
@@ -260,6 +189,13 @@ class ListsController extends FOSRestController
         return $word;
     }
 
+    /**
+     * Validate the given $data against the $formType form.
+     * @param $formType
+     * @param $data
+     * @param Request $request
+     * @return bool
+     */
     public function isValidData($formType, $data, Request $request)
     {
         $form = $this->formFactory->create($formType, $data, array('method' => $request->getMethod()));
