@@ -4,7 +4,7 @@ namespace SixtyNine\CloudApiBundle\Controller;
 
 use FOS\RestBundle\Controller\Annotations as FOS;
 use FOS\RestBundle\Controller\FOSRestController;
-use FOS\RestBundle\View\View;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use SixtyNine\CloudApiBundle\Form\Type\WordFormType;
 use SixtyNine\CloudBundle\Entity\Word;
 use SixtyNine\CloudBundle\Entity\WordsList;
@@ -31,18 +31,50 @@ class ListsController extends FOSRestController
         $this->formFactory = $this->get('form.factory');
     }
 
+    /**
+     * Get word lists of the current user.
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @ApiDoc(
+     *      section="Word lists",
+     *      statusCodes={
+     *          200="Successful",
+     *      }
+     * )
+     */
     public function cgetListsAction()
     {
         $data = $this->listsManager->getUserLists($this->getUser());
         return $this->handleView($this->view($data, 200));
     }
 
+    /**
+     * The the details of a single words list.
+     * @ApiDoc(
+     *      section="Word lists",
+     *      statusCodes={
+     *          200="Successful",
+     *          403="Not authorized",
+     *          404="Not found"
+     *     }
+     * )
+     */
     public function getListAction($id)
     {
         $list = $this->getMyList($id);
         return $this->handleView($this->view($list, 200));
     }
 
+    /**
+     * Delete a words list.
+     * @ApiDoc(
+     *      section="Word lists",
+     *      statusCodes={
+     *          200="Successful",
+     *          403="Not authorized",
+     *          404="Not found"
+     *     }
+     * )
+     */
     public function deleteListAction($id)
     {
         $list = $this->getMyList($id);
@@ -51,7 +83,16 @@ class ListsController extends FOSRestController
     }
 
     /**
+     * Get the words of a words list.
      * @FOS\Get("/lists/{id}/words")
+     * @ApiDoc(
+     *      section="Words",
+     *      statusCodes={
+     *          200="Successful",
+     *          403="Not authorized",
+     *          404="Not found"
+     *     }
+     * )
      */
     public function getWordsAction($id)
     {
@@ -60,11 +101,24 @@ class ListsController extends FOSRestController
     }
 
     /**
+     * Sort the words in a words list.
+     * @ApiDoc(
+     *      section="Word lists",
+     *      statusCodes={
+     *          200="Successful",
+     *          400="Bad request",
+     *          403="Not authorized",
+     *          404="Not found"
+     *      },
+     *      parameters={
+     *          {"name"="sortBy", "dataType"="string", "required"=true, "format"="(alpha|count|angle)", "requirement"="(alpha|count|angle)", "description"="Sort type"},
+     *          {"name"="order", "dataType"="string", "required"=true, "format"="(asc|desc)", "requirement"="(asc|desc)", "description"="Sort order"}
+     *      }
+     * )
      * @FOS\Post("/lists/{id}/words/sort")
      */
     public function sortWordsAction(Request $request, $id)
     {
-
         $list = $this->getMyList($id);
         $sortBy = $request->get('sortBy');
         $order = $request->get('order');
@@ -73,6 +127,16 @@ class ListsController extends FOSRestController
     }
 
     /**
+     * Get the details of a single word in a words list.
+     * @ApiDoc(
+     *      section="Words",
+     *      statusCodes={
+     *          200="Successful",
+     *          400="Bad request",
+     *          403="Not authorized",
+     *          404="Not found"
+     *      }
+     * )
      * @FOS\Get("/lists/{id}/words/{wordId}")
      */
     public function getWordAction($id, $wordId)
@@ -82,6 +146,16 @@ class ListsController extends FOSRestController
     }
 
     /**
+     * Update an existing word in a words list.
+     * @ApiDoc(
+     *      section="Words",
+     *      statusCodes={
+     *          200="Successful",
+     *          400="Bad request",
+     *          403="Not authorized",
+     *          404="Not found"
+     *      }
+     * )
      * @FOS\Put("/lists/{id}/words/{wordId}")
      */
     public function putWordAction(Request $request, $id, $wordId)
@@ -98,6 +172,16 @@ class ListsController extends FOSRestController
     }
 
     /**
+     * Delete a single word from a words list.
+     * @ApiDoc(
+     *      section="Words",
+     *      statusCodes={
+     *          200="Successful",
+     *          400="Bad request",
+     *          403="Not authorized",
+     *          404="Not found"
+     *      }
+     * )
      * @FOS\Delete("/lists/{id}/words/{wordId}")
      */
     public function deleteWordAction($id, $wordId)
@@ -108,6 +192,16 @@ class ListsController extends FOSRestController
     }
 
     /**
+     * Toggle the orientation of a single word in a words list.
+     * @ApiDoc(
+     *      section="Words",
+     *      statusCodes={
+     *          200="Successful",
+     *          400="Bad request",
+     *          403="Not authorized",
+     *          404="Not found"
+     *      }
+     * )
      * @FOS\Get("/lists/{id}/words/{wordId}/toggle-orientation")
      */
     public function toggleWordOrientationAction($id, $wordId)
@@ -118,6 +212,16 @@ class ListsController extends FOSRestController
     }
 
     /**
+     * Increase the occurrences of the word in the words list by 1.
+     * @ApiDoc(
+     *      section="Words",
+     *      statusCodes={
+     *          200="Successful",
+     *          400="Bad request",
+     *          403="Not authorized",
+     *          404="Not found"
+     *      }
+     * )
      * @FOS\Get("/lists/{id}/words/{wordId}/count/inc")
      */
     public function increaseWordCountAction($id, $wordId)
@@ -128,6 +232,16 @@ class ListsController extends FOSRestController
     }
 
     /**
+     * Decrease the occurrences of the word in the words list by 1.
+     * @ApiDoc(
+     *      section="Words",
+     *      statusCodes={
+     *          200="Successful",
+     *          400="Bad request",
+     *          403="Not authorized",
+     *          404="Not found"
+     *      }
+     * )
      * @FOS\Get("/lists/{id}/words/{wordId}/count/dec")
      */
     public function decreaseWordCountAction($id, $wordId)

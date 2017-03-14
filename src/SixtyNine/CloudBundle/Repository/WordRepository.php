@@ -2,6 +2,7 @@
 
 namespace SixtyNine\CloudBundle\Repository;
 use SixtyNine\CloudBundle\Entity\WordsList;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * WordRepository
@@ -33,6 +34,8 @@ class WordRepository extends \Doctrine\ORM\EntityRepository
             case 'angle' === $sortBy:
                 $qb->addOrderBy('w.orientation', $order);
                 break;
+            default:
+                throw new BadRequestHttpException('Invalid sort order');
         }
 
         return $qb->getQuery()->execute();
