@@ -137,23 +137,6 @@ class WordsController extends Controller
     }
 
     /**
-     * Delete a word list.
-     * @param WordsList $list
-     * @return RedirectResponse
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     */
-    public function deleteAction(WordsList $list)
-    {
-        if ($list->getUser() !== $this->getUser()) {
-            throw new NotFoundHttpException();
-        }
-
-        $this->listRepo->deleteWordsList($list);
-
-        return $this->redirectToRoute('sn_words_list');
-    }
-
-    /**
      * Add one or more word to a word list.
      * @param Request $request
      * @param WordsList $list
@@ -232,44 +215,6 @@ class WordsController extends Controller
         );
     }
 
-    public function increaseWordAction(WordsList $list, $wordId)
-    {
-        $word = $this->getRepository('SixtyNineCloudBundle:Word')->find($wordId);
-        $word->setCount($word->getCount() + 1);
-        $this->getDoctrine()->getEntityManager()->flush();
-        return $this->redirectToRoute('sn_words_view', array('id' => $word->getList()->getId()));
-    }
-
-    public function decreaseWordAction(WordsList $list, $wordId)
-    {
-        $word = $this->getRepository('SixtyNineCloudBundle:Word')->find($wordId);
-        if ($word->getCount() > 1) {
-            $word->setCount($word->getCount() - 1);
-        }
-        $this->getDoctrine()->getEntityManager()->flush();
-        return $this->redirectToRoute('sn_words_view', array('id' => $word->getList()->getId()));
-    }
-
-    /**
-     * Remove a word from a list.
-     * @param \SixtyNine\CloudBundle\Entity\WordsList $list
-     * @param $wordId
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     * @return RedirectResponse
-     */
-    public function removeWordAction(WordsList $list, $wordId)
-    {
-        $word = $this->getRepository('SixtyNineCloudBundle:Word')->find($wordId);
-
-        if ($this->getUser() !== $list->getUser()) {
-            throw new NotFoundHttpException();
-        }
-
-        $this->listRepo->removeWord($word);
-
-        return $this->redirectToRoute('sn_words_view', array('id' => $word->getList()->getId()));
-    }
-
     public function randomizeOrientationsAction(WordsList $list, $orientation)
     {
         $this
@@ -277,18 +222,6 @@ class WordsController extends Controller
             ->randomizeWordsOrientation($list, (int)$orientation)
         ;
         return $this->redirectToRoute('sn_words_view', array('id' => $list->getId()));
-    }
-
-    public function toggleOrientationAction(Word $word)
-    {
-        $word->setOrientation(
-            $word->getOrientation() === Text::DIR_VERTICAL
-                ? Text::DIR_HORIZONTAL
-                : Text::DIR_VERTICAL
-        );
-        $this->getDoctrine()->getEntityManager()->flush();
-
-        return $this->redirectToRoute('sn_words_view', array('id' => $word->getList()->getId()));
     }
 
     public function randomizeColorsAction(WordsList $list, $type, $paletteId)

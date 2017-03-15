@@ -25,11 +25,6 @@
         <requirement key="id">\d+</requirement>
     </route>
 
-    <route id="sn_words_remove" path="/{id}/delete" methods="GET">
-        <default key="_controller">SixtyNineCloudBundle:Words:delete</default>
-        <requirement key="id">\d+</requirement>
-    </route>
-
     <route id="sn_words_add_words" path="/{id}/words/add" methods="POST">
         <default key="_controller">SixtyNineCloudBundle:Words:addWords</default>
         <requirement key="id">\d+</requirement>
@@ -40,33 +35,10 @@
         <requirement key="id">\d+</requirement>
     </route>
 
-    <route id="sn_words_remove_word" path="/{id}/words/{wordId}/remove" methods="GET">
-        <default key="_controller">SixtyNineCloudBundle:Words:removeWord</default>
-        <requirement key="id">\d+</requirement>
-        <requirement key="wordId">\d+</requirement>
-    </route>
-
-    <route id="sn_words_increase_word" path="/{id}/words/{wordId}/increase" methods="GET">
-        <default key="_controller">SixtyNineCloudBundle:Words:increaseWord</default>
-        <requirement key="id">\d+</requirement>
-        <requirement key="wordId">\d+</requirement>
-    </route>
-
-    <route id="sn_words_decrease_word" path="/{id}/words/{wordId}/decrease" methods="GET">
-        <default key="_controller">SixtyNineCloudBundle:Words:decreaseWord</default>
-        <requirement key="id">\d+</requirement>
-        <requirement key="wordId">\d+</requirement>
-    </route>
-
     <route id="sn_words_random_orientation" path="/{id}/orientation/{orientation}" methods="GET">
         <default key="_controller">SixtyNineCloudBundle:Words:randomizeOrientations</default>
         <requirement key="id">\d+</requirement>
         <requirement key="orientation">\d+</requirement>
-    </route>
-
-    <route id="sn_words_toggle_orientation" path="/{id}/orientation/toggle" methods="GET">
-        <default key="_controller">SixtyNineCloudBundle:Words:toggleOrientation</default>
-        <requirement key="id">\d+</requirement>
     </route>
 
     <route id="sn_words_random_color" path="/{id}/colors/{paletteId}/{type}" methods="GET">
