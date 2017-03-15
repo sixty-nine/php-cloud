@@ -5,6 +5,7 @@ namespace SixtyNine\CloudApiBundle\Controller;
 use FOS\RestBundle\Controller\Annotations as FOS;
 use FOS\RestBundle\Controller\FOSRestController;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use SixtyNine\CloudApiBundle\Form\Type\ListFormType;
 use SixtyNine\CloudApiBundle\Form\Type\WordFormType;
 use SixtyNine\CloudBundle\Entity\Word;
 use SixtyNine\CloudBundle\Entity\WordsList;
@@ -62,6 +63,35 @@ class ListsController extends FOSRestController
     {
         $list = $this->getMyList($id);
         return $this->handleView($this->view($list, 200));
+    }
+
+    /**
+     * Update an existing words list.
+     * @ApiDoc(
+     *      section="Word lists",
+     *      statusCodes={
+     *          200="Successful",
+     *          400="Bad request",
+     *          403="Not authorized",
+     *          404="Not found"
+     *      },
+     *      parameters={
+     *          {"name"="name", "dataType"="string", "required"=true, "description"="The new list name"},
+     *      }
+     * )
+     * @FOS\Put("/lists/{id}")
+     */
+    public function putListAction(Request $request, $id)
+    {
+        $list = $this->getMyList($id);
+        $data = json_decode($request->getContent(), true);
+
+        if ($this->isValidData(new ListFormType(), $data, $request)) {
+            $this->listsManager->saveList($list, $data);
+            return $this->handleView($this->view($list, 200));
+        }
+
+        throw new BadRequestHttpException();
     }
 
     /**
@@ -154,6 +184,13 @@ class ListsController extends FOSRestController
      *          400="Bad request",
      *          403="Not authorized",
      *          404="Not found"
+     *      },
+     *      parameters={
+     *          {"name"="text", "dataType"="string", "required"=true, "description"="The word text"},
+     *          {"name"="count", "dataType"="integer", "required"=true, "description"="The word occurrences"},
+     *          {"name"="orientation", "dataType"="string", "required"=true, "format"="(horiz|vert)", "requirement"="(horiz|vert)", "description"="The word orientation"},
+     *          {"name"="color", "dataType"="string", "required"=true, "description"="The word color"},
+     *          {"name"="position", "dataType"="integer", "required"=true, "description"="The word position"},
      *      }
      * )
      * @FOS\Put("/lists/{id}/words/{wordId}")

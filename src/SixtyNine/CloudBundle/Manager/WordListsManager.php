@@ -71,6 +71,13 @@ class WordListsManager
         return $this->listRepo->findByUser($user);
     }
 
+    public function saveList(WordsList $list, $data)
+    {
+        $list->setName($data['name']);
+        $this->em->flush();
+        return $list;
+    }
+
     public function deleteList(WordsList $list)
     {
         $this->em->remove($list);
