@@ -29,7 +29,6 @@ class FiltersFormType extends AbstractType
             ))
             ->add('case', ChoiceType::class, array(
                 'label' => false,
-                'choices_as_values' => true,
                 'choices' => array(
                     'Lowercase' => ChangeCase::LOWERCASE,
                     'Uppercase' => ChangeCase::UPPERCASE,

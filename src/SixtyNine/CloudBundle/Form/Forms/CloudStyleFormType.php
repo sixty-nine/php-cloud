@@ -6,9 +6,7 @@ use SixtyNine\Cloud\Filters\ChangeCase;
 use SixtyNine\Cloud\TextListFilter\OrientationVisitor;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Date;
 use Symfony\Component\Validator\Constraints\GreaterThan;
@@ -40,82 +38,82 @@ class CloudStyleFormType extends AbstractType
         );
 
         $builder
-            ->add('palette', 'choice', array(
+            ->add('palette', ChoiceType::class, array(
                 'label' => 'Colors',
                 'choices' => array(
-                    'aqua' => 'Aqua',
-                    'yellow/blue' => 'Yellow/Blue',
-                    'grey' => 'Greyscale',
-                    'brown' => 'Brown',
-                    'army' => 'Army',
-                    'pastel' => 'Pastel',
-                    'red' => 'Red',
+                    'Aqua' => 'aqua',
+                    'Yellow/Blue' => 'yellow/blue',
+                    'Greyscale' => 'grey',
+                    'Brown' => 'brown',
+                    'Army' => 'army',
+                    'Pastel' => 'pastel',
+                    'Red' => 'red',
                 ),
             ))
-            ->add('font', 'choice', array(
+            ->add('font', ChoiceType::class, array(
                 'choices' => array(
-                    'Airmole_Antique.ttf' => 'Airmole Antique',
-                    'Airmole_Shaded.ttf' => 'Airmole Shaded',
-                    'Alexis_3D.ttf' => 'Alexis 3D',
-                    'Almonte_Snow.ttf' => 'Almonte Snow',
-                    'Arial.ttf' => 'Arial',
-                    'Paper_Cut.ttf' => 'Paper Cut',
-                    'TheThreeStoogesFont.ttf' => 'The Three Stooges',
-                    'Marcsc___.ttf' => 'Marcelle',
-                    'SoulMission.ttf' => 'SoulMission',
-                    'FAIL.ttf' => 'FAIL',
-                    'laundromat_1967.ttf' => 'Laundromat 1967',
-                    'KILLEDDJ.ttf' => 'Killed DJ',
+                    'Airmole Antique' => 'Airmole_Antique.ttf',
+                    'Airmole Shaded' => 'Airmole_Shaded.ttf',
+                    'Alexis 3D' => 'Alexis_3D.ttf',
+                    'Almonte Snow' => 'Almonte_Snow.ttf',
+                    'Arial' => 'Arial.ttf',
+                    'Paper Cut' => 'Paper_Cut.ttf',
+                    'The Three Stooges' => 'TheThreeStoogesFont.ttf',
+                    'Marcelle' => 'Marcsc___.ttf',
+                    'SoulMission' => 'SoulMission.ttf',
+                    'FAIL' => 'FAIL.ttf',
+                    'Laundromat 1967' => 'laundromat_1967.ttf',
+                    'Killed DJ' => 'KILLEDDJ.ttf',
                 ),
             ))
-            ->add('minSize', 'choice', array(
+            ->add('minSize', ChoiceType::class, array(
                 'choices' => $sizes,
                 'constraints' => array(
 //                    new LessThan(array('value' => $data['maxSize']))
                 ),
             ))
-            ->add('maxSize', 'choice', array(
+            ->add('maxSize', ChoiceType::class, array(
                 'choices' => $sizes,
                 'constraints' => array(
 //                    new GreaterThan(array('value' => $data['minSize']))
                 ),
             ))
-            ->add('orientation', 'choice', array(
+            ->add('orientation', ChoiceType::class, array(
                 'label' => 'Dir',
                 'choices' => array(
-                    OrientationVisitor::WORDS_HORIZONTAL => 'Horizontal',
-                    OrientationVisitor::WORDS_MAINLY_HORIZONTAL => 'Mainly horizontal',
-                    OrientationVisitor::WORDS_MIXED => 'Mixed',
-                    OrientationVisitor::WORDS_MAINLY_VERTICAL => 'Mainly vertical',
-                    OrientationVisitor::WORDS_VERTICAL => 'Vertical',
+                    'Horizontal' => OrientationVisitor::WORDS_HORIZONTAL,
+                    'Mainly horizontal' => OrientationVisitor::WORDS_MAINLY_HORIZONTAL,
+                    'Mixed' => OrientationVisitor::WORDS_MIXED,
+                    'Mainly vertical' => OrientationVisitor::WORDS_MAINLY_VERTICAL,
+                    'Vertical' => OrientationVisitor::WORDS_VERTICAL,
                 ),
             ))
-            ->add('usher', 'choice', array(
+            ->add('usher', ChoiceType::class, array(
                 'choices' => array(
-                    'horiz' => 'Horizontal',
-                    'vert' => 'Vertical',
-                    'circular' => 'Circular',
-                    'wordle' => 'Wordle',
+                    'Horizontal' => 'horiz',
+                    'Vertical' => 'vert',
+                    'Circular' => 'circular',
+                    'Wordle' => 'wordle',
                 ),
             ))
-            ->add('sortby', 'choice', array(
+            ->add('sortby', ChoiceType::class, array(
                 'choices' => array(
-                    'none' => 'Nothing',
-                    'angle-v' => 'Vertical first',
-                    'angle-h' => 'Horizontal first',
-                    'alpha' => 'Alphabetical',
-                    'count' => 'Size',
+                    'Nothing' => 'none',
+                    'Vertical first' => 'angle-v',
+                    'Horizontal first' => 'angle-h',
+                    'Alphabetical' => 'alpha',
+                    'Size' => 'count',
                 ),
             ))
-            ->add('frame', 'checkbox', array(
+            ->add('frame', CheckboxType::class, array(
                 'label' => 'Show frame',
                 'required' => false,
             ))
-            ->add('randomColor', 'checkbox', array(
+            ->add('randomColor', CheckboxType::class, array(
                 'label' => 'Random color',
                 'required' => false,
             ))
-            ->add('debugUsher', 'checkbox', array(
+            ->add('debugUsher', CheckboxType::class, array(
                 'label' => 'Debug usher',
                 'required' => false,
             ))

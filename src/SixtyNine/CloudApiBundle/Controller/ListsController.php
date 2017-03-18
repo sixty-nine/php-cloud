@@ -86,7 +86,7 @@ class ListsController extends FOSRestController
         $list = $this->getMyList($id);
         $data = json_decode($request->getContent(), true);
 
-        if ($this->isValidData(new ListFormType(), $data, $request)) {
+        if ($this->isValidData(ListFormType::class, $data, $request)) {
             $this->listsManager->saveList($list, $data);
             return $this->handleView($this->view($list, 200));
         }
