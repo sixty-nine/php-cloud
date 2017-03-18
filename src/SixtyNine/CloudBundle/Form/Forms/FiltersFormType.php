@@ -6,11 +6,8 @@ use SixtyNine\Cloud\Filters\ChangeCase;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Validator\Constraints\Date;
 use Symfony\Component\Validator\Constraints\GreaterThan;
 use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 
@@ -32,10 +29,11 @@ class FiltersFormType extends AbstractType
             ))
             ->add('case', ChoiceType::class, array(
                 'label' => false,
+                'choices_as_values' => true,
                 'choices' => array(
-                    ChangeCase::LOWERCASE => 'Lowercase',
-                    ChangeCase::UPPERCASE => 'Uppercase',
-                    ChangeCase::UCFIRST   => 'Uppercase first',
+                    'Lowercase' => ChangeCase::LOWERCASE,
+                    'Uppercase' => ChangeCase::UPPERCASE,
+                    'Uppercase first' => ChangeCase::UCFIRST,
                 ),
             ))
             ->add('removeNumbersEnabled', CheckboxType::class, array(

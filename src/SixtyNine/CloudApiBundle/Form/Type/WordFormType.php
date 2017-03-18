@@ -3,6 +3,9 @@
 namespace SixtyNine\CloudApiBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -12,15 +15,15 @@ class WordFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('id', 'integer', array('required' => true))
-            ->add('text', 'text', array('required' => true))
-            ->add('count', 'integer', array('required' => true))
-            ->add('orientation',  'choice', array(
+            ->add('id', IntegerType::class, array('required' => true))
+            ->add('text', TextType::class, array('required' => true))
+            ->add('count', IntegerType::class, array('required' => true))
+            ->add('orientation',  ChoiceType::class, array(
                 'choices'   => array('horiz' => 'horiz', 'vert' => 'vert'),
                 'required'  => true,
             ))
-            ->add('color', 'text', array('required' => true))
-            ->add('position', 'integer', array('required' => true))
+            ->add('color', TextType::class, array('required' => true))
+            ->add('position', IntegerType::class, array('required' => true))
         ;
     }
 

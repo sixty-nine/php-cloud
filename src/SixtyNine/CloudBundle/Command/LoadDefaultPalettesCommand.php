@@ -25,7 +25,9 @@ class LoadDefaultPalettesCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $repo = $this->getContainer()->get('doctrine.orm.entity_manager')->getRepository('SixtyNineCloudBundle:Palette');
-        $yaml = Yaml::parse(__DIR__ . '/../Resources/config/default-palettes.yml');
+        $yaml = Yaml::parse(
+            file_get_contents(__DIR__ . '/../Resources/config/default-palettes.yml')
+        );
         foreach ($yaml['palettes'] as $name => $colors) {
             $repo->importPalette($name, $colors);
         }
