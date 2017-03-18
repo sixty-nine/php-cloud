@@ -4,13 +4,6 @@ namespace SixtyNine\CoreBundle\Twig;
 
 class SixtyNineExtension extends \Twig_Extension
 {
-    protected $twig;
-
-    public function initRuntime(\Twig_Environment $environment)
-    {
-        $this->twig = $environment;
-    }
-
     public function getTokenParsers()
     {
         return array(
@@ -22,14 +15,13 @@ class SixtyNineExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            'icon' => new \Twig_Function_Method($this, 'iconFunction', array('is_safe' => array('html'))),
-            'button' => new \Twig_Function_Method($this, 'buttonFunction', array('is_safe' => array('html'))),
+            new \Twig_SimpleFunction('icon', array($this, 'iconFunction'), array('is_safe' => array('html'))),
+            new \Twig_SimpleFunction('button', array($this, 'buttonFunction'), array('is_safe' => array('html'))),
         );
     }
 
     public function iconFunction($name, $inverted = false)
     {
-//        if ($name == 'icon-indent-right') die(var_dump(func_get_args()));
         return sprintf('<i class="%s %s"></i>', $name, $inverted ? 'icon-white' : '');
     }
 

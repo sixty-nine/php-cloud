@@ -1,0 +1,15 @@
+SixtyNine\CloudBundle\Entity\WordsList:
+    list0:
+        name: 'List 0'
+        user: '@admin'
+
+    list{1..10}:
+        name: 'list <current()>'
+        user: '@user<current()>'
+
+SixtyNine\CloudBundle\Entity\Word:
+    word{1..10}:
+        user: '@admin'
+        list: '@list0'
+        text: 'Word <current()>'
+        count: <current()>
