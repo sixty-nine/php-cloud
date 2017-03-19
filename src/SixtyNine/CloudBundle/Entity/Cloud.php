@@ -34,6 +34,18 @@ class Cloud
     protected $name;
 
     /**
+     * @var string
+     * @ORM\Column(type="string")
+     */
+    protected $backgroundColor;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string")
+     */
+    protected $font;
+
+    /**
      * @var Account
      * @ORM\ManyToOne(targetEntity="Account")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
@@ -86,5 +98,40 @@ class Cloud
         return $this->user;
     }
 
+    /**
+     * @param string $backgroundColor
+     * @return $this
+     */
+    public function setBackgroundColor($backgroundColor)
+    {
+        $this->backgroundColor = $backgroundColor;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBackgroundColor()
+    {
+        return $this->backgroundColor;
+    }
+
+    /**
+     * @param string $font
+     * @return $this
+     */
+    public function setFont($font)
+    {
+        $this->font = $font;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFont()
+    {
+        return $this->font;
+    }
 }
 

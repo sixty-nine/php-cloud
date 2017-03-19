@@ -1,0 +1,27 @@
+{% extends 'SixtyNineCloudBundle::layout.html.twig' %}
+
+{% set curPage = 'cloud' %}
+{% set pageTitle = 'Create cloud' | trans  %}
+{% set pageHeader = 'Cloud' | trans  %}
+{% set pageSubHeader = 'Create' | trans  %}
+{% set breadcrumb = [
+    { title: 'Cloud' | trans }
+] %}
+
+
+{% block body %}
+<div class="row">
+    <div class="col-sm-4">
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <div class="pull-right">
+            <a href="#" class="btn btn-default">{{ 'Cancel' | trans }}</a>
+            <input type="submit" class="btn btn-primary" value="{{ 'Create' | trans }}" />
+        </div>
+        {{ form_end(form) }}
+    </div>
+</div>
+
+{% endblock %}
+
+

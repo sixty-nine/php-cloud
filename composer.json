@@ -31,14 +31,14 @@
         "symfony/monolog-bundle": "^3.0.2",
         "symfony/swiftmailer-bundle": "~2.3,>=2.3.10",
         "symfony/symfony": "3.1.*",
-        "twig/twig": "^1.0||^2.0"
+        "twig/twig": "^1.0||^2.0"§
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^2.3",
         "nelmio/alice": "^2.2",
         "sensio/generator-bundle": "~3.0",
         "symfony/phpunit-bridge": "~2.7",
-        "phpunit/phpunit": "^4.8 || ^6.0"y
+        "phpunit/phpunit": "^4.8 || ^6.0"
     },
     "scripts": {
         "symfony-scripts": [

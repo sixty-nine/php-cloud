@@ -19,6 +19,7 @@
             <directory>../src/*/*Bundle/Tests</directory>
             <directory>../src/*/Bundle/*Bundle/Tests</directory>
             <directory>../src/*Bundle/Tests</directory>
+            <directory>../src/SixtyNine/Cloud/Tests</directory>
         </testsuite>
     </testsuites>
 

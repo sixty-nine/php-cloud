@@ -12,6 +12,9 @@
 /composer.phar
 
 web/assets/vendor/
+web/app.js
+web/css/
+web/vendors.js
 
 src/SixtyNine/CloudBundle/Resources/fonts
 
