@@ -66,6 +66,32 @@ class ListsController extends FOSRestController
     }
 
     /**
+     * Create a new words list.
+     * @ApiDoc(
+     *      section="Word lists",
+     *      statusCodes={
+     *          200="Successful",
+     *          400="Bad request",
+     *      },
+     *      parameters={
+     *          {"name"="name", "dataType"="string", "required"=true, "description"="The new list name"},
+     *      }
+     * )
+     * @FOS\Post("/lists")
+     */
+    public function postListAction(Request $request)
+    {
+        $data = json_decode($request->getContent(), true);
+
+        if ($this->isValidData(ListFormType::class, $data, $request)) {
+            $list = $this->listsManager->createList($this->getUser(), $data['name']);
+            return $this->handleView($this->view($list, 200));
+        }
+
+        throw new BadRequestHttpException();
+    }
+
+    /**
      * Update an existing words list.
      * @ApiDoc(
      *      section="Word lists",
@@ -350,7 +376,7 @@ class ListsController extends FOSRestController
     public function isValidData($formType, $data, Request $request)
     {
         $form = $this->formFactory->create($formType, $data, array('method' => $request->getMethod()));
-        $form->submit($request->get($form->getName()));
+        $form->submit($data);
         return $form->isValid();
     }
 }

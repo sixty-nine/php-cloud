@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Client;
 
 class SixtyNineTest extends WebTestCase
 {
-    protected function requestWithContent(Client $client, $method, $route, $content)
+    protected function requestWithContent(Client $client, $method, $route, $content = null)
     {
         $client->request($method, $route, array(), array(), array(), json_encode($content));
     }
