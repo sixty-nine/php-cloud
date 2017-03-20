@@ -34,6 +34,18 @@ class Cloud
     protected $backgroundColor;
 
     /**
+     * @var int
+     * @ORM\Column(type="integer")
+     */
+    protected $width;
+
+    /**
+     * @var int
+     * @ORM\Column(type="integer")
+     */
+    protected $height;
+
+    /**
      * @var string
      * @ORM\Column(type="string")
      */
@@ -174,6 +186,42 @@ class Cloud
     public function getWords()
     {
         return $this->words;
+    }
+
+    /**
+     * @param int $height
+     * @return $this
+     */
+    public function setHeight($height)
+    {
+        $this->height = $height;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getHeight()
+    {
+        return $this->height;
+    }
+
+    /**
+     * @param int $width
+     * @return $this
+     */
+    public function setWidth($width)
+    {
+        $this->width = $width;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getWidth()
+    {
+        return $this->width;
     }
 }
 

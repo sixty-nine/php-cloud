@@ -8,6 +8,7 @@ use SixtyNine\CloudBundle\Manager\FontsManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class CloudController extends Controller
 {
@@ -56,12 +57,24 @@ class CloudController extends Controller
 
     public function renderAction(Cloud $cloud)
     {
-        $image = $this->cloudManager->buildCloud($cloud);
+        $this->cloudManager->generateCloudWords($cloud, 10, 100);
+
+        $this->getDoctrine()->getManager()->clear();
+        $cloud = $this->cloudManager->getCloud($cloud->getId());
+        $this->cloudManager->placeWords($cloud);
+
+        $this->getDoctrine()->getManager()->clear();
+        $cloud = $this->cloudManager->getCloud($cloud->getId());
+        $image = $this->cloudManager->render($cloud);
+
+//        return new Response($image->get('png'), 200, array(
+//            'Content-type' => 'image/png',
+//        ));
 
         return $this->render(
             'SixtyNineCloudBundle:Cloud:render.html.twig',
             array(
-                'image' => base64_encode($image->getRawPngContent()),
+                'image' => base64_encode($image->get('png')),
                 'cloud' => $cloud,
             )
         );

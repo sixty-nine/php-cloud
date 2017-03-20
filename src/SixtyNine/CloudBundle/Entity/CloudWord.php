@@ -35,10 +35,10 @@ class CloudWord
     protected $position;
 
     /**
-     * @var array
-     * @ORM\Column(type="array", nullable=true)
+     * @var bool
+     * @ORM\Column(name="is_visible", type="boolean")
      */
-    protected $boundingBox;
+    protected $isVisible;
 
     /**
      * @var Cloud
@@ -143,21 +143,21 @@ class CloudWord
     }
 
     /**
-     * @param array $boundingBox
+     * @param boolean $isVisible
      * @return $this
      */
-    public function setBoundingBox($boundingBox)
+    public function setIsVisible($isVisible)
     {
-        $this->boundingBox = $boundingBox;
+        $this->isVisible = $isVisible;
         return $this;
     }
 
     /**
-     * @return array
+     * @return boolean
      */
-    public function getBoundingBox()
+    public function getIsVisible()
     {
-        return $this->boundingBox;
+        return $this->isVisible;
     }
 }
 

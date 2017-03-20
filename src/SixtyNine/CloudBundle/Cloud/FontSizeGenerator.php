@@ -1,15 +1,11 @@
 <?php
 
-namespace SixtyNine\Cloud\Font;
-
-use SixtyNine\Cloud\Model\Word;
-use SixtyNine\Cloud\Storage\Recordable;
-use SixtyNine\Cloud\Storage\RecordableInterface;
+namespace SixtyNine\CloudBundle\Cloud;
 
 /**
  * Contributed by @jaskra and @mrahmadt
  */
-class DefaultFontSizeGenerator implements FontSizeGeneratorInterface
+class FontSizeGenerator
 {
     /** @var int */
     protected $minFontSize;
@@ -30,14 +26,19 @@ class DefaultFontSizeGenerator implements FontSizeGeneratorInterface
         $this->maxFontSize = $maxFontSize;
     }
 
-    /** {@inheritdoc} */
-    public function calculateFontSize(Word $word)
+    public function reset()
     {
-        if ($word->getCount() > $this->maxCount) {
-            $this->maxCount = $word->getCount();
+        $this->minCount = PHP_INT_MAX;
+        $this->maxCount = 0;
+    }
+
+    public function calculateFontSize($count)
+    {
+        if ($count > $this->maxCount) {
+            $this->maxCount = $count;
         }
-        if ($word->getCount() < $this->minCount) {
-            $this->minCount = $word->getCount();
+        if ($count < $this->minCount) {
+            $this->minCount = $count;
         }
         $diffCount = ($this->maxCount - $this->minCount) != 0
             ? ($this->maxCount - $this->minCount)
@@ -50,7 +51,7 @@ class DefaultFontSizeGenerator implements FontSizeGeneratorInterface
         $slope = $diffSize / $diffCount;
         $yIntercept = $this->maxFontSize - ($slope * $this->maxCount);
 
-        $font_size = (integer)($slope * $word->getCount() + $yIntercept);
+        $font_size = (integer)($slope * $count + $yIntercept);
 
         if ($font_size < $this->minFontSize) {
             $font_size = $this->minFontSize;
@@ -59,23 +60,5 @@ class DefaultFontSizeGenerator implements FontSizeGeneratorInterface
         }
         
         return $font_size;
-    }
-
-    /**
-     * @return array
-     */
-    function getParamsArray()
-    {
-        return array('minSize' => $this->minFontSize, 'maxSize' => $this->maxFontSize);
-    }
-
-    /**
-     * @param array $params
-     * @return mixed
-     */
-    static function fromParamsArray(array $params)
-    {
-        Recordable::requireArrayKeysExist(array('minSize', 'maxSize'), $params);
-        return new DefaultFontSizeGenerator($params['minSize'], $params['maxSize']);
     }
 }
