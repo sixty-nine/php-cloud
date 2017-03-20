@@ -2,6 +2,7 @@
 
 namespace SixtyNine\CloudBundle\Controller;
 
+use Imagine\Image\Box;
 use SixtyNine\CloudBundle\Entity\Cloud;
 use SixtyNine\CloudBundle\Manager\CloudManager;
 use SixtyNine\CloudBundle\Manager\FontsManager;
@@ -27,7 +28,7 @@ class CloudController extends Controller
         $this->fontsManager = $this->get('sn_cloud.fonts_manager');
     }
 
-    public function indexAction(Request $request)
+    public function createAction(Request $request)
     {
         $form = $this->createForm(
             'SixtyNine\CloudBundle\Form\Forms\CreateCloudFormType',
@@ -44,7 +45,7 @@ class CloudController extends Controller
 
             $cloud = $this->cloudManager->createCloud($this->getUser(), $list, $font, $color);
 
-            return $this->redirectToRoute('sn_cloud_render', array('id' => $cloud->getId()));
+            return $this->redirectToRoute('sn_cloud_generate', array('id' => $cloud->getId()));
         }
 
         return $this->render(
@@ -55,28 +56,51 @@ class CloudController extends Controller
         );
     }
 
-    public function renderAction(Cloud $cloud)
+    public function generateAction(Cloud $cloud)
     {
-        $this->cloudManager->generateCloudWords($cloud, 10, 100);
-
-        $this->getDoctrine()->getManager()->clear();
-        $cloud = $this->cloudManager->getCloud($cloud->getId());
+        $this->cloudManager->generateCloudWords($cloud, 20, 60);
         $this->cloudManager->placeWords($cloud);
 
-        $this->getDoctrine()->getManager()->clear();
-        $cloud = $this->cloudManager->getCloud($cloud->getId());
-        $image = $this->cloudManager->render($cloud);
+        return $this->redirectToRoute('sn_cloud_view', array('id' => $cloud->getId()));
+    }
 
-//        return new Response($image->get('png'), 200, array(
-//            'Content-type' => 'image/png',
-//        ));
+    public function listAction()
+    {
+        $clouds = $this->cloudManager->getClouds($this->getUser());
 
         return $this->render(
-            'SixtyNineCloudBundle:Cloud:render.html.twig',
+            'SixtyNineCloudBundle:Cloud:list.html.twig',
             array(
-                'image' => base64_encode($image->get('png')),
+                'clouds' => $clouds,
+            )
+        );
+    }
+
+    public function viewAction(Cloud $cloud)
+    {
+        $cloud = $this->cloudManager->getCloud($cloud->getId());
+
+        return $this->render(
+            'SixtyNineCloudBundle:Cloud:view.html.twig',
+            array(
+                'image' => $this->generateUrl('sn_cloud_render', array('id' => $cloud->getId())),
                 'cloud' => $cloud,
             )
         );
+    }
+
+    public function renderAction(Request $request, Cloud $cloud)
+    {
+        $image = $this->cloudManager->render($cloud);
+
+        $width = $request->get('width');
+        $height = $request->get('height');
+
+        if ($width && $height) {
+            $image->resize(new Box($width, $height));
+        }
+        return new Response($image->get('png'), 200, array(
+            'Content-type' => 'image/png',
+        ));
     }
 }

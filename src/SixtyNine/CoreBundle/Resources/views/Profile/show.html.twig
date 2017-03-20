@@ -1,0 +1,31 @@
+{% extends 'SixtyNineCloudBundle::layout.html.twig' %}
+
+{% set curPage = 'profile' %}
+{% set pageTitle = 'My profile' | trans %}
+{% set pageHeader = 'My Profile' | trans %}
+{% set breadcrumb = [
+    { title: 'Home' | trans , url: path('sn_words_home') },
+    { title: 'My profile' | trans }
+] %}
+
+{% block buttons %}
+    <a href="{{ path('fos_user_security_logout') }}" class="btn btn-default">
+        {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+    </a>
+{% endblock %}
+
+{% block body %}
+    <div class="user-profile">
+        <div class="row">
+            <div class="span2">{{ 'profile.show.username'|trans({}, 'FOSUserBundle') }}</div>
+            <div class="span4">
+                {{ user.username }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="span2">{{ 'profile.show.email'|trans({}, 'FOSUserBundle') }}</div>
+            <div class="span4">{{ user.email }}</div>
+        </div>
+    </div>
+{% endblock %}
+

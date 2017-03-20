@@ -24,15 +24,39 @@ class CloudWord
     /**
      * @var int
      *
-     * @ORM\Column(name="size", type="integer", nullable=true)
+     * @ORM\Column(name="size", type="integer")
      */
     protected $size;
 
     /**
+     * @var int
+     * @ORM\Column(type="integer")
+     */
+    protected $angle;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string")
+     */
+    protected $color;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string")
+     */
+    protected $text;
+
+    /**
      * @var array
-     * @ORM\Column(type="array", nullable=true)
+     * @ORM\Column(type="array")
      */
     protected $position;
+
+    /**
+     * @var array
+     * @ORM\Column(type="array")
+     */
+    protected $box;
 
     /**
      * @var bool
@@ -46,13 +70,6 @@ class CloudWord
      * @ORM\JoinColumn(name="cloud_id", referencedColumnName="id", nullable=false)
      */
     protected $cloud;
-
-    /**
-     * @var Word
-     * @ORM\ManyToOne(targetEntity="Word")
-     * @ORM\JoinColumn(name="word_id", referencedColumnName="id", nullable=false)
-     */
-    protected $word;
 
     /**
      * Get id
@@ -107,24 +124,6 @@ class CloudWord
     }
 
     /**
-     * @param \SixtyNine\CloudBundle\Entity\Word $word
-     * @return $this
-     */
-    public function setWord($word)
-    {
-        $this->word = $word;
-        return $this;
-    }
-
-    /**
-     * @return \SixtyNine\CloudBundle\Entity\Word
-     */
-    public function getWord()
-    {
-        return $this->word;
-    }
-
-    /**
      * @param array $position
      * @return $this
      */
@@ -158,6 +157,78 @@ class CloudWord
     public function getIsVisible()
     {
         return $this->isVisible;
+    }
+
+    /**
+     * @param int $angle
+     * @return $this
+     */
+    public function setAngle($angle)
+    {
+        $this->angle = $angle;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getAngle()
+    {
+        return $this->angle;
+    }
+
+    /**
+     * @param string $color
+     * @return $this
+     */
+    public function setColor($color)
+    {
+        $this->color = $color;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getColor()
+    {
+        return $this->color;
+    }
+
+    /**
+     * @param string $text
+     * @return $this
+     */
+    public function setText($text)
+    {
+        $this->text = $text;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getText()
+    {
+        return $this->text;
+    }
+
+    /**
+     * @param array $box
+     * @return $this
+     */
+    public function setBox($box)
+    {
+        $this->box = $box;
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getBox()
+    {
+        return $this->box;
     }
 }
 

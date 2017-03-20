@@ -9,6 +9,12 @@
     { title: 'Words Lists' | trans }
 ] %}
 
+{% block buttons %}
+    <a href="{{ path('sn_words_new') }}" class="btn btn-default">
+        {{ 'Create a new list' | trans }}
+    </a>
+{% endblock %}
+
 {% block body %}
 
     <table class="table table-striped table-condensed words-list">

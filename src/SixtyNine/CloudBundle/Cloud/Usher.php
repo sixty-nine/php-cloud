@@ -34,9 +34,8 @@ class Usher
         $this->placer = $placer;
     }
 
-    public function getPlace($text, FontInterface $font, $angle = 0)
+    public function getPlace($text, BoxInterface $box)
     {
-        $box = $font->box($text, $angle);
         $bounds = new Box($this->imgWidth, $this->imgHeight);
         $firstPlace = new Point($this->imgWidth / 2, $this->imgHeight / 2);
 
@@ -44,10 +43,7 @@ class Usher
 
         if ($place) {
             $this->mask->add($place, $box);
-            return array(
-                'pos' => $place,
-                'box' => $box,
-            );
+            return $place;
         }
 
         return false;

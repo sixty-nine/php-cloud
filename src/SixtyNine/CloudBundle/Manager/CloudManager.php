@@ -11,6 +11,7 @@ use Imagine\Image\Point;
 use SixtyNine\CloudBundle\Cloud\CircularPlacer;
 use SixtyNine\CloudBundle\Cloud\FontSizeGenerator;
 use SixtyNine\CloudBundle\Cloud\Usher;
+use SixtyNine\CloudBundle\Cloud\WordlePlacer;
 use SixtyNine\CloudBundle\Entity\Account;
 use SixtyNine\CloudBundle\Entity\Cloud;
 use SixtyNine\CloudBundle\Entity\CloudWord;
@@ -37,6 +38,11 @@ class CloudManager
         $this->cloudRepo = $em->getRepository('SixtyNineCloudBundle:Cloud');
     }
 
+    public function getClouds(Account $user)
+    {
+        return $this->cloudRepo->findByUser($user);
+    }
+
     /**
      * Find a cloud by id.
      * @param int $id
@@ -53,15 +59,19 @@ class CloudManager
      * @param WordsList $list
      * @param string $font
      * @param string $color
+     * @param int $width
+     * @param int $height
      * @return Cloud
      */
-    public function createCloud(Account $user, WordsList $list, $font, $color)
+    public function createCloud(Account $user, WordsList $list, $font, $color, $width = 800, $height = 600)
     {
         $cloud = new Cloud();
         $cloud
             ->setUser($user)
             ->setList($list)
             ->setFont($font)
+            ->setWidth($width)
+            ->setHeight($height)
             ->setBackgroundColor($color)
         ;
 
@@ -139,10 +149,13 @@ class CloudManager
             $cloudWord
                 ->setCloud($cloud)
                 ->setPosition(array(0, 0))
-                ->setWord($word)
                 ->setSize($sizeGenerator->calculateFontSize($word->getCount()))
+                ->setAngle($word->getOrientation() === 'vert' ? 90 : 0)
+                ->setColor($word->getColor())
+                ->setText($word->getText())
                 ->setIsVisible(true)
             ;
+            $cloud->addWord($cloudWord);
             $this->em->persist($cloudWord);
         }
 
@@ -159,16 +172,19 @@ class CloudManager
             $font = new Font(
                 __DIR__ . '/../Resources/fonts/' . $cloud->getFont(),
                 $word->getSize(),
-                new Color($word->getWord()->getColor())
+                new Color($word->getColor())
             );
-            $angle = $word->getWord()->getOrientation() === 'vert' ? 90 : 0;
 
-            $place = $usher->getPlace($word->getWord()->getText(), $font, $angle);
+            $box = $font->box($word->getText(), $word->getAngle());
+            $place = $usher->getPlace($word->getText(), $box);
 
-            $word->setIsVisible((bool)$place);
+            $word
+                ->setIsVisible((bool)$place)
+                ->setBox(array($box->getWidth(), $box->getHeight()))
+            ;
 
             if ($place) {
-                $word->setPosition(array($place['pos']->getX(), $place['pos']->getY()));
+                $word->setPosition(array((int)$place->getX(), (int)$place->getY()));
             }
         }
 
@@ -178,7 +194,7 @@ class CloudManager
     public function render(Cloud $cloud)
     {
         $imagine = new Imagine();
-        $size  = new Box(800, 600);
+        $size  = new Box($cloud->getWidth(), $cloud->getHeight());
         $image = $imagine->create(
             $size,
             new Color($cloud->getBackgroundColor())
@@ -194,15 +210,15 @@ class CloudManager
             $font = new Font(
                 __DIR__ . '/../Resources/fonts/' . $cloud->getFont(),
                 $word->getSize(),
-                new Color($word->getWord()->getColor())
+                new Color($word->getColor())
             );
 
-            $angle = $word->getWord()->getOrientation() === 'horiz' ? 0 : 90;
+            $angle = $word->getAngle();
             $pos = $word->getPosition();
-            $box = $font->box($word->getWord()->getText(), $angle);
+            $box =$word->getBox();
 
             $image->draw()->text(
-                $word->getWord()->getText(),
+                $word->getText(),
                 $font,
                 new Point($pos[0], $pos[1]),
                 $angle
@@ -210,9 +226,9 @@ class CloudManager
 
             $image->draw()->polygon(array(
                 new Point($pos[0], $pos[1]),
-                new Point($pos[0] + $box->getWidth(), $pos[1]),
-                new Point($pos[0] + $box->getWidth(), $pos[1] + $box->getHeight()),
-                new Point($pos[0], $pos[1] + $box->getHeight()),
+                new Point($pos[0] + $box[0], $pos[1]),
+                new Point($pos[0] + $box[0], $pos[1] + $box[1]),
+                new Point($pos[0], $pos[1] + $box[1]),
             ), new Color(0xFF0000));
         }
 

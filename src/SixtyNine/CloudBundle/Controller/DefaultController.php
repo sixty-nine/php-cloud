@@ -39,7 +39,7 @@ class DefaultController extends Controller
         $image = $builder->createImage($words, new Config(), $data);
 
         return $this->render(
-            'SixtyNineCloudBundle:Default:bla.html.twig',
+            'SixtyNineCloudBundle:Default:index.html.twig',
             array(
                 'image' => base64_encode($image->getRawPngContent()),
                 'form' => $styleForm->createView(),

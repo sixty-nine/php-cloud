@@ -22,7 +22,7 @@ class CircularPlacer implements PlacerInterface
         $a = 0;
         $b = 1;
         $i = $this->increment;
-        $this->increment += 0.1;
+        $this->increment += 0.01;
         $r = $a + $b * $i;
 
         $x = $current->getX() + cos($i) * $r;

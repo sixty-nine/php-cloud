@@ -5,9 +5,24 @@
     xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
     <route id="sn_cloud_index" path="/" methods="GET|POST">
-        <default key="_controller">SixtyNineCloudBundle:Cloud:index</default>
+        <default key="_controller">SixtyNineCloudBundle:Cloud:list</default>
     </route>
-    <route id="sn_cloud_render" path="/render/{id}" methods="GET|POST">
+
+    <route id="sn_cloud_create" path="/create" methods="GET|POST">
+        <default key="_controller">SixtyNineCloudBundle:Cloud:create</default>
+    </route>
+
+    <route id="sn_cloud_generate" path="/{id}/generate" methods="GET">
+        <default key="_controller">SixtyNineCloudBundle:Cloud:generate</default>
+        <requirement key="id">\d+</requirement>
+    </route>
+
+    <route id="sn_cloud_view" path="/{id}" methods="GET">
+        <default key="_controller">SixtyNineCloudBundle:Cloud:view</default>
+        <requirement key="id">\d+</requirement>
+    </route>
+
+    <route id="sn_cloud_render" path="/{id}/render" methods="GET|POST">
         <default key="_controller">SixtyNineCloudBundle:Cloud:render</default>
         <requirement key="id">\d+</requirement>
     </route>
