@@ -70,6 +70,8 @@ class Renderer
      * Draw the search path of the given $usher to the $image.
      * @param Image $image
      * @param UsherInterface $usher
+     * @param \SixtyNine\Cloud\Color\Color $color
+     * @param int $maxIterations
      */
     public function drawUsher(Image $image, UsherInterface $usher, Color $color, $maxIterations = 100)
     {

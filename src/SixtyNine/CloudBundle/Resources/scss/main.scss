@@ -56,9 +56,14 @@ section.list-words {
       color: #505050;
       font-size: medium;
       font-weight: bold;
+
+      span.minus, span.plus {
+        cursor: pointer;
+      }
     }
 
-    span.text {
+    span.orientation {
+      cursor: pointer;
     }
 
     span.remove {
@@ -66,6 +71,7 @@ section.list-words {
       top: 10px;
       right: 10px;
       font-size: x-small;
+      cursor: pointer;
     }
 
     span.color {
@@ -76,6 +82,7 @@ section.list-words {
       height: 5px;
       @include rounded-top-left();
       @include rounded-top-right();
+      cursor: pointer;
     }
   }
 }

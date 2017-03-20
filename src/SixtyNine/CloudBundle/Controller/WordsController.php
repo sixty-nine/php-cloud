@@ -21,9 +21,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class WordsController extends Controller
 {
-    /**
-     * @var WordsListRepository
-     */
+    /** @var WordsListRepository */
     protected $listRepo;
 
     public function setContainer(ContainerInterface $container = null)

@@ -1,0 +1,32 @@
+{% extends 'SixtyNineCloudBundle::layout.html.twig' %}
+
+{% set curPage = 'cloud' %}
+{% set pageTitle = 'Render cloud' | trans  %}
+{% set pageHeader = 'Cloud' | trans  %}
+{% set pageSubHeader = 'Render' | trans  %}
+{% set breadcrumb = [
+    { title: 'Cloud' | trans }
+] %}
+
+{% block body %}
+<div class="row">
+    <div class="col-sm-12">
+        <div id="cloud">
+            <img src="data:image/png;base64,{{ image }}"/>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+
+{% block javascripts %}
+
+    <script type="text/javascript">
+
+        $(function () {
+        });
+
+    </script>
+
+{% endblock %}

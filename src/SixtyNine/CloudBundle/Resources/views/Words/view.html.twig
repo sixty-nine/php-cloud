@@ -172,16 +172,6 @@
 
     {%- include 'SixtyNineCloudBundle:Components:js-startup.html.twig' -%}
 
-    <script type="text/template" id="sn-cloud-words-item-template">
-        <span class="color" style="background-color: <%= color %>;"></span>
-        <span class="orientation">
-            <i class="glyphicon glyphicon-option-<%= orientation === 'horiz' ? 'horizontal' : 'vertical' %>"></i>
-        </span>
-        <span class="text"><%= text %></span>
-        <span class="count"><%= count %></span>
-        <span class="remove glyphicon glyphicon-remove"></span>
-    </script>
-
     <script type="text/javascript">
 
         SnCloud.showSpinner();
@@ -206,3 +196,19 @@
     </script>
 
 {% endblock %}
+
+    {% block templates %}
+        <script type="text/template" id="sn-cloud-words-item-template">
+            <span class="color" style="background-color: <%= color %>;"></span>
+            <span class="orientation">
+            <i class="glyphicon glyphicon-option-<%= orientation === 'horiz' ? 'horizontal' : 'vertical' %>"></i>
+        </span>
+            <span class="text"><%= text %></span>
+            <span class="count">
+                <span class="minus">-</span>
+                <%= count %>
+                <span class="plus">+</span>
+            </span>
+            <span class="remove glyphicon glyphicon-remove"></span>
+        </script>
+    {% endblock %}

@@ -56,12 +56,16 @@ void function (config) {
         template: '#sn-cloud-words-item-template',
 
         ui: {
-            orientationToggle: 'span.orientation'
+            orientationToggle: 'span.orientation',
+            countMinus: 'span.count span.minus',
+            countPlus: 'span.count span.plus'
         },
 
         events: {
             'click @ui.orientationToggle': 'toggleOrientation',
-            'click span.remove': 'removeWord'
+            'click span.remove': 'removeWord',
+            'click @ui.countPlus': 'incCount',
+            'click @ui.countMinus': 'decCount'
         },
 
         initialize: function () {
@@ -90,7 +94,37 @@ void function (config) {
                 SnCloud.hideSpinner();
                 self.model.set('orientation', data.orientation);
             });
+        },
+
+        incCount: function (e) {
+            var id = $(e.currentTarget).parent().parent().attr('data-id');
+            var url = Routing.generate(
+                'cloud_api_increase_word_count',
+                {id: this.model.collection.listId, wordId: this.model.get('id')}
+            );
+
+            this.changeCount(url);
+        },
+
+        decCount: function (e) {
+            var id = $(e.currentTarget).parent().parent().attr('data-id');
+            var url = Routing.generate(
+                'cloud_api_decrease_word_count',
+                {id: this.model.collection.listId, wordId: this.model.get('id')}
+            );
+
+            this.changeCount(url);
+        },
+
+        changeCount: function (url) {
+            var self = this;
+            SnCloud.showSpinner();
+            $.get(url).then(function( data ) {
+                SnCloud.hideSpinner();
+                self.model.set('count', data.count);
+            });
         }
+
     });
 
     SnCloud.Views.WordsView = Mn.CollectionView.extend({

@@ -1,23 +1,13 @@
-<!DOCTYPE html>
-<!--[if IE 8]>
-<html lang="en" class="ie8 no-js"><![endif]-->
-<!--[if IE 9]>
-<html lang="en" class="ie9 no-js"> <![endif]-->
-<!--[if !IE]><!-->
-<html lang="en">
-<!--<![endif]-->
+{% extends 'SixtyNineCoreBundle::layout.html.twig' %}
 
-<head>
-    <meta charset="utf-8"/>
-    <title>
-        PHP Cloud{% if pageTitle is defined and pageTitle != '' %} | {% endif %}{{ pageTitle | default('') }}
-    </title>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+{% set appTitle = 'PHP Cloud' | trans  %}
+{% set fosRouting = true  %}
 
+{% block css %}
     {% stylesheets
         'assets/vendor/bootstrap/dist/css/bootstrap.min.css'
         'assets/vendor/datatables/media/css/jquery.dataTables.css'
+        'assets/vendor/huebee/dist/huebee.css'
     filter='cssrewrite' %}
     <link rel="stylesheet" href="{{ asset_url }}" type="text/css"/>
     {% endstylesheets %}
@@ -26,22 +16,12 @@
         '@SixtyNineCloudBundle/Resources/scss/main.scss' %}
     <link rel="stylesheet" href="{{ asset_url }}"/>
     {% endstylesheets %}
+{% endblock %}
 
-    {% block stylesheets %}{% endblock %}
-
-    <link rel="shortcut icon" href="favicon.ico"/>
-
-    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
-    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
-
-</head>
-
-<body>
-
+{% block content %}
 {%- include 'SixtyNineCloudBundle:Components:navbar.html.twig' -%}
 
 <div class="container">
-
 
     {%- include 'SixtyNineCloudBundle:Components:breadcrumb.html.twig' -%}
 
@@ -62,7 +42,9 @@
     {% block body %}{% endblock %}
 
 </div>
+{% endblock %}
 
+{% block js %}
     {% javascripts output='vendors.js'
         'assets/vendor/jquery/dist/jquery.min.js'
         'assets/vendor/jquery-ui/jquery-ui.js'
@@ -72,11 +54,10 @@
         'assets/vendor/backbone/backbone-min.js'
         'assets/vendor/backbone.radio/build/backbone.radio.js'
         'assets/vendor/backbone.marionette/lib/backbone.marionette.js'
+        'assets/vendor/huebee/dist/huebee.pkgd.js'
     %}
     <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
 
     {% block javascripts %}{% endblock %}
-
-</body>
-</html>
+{% endblock %}

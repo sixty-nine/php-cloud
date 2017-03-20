@@ -5,11 +5,19 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
+
         <service id="sn_cloud.cloud_builder" class="SixtyNine\CloudBundle\Builder\CloudBuilder" />
 
         <service id="sn_cloud.word_lists_manager" class="SixtyNine\CloudBundle\Manager\WordListsManager">
             <argument type="service" id="doctrine.orm.entity_manager"/>
         </service>
+
+        <service id="sn_cloud.cloud_manager" class="SixtyNine\CloudBundle\Manager\CloudManager">
+            <argument type="service" id="doctrine.orm.entity_manager"/>
+        </service>
+
+        <service id="sn_cloud.fonts_manager" class="SixtyNine\CloudBundle\Manager\FontsManager"/>
+
     </services>
 
 </container>

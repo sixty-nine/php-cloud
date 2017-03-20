@@ -226,7 +226,7 @@ class ListsController extends FOSRestController
         $word = $this->getMyWord($id, $wordId);
         $data = json_decode($request->getContent(), true);
 
-        if ($this->isValidData(new WordFormType(), $data, $request)) {
+        if ($this->isValidData(WordFormType::class, $data, $request)) {
             $this->listsManager->saveWord($word, $data);
             return $this->handleView($this->view($word, 200));
         }

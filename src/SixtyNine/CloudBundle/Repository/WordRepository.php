@@ -12,7 +12,7 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
  */
 class WordRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function getWordsOrdered(WordsList $list, $sortBy, $order = 'ASC')
+    public function getWordsOrdered(WordsList $list, $sortBy = null, $order = 'ASC')
     {
         if (!in_array(strtoupper($order), array('ASC', 'DESC'))) {
             $order = 'ASC';
@@ -35,7 +35,7 @@ class WordRepository extends \Doctrine\ORM\EntityRepository
                 $qb->addOrderBy('w.orientation', $order);
                 break;
             default:
-                throw new BadRequestHttpException('Invalid sort order');
+                $qb->addOrderBy('w.position', $order);
         }
 
         return $qb->getQuery()->execute();

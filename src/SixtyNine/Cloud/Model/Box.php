@@ -136,6 +136,14 @@ class Box
         $this->position = $this->position->move($x, $y);
     }
 
+    public function toArray()
+    {
+        return array(
+            $this->position->x, $this->position->y,
+            $this->size->x, $this->size->y
+        );
+    }
+
     /**
      * Detect box collision
      * This algorithm only works with Axis-Aligned boxes!

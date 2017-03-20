@@ -8,10 +8,11 @@
     { title: 'Cloud' | trans }
 ] %}
 
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
 
 {% block body %}
 <div class="row">
-    <div class="col-sm-4">
+    <div class="col-sm-12">
         {{ form_start(form) }}
         {{ form_widget(form) }}
         <div class="pull-right">
@@ -25,3 +26,18 @@
 {% endblock %}
 
 
+{% block javascripts %}
+
+    <script type="text/javascript">
+
+        $(function () {
+            new Huebee('#create_cloud_form_color', {
+                setBGColor: true,
+                saturations: 2,
+                notation: 'hex'
+            });
+        });
+
+    </script>
+
+{% endblock %}

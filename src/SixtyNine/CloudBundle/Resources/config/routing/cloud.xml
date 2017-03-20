@@ -7,5 +7,9 @@
     <route id="sn_cloud_index" path="/" methods="GET|POST">
         <default key="_controller">SixtyNineCloudBundle:Cloud:index</default>
     </route>
+    <route id="sn_cloud_render" path="/render/{id}" methods="GET|POST">
+        <default key="_controller">SixtyNineCloudBundle:Cloud:render</default>
+        <requirement key="id">\d+</requirement>
+    </route>
 
 </routes>

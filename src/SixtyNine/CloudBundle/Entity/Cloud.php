@@ -25,13 +25,7 @@ class Cloud
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
-
-    /**
-     * @var string
-     * @ORM\Column(type="string")
-     */
-    protected $name;
+    protected $id;
 
     /**
      * @var string
@@ -53,6 +47,24 @@ class Cloud
     protected $user;
 
     /**
+     * @var WordsList
+     * @ORM\ManyToOne(targetEntity="WordsList")
+     * @ORM\JoinColumn(name="list_id", referencedColumnName="id", nullable=false)
+     */
+    protected $list;
+
+    /**
+     * @var ArrayCollection
+     * @ORM\OneToMany(targetEntity="CloudWord", mappedBy="cloud")
+     */
+    protected $words;
+
+    function __construct()
+    {
+        $this->words = new ArrayCollection();
+    }
+
+    /**
      * Get id
      *
      * @return int
@@ -60,24 +72,6 @@ class Cloud
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * @param string $name
-     * @return $this
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
     }
 
     /**
@@ -132,6 +126,54 @@ class Cloud
     public function getFont()
     {
         return $this->font;
+    }
+
+    /**
+     * @param \SixtyNine\CloudBundle\Entity\WordsList $list
+     * @return $this
+     */
+    public function setList($list)
+    {
+        $this->list = $list;
+        return $this;
+    }
+
+    /**
+     * @return \SixtyNine\CloudBundle\Entity\WordsList
+     */
+    public function getList()
+    {
+        return $this->list;
+    }
+
+    /**
+     * @param CloudWord $word
+     * @return $this
+     */
+    public function addWord(CloudWord $word)
+    {
+        if (!$this->words->contains($word)) {
+            $this->words->add($word);
+        }
+        return $this;
+    }
+
+    /**
+     * @param CloudWord $word
+     * @return $this
+     */
+    public function removeWord(CloudWord $word)
+    {
+        $this->words->remove($word);
+        return $this;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getWords()
+    {
+        return $this->words;
     }
 }
 

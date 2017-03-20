@@ -9,6 +9,15 @@ class Vector
     /** @var int */
     public $y = 0;
 
+    public static function fromArray(array $a)
+    {
+        if (!is_array($a) || count($a) < 2) {
+            throw new \InvalidArgumentException();
+        }
+
+        return new Vector($a[0], $a[1]);
+    }
+
     public function __construct($x = 0, $y = 0)
     {
         $this->x = (int)$x;
@@ -26,6 +35,11 @@ class Vector
         $v->x += $dx;
         $v->y += $dy;
         return $v;
+    }
+
+    public function toArray()
+    {
+        return array($this->x, $this->y);
     }
 
     public function __toString()

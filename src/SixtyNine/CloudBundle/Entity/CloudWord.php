@@ -29,8 +29,20 @@ class CloudWord
     protected $size;
 
     /**
+     * @var array
+     * @ORM\Column(type="array", nullable=true)
+     */
+    protected $position;
+
+    /**
+     * @var array
+     * @ORM\Column(type="array", nullable=true)
+     */
+    protected $boundingBox;
+
+    /**
      * @var Cloud
-     * @ORM\ManyToOne(targetEntity="Cloud")
+     * @ORM\ManyToOne(targetEntity="Cloud", inversedBy="words")
      * @ORM\JoinColumn(name="cloud_id", referencedColumnName="id", nullable=false)
      */
     protected $cloud;
@@ -112,5 +124,40 @@ class CloudWord
         return $this->word;
     }
 
+    /**
+     * @param array $position
+     * @return $this
+     */
+    public function setPosition($position)
+    {
+        $this->position = $position;
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getPosition()
+    {
+        return $this->position;
+    }
+
+    /**
+     * @param array $boundingBox
+     * @return $this
+     */
+    public function setBoundingBox($boundingBox)
+    {
+        $this->boundingBox = $boundingBox;
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getBoundingBox()
+    {
+        return $this->boundingBox;
+    }
 }
 
