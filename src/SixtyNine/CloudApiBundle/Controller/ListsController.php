@@ -171,7 +171,7 @@ class ListsController extends FOSRestController
      *          {"name"="order", "dataType"="string", "required"=true, "format"="(asc|desc)", "requirement"="(asc|desc)", "description"="Sort order"}
      *      }
      * )
-     * @FOS\Post("/lists/{id}/words/sort")
+     * @FOS\Post("/lists/{id}/sort")
      */
     public function sortWordsAction(Request $request, $id)
     {
@@ -315,6 +315,29 @@ class ListsController extends FOSRestController
     }
 
     /**
+     * Filter the words list.
+     * @ApiDoc(
+     *      section="Word lists",
+     *      statusCodes={
+     *          200="Successful",
+     *          400="Bad request",
+     *          403="Not authorized",
+     *          404="Not found"
+     *      },
+     *      parameters={
+     *          {"name"="filter", "dataType"="string", "required"=true, "description"="The name of the filter to apply"},
+     *      }
+     * )
+     * @FOS\Get("/lists/{id}/filter")
+     */
+    public function filterListAction($id)
+    {
+        $list = $this->getMyList($id);
+        // TODO: implement
+        return $this->handleView($this->view($list, 200));
+    }
+
+    /**
      * Get the WordsList given by $id.
      * Throws an exception if the list does not exist or the current user
      * is not the owner of the list.
@@ -373,7 +396,7 @@ class ListsController extends FOSRestController
      * @param Request $request
      * @return bool
      */
-    public function isValidData($formType, $data, Request $request)
+    protected function isValidData($formType, $data, Request $request)
     {
         $form = $this->formFactory->create($formType, $data, array('method' => $request->getMethod()));
         $form->submit($data);

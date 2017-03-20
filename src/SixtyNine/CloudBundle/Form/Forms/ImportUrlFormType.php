@@ -11,7 +11,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\GreaterThan;
 use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 
-class FiltersFormType extends AbstractType
+class ImportUrlFormType extends AbstractType
 {
     /** {@inheritdoc} */
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -53,15 +53,18 @@ class FiltersFormType extends AbstractType
             ->add('removeByLengthEnabled', CheckboxType::class, array(
                 'label'    => 'Enable remove characters by length filter?',
                 'required' => false,
+                'attr' => array('checked' => 'checked'),
             ))
             ->add('minLength', TextType::class, array(
                 'label' => false,
                 'required' => false,
+                'data' => 4,
                 'attr' => array('placeholder' => 'Minimal len')
             ))
             ->add('maxLength', TextType::class, array(
                 'label' => false,
                 'required' => false,
+                'data' => 15,
                 'attr' => array('placeholder' => 'Maximal len')
             ))
         ;

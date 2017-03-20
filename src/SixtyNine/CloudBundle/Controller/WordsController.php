@@ -2,15 +2,13 @@
 
 namespace SixtyNine\CloudBundle\Controller;
 
-use SixtyNine\Cloud\Filters\ChangeCase;
-use SixtyNine\Cloud\Filters\Filters;
-use SixtyNine\Cloud\Filters\RemoveByLength;
-use SixtyNine\Cloud\Filters\RemoveCharacters;
-use SixtyNine\Cloud\Filters\RemoveNumbers;
-use SixtyNine\Cloud\Filters\RemoveTrailingCharacters;
-use SixtyNine\Cloud\Model\Text;
 use SixtyNine\Cloud\TextListFilter\OrientationVisitor;
-use SixtyNine\CloudBundle\Entity\Word;
+use SixtyNine\CloudBundle\Cloud\Filters\ChangeCase;
+use SixtyNine\CloudBundle\Cloud\Filters\Filters;
+use SixtyNine\CloudBundle\Cloud\Filters\RemoveByLength;
+use SixtyNine\CloudBundle\Cloud\Filters\RemoveCharacters;
+use SixtyNine\CloudBundle\Cloud\Filters\RemoveNumbers;
+use SixtyNine\CloudBundle\Cloud\Filters\RemoveTrailingCharacters;
 use SixtyNine\CloudBundle\Entity\WordsList;
 use SixtyNine\CloudBundle\Repository\WordsListRepository;
 use SixtyNine\CoreBundle\Controller\Controller;
@@ -66,7 +64,7 @@ class WordsController extends Controller
         $addWordsForm = $this->createForm('SixtyNine\CloudBundle\Form\Forms\AddWordsFormType');
         $addWordsForm->handleRequest($request);
 
-        $filtersForm = $this->createForm('SixtyNine\CloudBundle\Form\Forms\FiltersFormType');
+        $filtersForm = $this->createForm('SixtyNine\CloudBundle\Form\Forms\ImportUrlFormType');
         $filtersForm->handleRequest($request);
 
         return $this->render(
@@ -83,9 +81,9 @@ class WordsController extends Controller
                     OrientationVisitor::WORDS_VERTICAL => 'Vertical',
                 ),
                 'palettes' => $this
-                        ->getDoctrine()
-                        ->getRepository('SixtyNineCloudBundle:Palette')
-                        ->getPalettes($this->getUser())
+                    ->getDoctrine()
+                    ->getRepository('SixtyNineCloudBundle:Palette')
+                    ->getPalettes($this->getUser())
             )
         );
     }
@@ -148,9 +146,7 @@ class WordsController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
 
             $text = $form->get('text')->getData();
-            $builder = $this->get('sn_cloud.cloud_builder');
-            $words = $builder->createWords($text);
-            $this->listRepo->importWords($list, $words);
+            $this->get('sn_cloud.word_lists_manager')->importText($list, $text);
 
             return $this->redirectToRoute('sn_words_view', array('id' => $list->getId()));
         }
@@ -166,7 +162,7 @@ class WordsController extends Controller
      */
     public function importWordsAction(Request $request, WordsList $list)
     {
-        $form = $this->createForm('SixtyNine\CloudBundle\Form\Forms\FiltersFormType');
+        $form = $this->createForm('SixtyNine\CloudBundle\Form\Forms\ImportUrlFormType');
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -199,8 +195,7 @@ class WordsController extends Controller
                 }
             }
 
-            $words = $builder->createWordsFromUrl($url, $filters);
-            $this->listRepo->importWords($list, $words);
+            $this->get('sn_cloud.word_lists_manager')->importUrl($list, $url, 100, $filters);
 
             return $this->redirectToRoute('sn_words_view', array('id' => $list->getId()));
         }

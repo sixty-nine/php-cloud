@@ -4,6 +4,7 @@ namespace SixtyNine\CloudBundle\Manager;
 
 use Doctrine\ORM\EntityManagerInterface;
 use SixtyNine\Cloud\Model\Text;
+use SixtyNine\CloudBundle\Cloud\Filters\Filters;
 use SixtyNine\CloudBundle\Entity\Account;
 use SixtyNine\CloudBundle\Entity\Word;
 use SixtyNine\CloudBundle\Entity\WordsList;
@@ -44,6 +45,83 @@ class WordListsManager
     public function getWord($id)
     {
         return $this->wordRepo->find($id);
+    }
+
+    public function importWord(WordsList $list, $word, Filters $filters = null)
+    {
+        if ($filters) {
+            $word = $filters->filterWord($word);
+            if (!$word) {
+                return;
+            }
+        }
+
+        $entity = $list->getWordForText($word);
+
+        if (!$entity) {
+            $entity = new Word();
+            $entity
+                ->setList($list)
+                ->setText($word)
+                ->setUser($list->getUser())
+                ->setOrientation('horiz')
+                ->setColor('#000000')
+            ;
+            $list->addWord($entity);
+        }
+
+        $entity->setCount($entity->getCount() + 1);
+
+        $this->em->persist($entity);
+        $this->em->flush();
+    }
+
+    public function importText(WordsList $list, $text, $maxWords = 100, Filters $filters = null)
+    {
+        $array = preg_split("/[\n\r\t ]+/", $text);
+
+        foreach (array_slice($array, 0, $maxWords) as $word) {
+            $this->importWord($list, $word, $filters);
+        }
+    }
+
+    public function importHtml(WordsList $list, $html, $maxWords = 100, Filters $filters = null)
+    {
+        if (!$html) {
+            return;
+        }
+
+        $d = new \DOMDocument;
+        $mock = new \DOMDocument;
+        libxml_use_internal_errors(true);
+        $d->loadHTML($html);
+        libxml_use_internal_errors(false);
+        $body = $d->getElementsByTagName('body')->item(0);
+        if ($body) {
+            foreach ($body->childNodes as $child) {
+                $mock->appendChild($mock->importNode($child, true));
+            }
+        }
+        $text = html_entity_decode(strip_tags($mock->saveHTML()));
+        $this->importText($list, $text, $maxWords, $filters);
+    }
+
+    public function importUrl(WordsList $list, $url, $maxWords = 100, Filters $filters = null)
+    {
+        $this->importHtml($list, file_get_contents($url), $maxWords, $filters);
+    }
+
+    public function filterWords(WordsList $list, Filters $filters)
+    {
+        /** @var Word $word */
+        foreach ($list->getWords() as $word) {
+            $filtered = $filters->filterWord($word->getText());
+            if (!$filtered) {
+                $this->em->remove($word);
+            }
+            $word->setText($filtered);
+        }
+        $this->em->flush();
     }
 
     public function sortWords(WordsList $list, $sortBy, $order)
