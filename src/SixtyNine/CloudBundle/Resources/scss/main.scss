@@ -3,17 +3,6 @@
 
 @import "spinner";
 
-body {
-  margin-top: 50px;
-}
-
-h1.page-header {
-  margin-top: 0;
-  small {
-    display: inline-block;
-  }
-}
-
 div.color-box {
 
   width: 50px;
@@ -23,6 +12,17 @@ div.color-box {
   &.mini {
     width: 25px;
     height: 25px;
+  }
+}
+
+section.buttons {
+  margin-bottom: 15px;
+}
+
+table.words-list {
+  tr th:nth-child(2),
+  tr th:nth-child(3) {
+    width: 15%;
   }
 }
 

@@ -9,16 +9,34 @@ void function (config) {
         template: false,
 
         ui: {
-            colorsSubmitButton: '#colorModal button[type="submit"]',
-            colorsPalette: '#colorModal select',
-            sortSubmitButton: '#sortModal button[type="submit"]',
-            sortModalSortBy: '#sortModal select.sort-by',
-            sortModalOrder: '#sortModal select.order'
+            triggerButton: 'button[data-trigger]',
+            closeButton: 'div.modal button.btn-clear',
+            colorsModal: 'div.modal[data-id="colors"]',
+            colorsSubmitButton: 'div.modal[data-id="colors"] button[type="submit"]',
+            colorsPalette: 'div.modal[data-id="colors"] select',
+            sortModal: 'div.modal[data-id="sort-words"]',
+            sortSubmitButton: 'div.modal[data-id="sort-words"] button[type="submit"]',
+            sortModalSortBy: 'div.modal[data-id="sort-words"] select.sort-by',
+            sortModalOrder: 'div.modal[data-id="sort-words"] select.order'
         },
 
         events: {
+            'click @ui.triggerButton': 'triggerModal',
+            'click @ui.closeButton': 'closeModal',
+            'click div.modal-overlay': 'closeModal',
             'click @ui.colorsSubmitButton': 'changeColors',
             'click @ui.sortSubmitButton': 'sortWords'
+        },
+
+        triggerModal: function (e) {
+            var target = $(e.currentTarget).data('trigger');
+            var $modal = $('div.modal[data-id="' + target + '"]');
+            $modal.addClass('active');
+        },
+
+        closeModal: function (e) {
+            e.preventDefault();
+            $(e.currentTarget).closest('div.modal').removeClass('active');
         },
 
         changeColors: function (e) {
@@ -26,7 +44,8 @@ void function (config) {
 
             var paletteId = this.ui.colorsPalette.find(':selected').val();
 
-            $('#colorModal').modal('hide');
+            $(this.ui.colorsModal).removeClass('active');
+
             SnCloud.showSpinner();
             location.href = $(e.currentTarget)
                 .data('url')
@@ -36,6 +55,8 @@ void function (config) {
 
         sortWords: function (e) {
             e.preventDefault();
+
+            $(this.ui.sortModal).removeClass('active');
 
             SnCloud.showSpinner();
 

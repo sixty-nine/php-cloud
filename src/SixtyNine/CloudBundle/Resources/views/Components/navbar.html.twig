@@ -1,22 +1,17 @@
-<nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
-                    aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">{{ 'Toggle navigation' | trans }}</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="{{ path('sn_cloud_home') }}">PHP Cloud</a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="{{ path('sn_words_list') }}">{{ 'My words' | trans }}</a></li>
-                <li><a href="{{ path('sn_cloud_index') }}">{{ 'My clouds' | trans }}</a></li>
-                <li><a href="{{ path('sn_palettes_list') }}">{{ 'Settings' | trans }}</a></li>
-                <li><a href="{{ path('fos_user_profile_show') }}">{{ 'Profile' | trans }}</a></li>
-            </ul>
-        </div>
-    </div>
-</nav>
+<section class="section section-header bg-gray">
+    <section class="grid-header container grid-960">
+        <header class="navbar">
+            <section class="navbar-primary col-3">
+                <a href="{{ path('sn_cloud_home') }}" class="navbar-brand mr-10">
+                    <i class="fa fa-cloud"></i> {{ appTitle }}
+                </a>
+            </section>
+            <section class="navbar-section col-9">
+                <a href="{{ path('sn_words_list') }}" class="btn btn-link">{{ 'My words' | trans }}</a>
+                <a href="{{ path('sn_cloud_index') }}" class="btn btn-link">{{ 'My clouds' | trans }}</a>
+                <a href="{{ path('sn_palettes_list') }}" class="btn btn-link">{{ 'Settings' | trans }}</a>
+                <a href="{{ path('fos_user_profile_show') }}" class="btn btn-link">{{ 'Profile' | trans }}</a>
+            </section>
+        </header>
+    </section>
+</section>

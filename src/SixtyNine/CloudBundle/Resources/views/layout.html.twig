@@ -1,12 +1,12 @@
 {% extends 'SixtyNineCoreBundle::layout.html.twig' %}
 
-{% set appTitle = 'PHP Cloud' | trans  %}
+{% set appTitle = 'Clouder' | trans  %}
 {% set fosRouting = true  %}
 
 {% block css %}
     {% stylesheets
-        'assets/vendor/bootstrap/dist/css/bootstrap.min.css'
-        'assets/vendor/datatables/media/css/jquery.dataTables.css'
+        'assets/vendor/spectre.css/dist/spectre.css'
+        'assets/vendor/font-awesome/css/font-awesome.css'
         'assets/vendor/huebee/dist/huebee.css'
     filter='cssrewrite' %}
     <link rel="stylesheet" href="{{ asset_url }}" type="text/css"/>
@@ -21,35 +21,25 @@
 {% block content %}
 {%- include 'SixtyNineCloudBundle:Components:navbar.html.twig' -%}
 
-<div class="container">
+    <section class="container grid-960">
+        <h3 class="page-header">
+            {{ pageHeader | default('') }}
+            <small>{{ pageSubHeader | default('') }}</small>
+        </h3>
 
-    {#{%- include 'SixtyNineCloudBundle:Components:breadcrumb.html.twig' -%}#}
+        <section class="buttons">
+            {% block buttons %}{% endblock %}
+        </section>
 
-    <div class="row">
-        <div class="col-sm-5">
-            <h1 class="page-header">
-                {{ pageHeader | default('') }}
-                <small>{{ pageSubHeader | default('') }}</small>
-            </h1>
-        </div>
-        <div class="col-sm-7">
-            <div class="pull-right">
-                {% block buttons %}{% endblock %}
-            </div>
-        </div>
-    </div>
+        {% block body %}{% endblock %}
+    </section>
 
-    {% block body %}{% endblock %}
-
-</div>
 {% endblock %}
 
 {% block js %}
     {% javascripts output='vendors.js'
         'assets/vendor/jquery/dist/jquery.min.js'
         'assets/vendor/jquery-ui/jquery-ui.js'
-        'assets/vendor/bootstrap/dist/js/bootstrap.min.js'
-        'assets/vendor/datatables/media/js/jquery.dataTables.js'
         'assets/vendor/underscore/underscore-min.js'
         'assets/vendor/backbone/backbone-min.js'
         'assets/vendor/backbone.radio/build/backbone.radio.js'
