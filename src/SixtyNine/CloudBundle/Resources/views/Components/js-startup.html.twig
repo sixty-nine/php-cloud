@@ -12,7 +12,7 @@
 
     SnCloud.fn = {
         confirm: function (message) {
-            return confirm(message);
+            return new SnCloud.Views.ModalConfirmView({message: message}).getPromise();
         }
     };
 
@@ -24,3 +24,20 @@
 %}
 <script src="{{ asset_url }}"></script>
 {% endjavascripts %}
+
+<script type="text/template" id="sn-cloud-modal-confirm-template">
+    <div class="modal active" data-id="are-you-sure">
+        <div class="modal-overlay"></div>
+        <div class="modal-container">
+            <div class="modal-header">
+                <div class="modal-title">{{ 'Are you sure?' | trans }}</div>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary ok">{{ 'Yes' | trans }}</button>
+                <button class="btn nok">{{ 'No' | trans }}</button>
+            </div>
+        </div>
+    </div>
+</script>
