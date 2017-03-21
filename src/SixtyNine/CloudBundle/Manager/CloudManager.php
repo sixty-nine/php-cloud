@@ -81,57 +81,6 @@ class CloudManager
         return $cloud;
     }
 
-//    public function buildCloud(Cloud $cloud)
-//    {
-//        $map = array();
-//
-//        $imgWidth = 1024;
-//        $imgHeight = 800;
-//
-//        $cloudWords = $this->em
-//            ->getRepository('SixtyNineCloudBundle:Word')
-//            ->getWordsOrdered($cloud->getList())
-//        ;
-//
-//        $words = new Words(new Filters());
-//        /** @var \SixtyNine\CloudBundle\Entity\Word $word */
-//        foreach ($cloudWords as $word) {
-//            $words->addWord($word->getText(), $word->getCount());
-//            $map[$word->getText()] = $word;
-//        }
-//
-//        $font = new Font(__DIR__ . '/../Resources/fonts/' . $cloud->getFont());
-//        $style = new CloudStyle($font);
-//        $color = new Color();
-//        $color->setHex(substr($cloud->getBackgroundColor(), 1));
-//        $style->setBackgroundColor($color);
-//        $list = new TextList($style, $words);
-//
-//        /** @var Text $text */
-//        foreach ($list as $text) {
-//            $word = $map[$text->getWord()->getText()];
-//            $text->setDir($word->getOrientation());
-//            $text->getWord()->getStyle()->setAngle(
-//                $word->getOrientation() === Text::DIR_HORIZONTAL ? 0 : 90
-//            );
-//            $color = new Color();
-//            $color->setHex(substr($word->getColor(), 1));
-//            $text->getWord()->getStyle()->setColor($color);
-//        }
-//
-//        $sizeGenerator = new DefaultFontSizeGenerator(10, 50);
-//        $list->applyVisitor(new FontSizeVisitor($sizeGenerator));
-//
-//        $usher = new WordleUsher($imgWidth, $imgHeight);
-//        $list->applyVisitor(new UsherVisitor($usher));
-//
-//        $renderer = new Renderer();
-//        $image = $renderer->createImage($imgWidth, $imgHeight);
-//        $renderer->render($image, $list);
-//
-//        return $image;
-//    }
-
     public function generateCloudWords(Cloud $cloud, $minFontSize, $maxFontSize)
     {
         $this->cloudRepo->deleteWords($cloud);
