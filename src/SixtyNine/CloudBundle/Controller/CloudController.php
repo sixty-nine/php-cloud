@@ -58,7 +58,7 @@ class CloudController extends Controller
         }
 
         return $this->render(
-            'SixtyNineCloudBundle:Cloud:index.html.twig',
+            'SixtyNineCloudBundle:Cloud:create.html.twig',
             array(
                 'form' => $form->createView(),
             )

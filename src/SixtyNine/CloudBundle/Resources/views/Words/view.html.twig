@@ -93,7 +93,7 @@
             <div class="modal-body">
                 <div class="content">
                     {% for key, orientation in orientations %}
-                    <li><a href="{{ path('sn_words_random_orientation', {'id': list.id, 'orientation': key}) }}">{{ orientation }}</a></li>
+                    <a class="btn" href="{{ path('sn_words_random_orientation', {'id': list.id, 'orientation': key}) }}">{{ orientation }}</a>
                     {% endfor %}
                 </div>
             </div>
@@ -149,13 +149,15 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn"
-                        data-url="{{ path('sn_words_random_color', {'id': list.id, 'paletteId': '9999', 'type': 'cycle'}) }}">
+               <button type="submit" class="btn tooltip"
+                        data-url="{{ path('sn_words_random_color', {'id': list.id, 'paletteId': '9999', 'type': 'cycle'}) }}"
+                        data-tooltip="{{ 'Iterate through each color of the palette' | trans }}">
                     <i class="fa fa-refresh"></i>
                     {{ 'Cycle' | trans }}
                 </button>
-                <button type="submit" class="btn"
-                        data-url="{{ path('sn_words_random_color', {'id': list.id, 'paletteId': '9999', 'type': 'random'}) }}">
+                <button type="submit" class="btn tooltip"
+                        data-url="{{ path('sn_words_random_color', {'id': list.id, 'paletteId': '9999', 'type': 'random'}) }}"
+                        data-tooltip="{{ 'Pick colors randomly from the palette' | trans }}">
                     <i class="fa fa-random"></i>
                     {{ 'Random' | trans }}
                 </button>

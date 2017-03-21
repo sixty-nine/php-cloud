@@ -2,8 +2,7 @@
 
 {% set curPage = 'cloud' %}
 {% set pageTitle = 'List clouds' | trans  %}
-{% set pageHeader = 'Cloud' | trans  %}
-{% set pageSubHeader = 'List' | trans  %}
+{% set pageHeader = 'My Clouds' | trans  %}
 
 {% block buttons %}
     <a href="{{ path('sn_cloud_create') }}" class="btn btn-default">
@@ -12,33 +11,37 @@
 {% endblock %}
 
 {% block body %}
-<div class="row">
-    <div class="col-sm-12">
-        <div class="clouds">
-            {% for cloud in clouds %}
-            <div class="cloud">
-                <div class="image">
-                    <a href="{{ path('sn_cloud_view', {'id': cloud.id}) }}">
-                        <img src="{{ path('sn_cloud_render', {'id': cloud.id, 'width': 200, 'height': 200}) }}" />
-                    </a>
-                </div>
-                <div class="actions">
-                    <a href="{{ path('sn_cloud_generate', {'id': cloud.id}) }}" class="btn btn-default btn-xs">
-                        {{ 'Regenerate' | trans }}
-                    </a>
-                    <a href="#" class="btn btn-default btn-xs">
-                        {{ 'Edit' | trans }}
-                    </a>
-                    <a href="#" class="btn btn-default btn-xs">
-                        {{ 'Delete' | trans }}
-                    </a>
-                </div>
+<section class="clouds">
+    {% for cloud in clouds %}
+    <div class="tile tile-centered">
+        <div class="tile-icon">
+            <div class="example-tile-icon">
+                <a href="{{ path('sn_cloud_view', {'id': cloud.id}) }}">
+                    <img src="{{ path('sn_cloud_render', {'id': cloud.id, 'width': 100, 'height': 100}) }}" />
+                </a>
             </div>
-            {% endfor %}
+        </div>
+        <div class="tile-content">
+            <div class="tile-title">
+                List "{{ cloud.list.name }}" ·
+                {{ cloud.list.words | length }} words
+            </div>
+            <div class="tile-subtitle">Created at {{ cloud.createdAt | date("d-m-Y h:i") }}</div>
+        </div>
+        <div class="tile-action btn-group">
+            <a href="{{ path('sn_cloud_generate', {'id': cloud.id}) }}" class="btn btn-xs">
+                {{ 'Regenerate' | trans }}
+            </a>
+            <a href="#" class="btn btn-xs">
+                {{ 'Edit' | trans }}
+            </a>
+            <a href="#" class="btn btn-xs">
+                {{ 'Delete' | trans }}
+            </a>
         </div>
     </div>
-</div>
-
+    {% endfor %}
+</section>
 {% endblock %}
 
 
