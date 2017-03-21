@@ -82,20 +82,21 @@
 
     <script type="text/javascript">
 
-        SnCloud.showSpinner();
-
         $(function () {
 
-            var collection = new SnCloud.Models.ListCollection();
-            collection.fetch().then(function () {
+            var data = [
+                {% for list in lists -%}
+                {
+                    id: {{ list.id }},
+                    name: '{{ list.name }}',
+                    count: {{ list.words.count }}
+                },
+                {% endfor -%}
+            ];
 
-                SnCloud.hideSpinner();
-
-                new SnCloud.Views.ListsView({
-                    collection: collection
-                }).render();
-
-            });
+            new SnCloud.Views.ListsView({
+                collection: new SnCloud.Models.ListCollection(data)
+            }).render();
 
         });
     </script>
