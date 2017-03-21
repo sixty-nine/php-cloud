@@ -177,19 +177,29 @@
 
         $(function () {
 
-            var collection = new SnCloud.Models.WordCollection([], {listId: {{ list.id }} });
-            collection.fetch().then(function () {
+            var data = [
+                {% for word in list.words -%}
+                {
+                    id: {{ word.id }},
+                    text: '{{ word.text }}',
+                    count: {{ word.count }},
+                    orientation: '{{ word.orientation }}',
+                    color: '{{ word.color }}',
+                    position: {{ word.position }}
+                },
+                {% endfor -%}
+            ];
+            var collection = new SnCloud.Models.WordCollection(data, {listId: {{ list.id }}});
 
-                SnCloud.hideSpinner();
+            SnCloud.hideSpinner();
 
-                new SnCloud.Views.WordsView({
-                    collection: collection
-                }).render();
+            new SnCloud.Views.WordsView({
+                collection: collection
+            }).render();
 
-                new SnCloud.Views.WordsList({
-                    collection: collection
-                }).render();
-            });
+            new SnCloud.Views.WordsList({
+                collection: collection
+            }).render();
         });
 
     </script>

@@ -82,6 +82,8 @@
 
     <script type="text/javascript">
 
+        SnCloud.showSpinner();
+
         $(function () {
 
             var data = [
@@ -98,6 +100,7 @@
                 collection: new SnCloud.Models.ListCollection(data)
             }).render();
 
+            SnCloud.hideSpinner();
         });
     </script>
 
