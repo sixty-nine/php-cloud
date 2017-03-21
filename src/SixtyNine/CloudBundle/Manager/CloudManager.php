@@ -37,6 +37,10 @@ class CloudManager
     /** @var CloudRepository */
     protected $cloudRepo;
 
+    /**
+     * Constructor
+     * @param EntityManagerInterface $em
+     */
     public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
@@ -44,6 +48,11 @@ class CloudManager
         $this->cloudRepo = $em->getRepository('SixtyNineCloudBundle:Cloud');
     }
 
+    /**
+     * Get the list of clouds of the $user.
+     * @param Account $user
+     * @return mixed
+     */
     public function getClouds(Account $user)
     {
         return $this->cloudRepo->findByUser($user);
@@ -87,6 +96,14 @@ class CloudManager
         return $cloud;
     }
 
+    /**
+     * Generate the words of the $cloud.
+     * Set their font size using the given $generator (linear|boost|dim).
+     * @param Cloud $cloud
+     * @param int $minFontSize
+     * @param int $maxFontSize
+     * @param string $generator
+     */
     public function generateCloudWords(Cloud $cloud, $minFontSize, $maxFontSize, $generator)
     {
         $this->cloudRepo->deleteWords($cloud);
@@ -130,6 +147,10 @@ class CloudManager
         $this->em->flush();
     }
 
+    /**
+     * Find the place of the words in the $cloud.
+     * @param Cloud $cloud
+     */
     public function placeWords(Cloud $cloud)
     {
         $placer = new WordlePlacer();
@@ -160,6 +181,8 @@ class CloudManager
     }
 
     /**
+     * Render the $cloud as an Imagine image.
+     * If $drawBoundingBoxes is set then boxes will be drawn around the words.
      * @param Cloud $cloud
      * @param bool $drawBoundingBoxes
      * @return \Imagine\Gd\Image|\Imagine\Image\ImageInterface
@@ -210,6 +233,14 @@ class CloudManager
         return $image;
     }
 
+    /**
+     * Render the path used to find the words places by the given $placer in the $image.
+     * @param ImageInterface $image
+     * @param PlacerInterface $placer
+     * @param PointInterface $firstPlace
+     * @param Color $color
+     * @param int $maxIterations
+     */
     public function renderUsher(
         ImageInterface $image,
         PlacerInterface $placer,
