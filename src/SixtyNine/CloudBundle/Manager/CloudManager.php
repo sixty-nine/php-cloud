@@ -7,11 +7,14 @@ use Imagine\Gd\Font;
 use Imagine\Gd\Imagine;
 use Imagine\Image\Box;
 use Imagine\Image\Color;
+use Imagine\Image\ImageInterface;
 use Imagine\Image\Point;
+use Imagine\Image\PointInterface;
 use SixtyNine\CloudBundle\Cloud\FontSize\BoostFontSizeGenerator;
 use SixtyNine\CloudBundle\Cloud\FontSize\DimFontSizeGenerator;
 use SixtyNine\CloudBundle\Cloud\FontSize\LinearFontSizeGenerator;
 use SixtyNine\CloudBundle\Cloud\Placer\CircularPlacer;
+use SixtyNine\CloudBundle\Cloud\Placer\PlacerInterface;
 use SixtyNine\CloudBundle\Cloud\Placer\WordlePlacer;
 use SixtyNine\CloudBundle\Cloud\Usher;
 use SixtyNine\CloudBundle\Entity\Account;
@@ -129,7 +132,7 @@ class CloudManager
 
     public function placeWords(Cloud $cloud)
     {
-        $placer = new CircularPlacer();
+        $placer = new WordlePlacer();
         $usher = new Usher($cloud->getWidth(), $cloud->getHeight(), $placer);
 
         /** @var CloudWord $word */
@@ -156,7 +159,12 @@ class CloudManager
         $this->em->flush();
     }
 
-    public function render(Cloud $cloud)
+    /**
+     * @param Cloud $cloud
+     * @param bool $drawBoundingBoxes
+     * @return \Imagine\Gd\Image|\Imagine\Image\ImageInterface
+     */
+    public function render(Cloud $cloud, $drawBoundingBoxes = false)
     {
         $imagine = new Imagine();
         $size  = new Box($cloud->getWidth(), $cloud->getHeight());
@@ -189,14 +197,43 @@ class CloudManager
                 $angle
             );
 
-            $image->draw()->polygon(array(
-                new Point($pos[0], $pos[1]),
-                new Point($pos[0] + $box[0], $pos[1]),
-                new Point($pos[0] + $box[0], $pos[1] + $box[1]),
-                new Point($pos[0], $pos[1] + $box[1]),
-            ), new Color(0xFF0000));
+            if ($drawBoundingBoxes) {
+                $image->draw()->polygon(array(
+                    new Point($pos[0], $pos[1]),
+                    new Point($pos[0] + $box[0], $pos[1]),
+                    new Point($pos[0] + $box[0], $pos[1] + $box[1]),
+                    new Point($pos[0], $pos[1] + $box[1]),
+                ), new Color(0xFF0000));
+            }
         }
 
         return $image;
+    }
+
+    public function renderUsher(
+        ImageInterface $image,
+        PlacerInterface $placer,
+        PointInterface $firstPlace,
+        Color $color,
+        $maxIterations = 1000
+    ) {
+        $i = 0;
+        $cur = $firstPlace;
+
+        while($cur) {
+
+            $next = $placer->getNextPlaceToTry($cur);
+
+            if ($next) {
+                $image->draw()->line($cur, $next, $color);
+            }
+
+            $i++;
+            $cur = $next;
+
+            if ($i >= $maxIterations) {
+                break;
+            }
+        }
     }
 }

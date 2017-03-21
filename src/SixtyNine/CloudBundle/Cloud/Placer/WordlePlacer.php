@@ -12,7 +12,7 @@ class WordlePlacer implements PlacerInterface
     public function getNextPlaceToTry(PointInterface $current)
     {
         $i = $this->increment;
-        $this->increment += 0.001;
+        $this->increment += 0.1;
 
         $x = $current->getX() + ($i / 2 * cos($i));
         $y = $current->getY() + ($i / 2 * sin($i));

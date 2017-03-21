@@ -11,16 +11,8 @@ class CircularPlacer implements PlacerInterface
 
     public function getNextPlaceToTry(PointInterface $current)
     {
-        /**
-         * Cool params:
-         *
-         *      booby: a = 0, b = 1, i = 0.1
-         *      perfect spiral: a = 0, b = 2, i = 0.25
-         *
-         */
-
         $a = 0;
-        $b = 1;
+        $b = 0.05;
         $i = $this->increment;
         $this->increment += 0.01;
         $r = $a + $b * $i;

@@ -3,6 +3,10 @@
 namespace SixtyNine\CloudBundle\Controller;
 
 use Imagine\Image\Box;
+use Imagine\Image\Color;
+use Imagine\Image\Point;
+use SixtyNine\CloudBundle\Cloud\Placer\CircularPlacer;
+use SixtyNine\CloudBundle\Cloud\Placer\WordlePlacer;
 use SixtyNine\CloudBundle\Entity\Cloud;
 use SixtyNine\CloudBundle\Manager\CloudManager;
 use SixtyNine\CloudBundle\Manager\FontsManager;
@@ -100,7 +104,16 @@ class CloudController extends Controller
 
     public function renderAction(Request $request, Cloud $cloud)
     {
-        $image = $this->cloudManager->render($cloud);
+        $showBoundingBoxes = $request->get('show-bb', false);
+        $showPlacer = $request->get('show-placer', false);
+
+        $image = $this->cloudManager->render($cloud, $showBoundingBoxes);
+
+        if ($showPlacer) {
+            $placer = new WordlePlacer();
+            $firstPlace = new Point($cloud->getWidth() / 2, $cloud->getHeight() / 2);
+            $this->cloudManager->renderUsher($image, $placer, $firstPlace, new Color('#FF0000'));
+        }
 
         $width = $request->get('width');
         $height = $request->get('height');
