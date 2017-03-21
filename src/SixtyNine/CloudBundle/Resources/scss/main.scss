@@ -92,3 +92,13 @@ section.list-words {
     }
   }
 }
+
+form.login {
+  div.card {
+    width: 50%;
+    margin: 50px auto 0 auto;
+  }
+  div.error {
+    color: red;
+  }
+}
