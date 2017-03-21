@@ -29,13 +29,13 @@
             <div class="tile-subtitle">Created at {{ cloud.createdAt | date("d-m-Y h:i") }}</div>
         </div>
         <div class="tile-action btn-group">
-            <a href="{{ path('sn_cloud_generate', {'id': cloud.id}) }}" class="btn btn-xs">
+            <a href="{{ path('sn_cloud_generate', {'id': cloud.id}) }}" class="btn">
                 {{ 'Regenerate' | trans }}
             </a>
-            <a href="#" class="btn btn-xs">
+            <a href="#" class="btn">
                 {{ 'Edit' | trans }}
             </a>
-            <a href="#" class="btn btn-xs">
+            <a href="#" class="btn">
                 {{ 'Delete' | trans }}
             </a>
         </div>

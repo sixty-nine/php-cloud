@@ -11,17 +11,9 @@
 {% endblock %}
 
 {% block body %}
+<section class="lists">
 
-    <table class="table table-striped words-list">
-        <thead>
-            <tr>
-                <th>{{ 'Name' | trans }}</th>
-                <th>{{ 'Word count' | trans }}</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
+</section>
 {% endblock %}
 
 {% block javascripts %}
@@ -29,6 +21,29 @@
     {%- include 'SixtyNineCloudBundle:Components:js-startup.html.twig' -%}
 
     <script type="text/template" id="sn-cloud-word-list-item-template">
+        <div class="tile tile-centered">
+            <div class="tile-icon">
+                <div class="example-tile-icon">
+                    <i class="fa fa-list centered"></i>
+                </div>
+            </div>
+            <div class="tile-content">
+                <div class="tile-title"><%= name %></div>
+                <div class="tile-subtitle"><%= count %> words</div>
+            </div>
+            <div class="tile-action btn-group">
+                <button data-role="view-words" class="btn">
+                    {{ 'View words' | trans }}
+                </button>
+                <button data-role="duplicate" class="btn">
+                    {{ 'Duplicate' | trans }}
+                </button>
+                <button data-role="remove-list" class="btn">
+                    {{ 'Remove' | trans }}
+                </button>
+            </div>
+        </div>
+{#
         <td><%= name %></td>
         <td><%= count %></td>
         <td>
@@ -44,23 +59,22 @@
                 </button>
             </div>
         </td>
+#}
     </script>
 
     <script type="text/template" id="sn-cloud-no-list-template">
-        <td colspan="3">
-            <div class="empty">
-                <div class="empty-icon">
-                    <i class="fa fa-cloud"></i>
-                </div>
-                <h4 class="empty-title">{{ 'You have no lists' | trans }}</h4>
-                <p class="empty-subtitle">{{ 'Click the button to create one' | trans }}</p>
-                <div class="empty-action">
-                    <a href="{{ path('sn_words_new') }}" class="btn">
-                        {{ 'Create a new list' | trans }}
-                    </a>
-                </div>
+        <div class="empty">
+            <div class="empty-icon">
+                <i class="fa fa-cloud"></i>
             </div>
-        </td>
+            <h4 class="empty-title">{{ 'You have no lists' | trans }}</h4>
+            <p class="empty-subtitle">{{ 'Click the button to create one' | trans }}</p>
+            <div class="empty-action">
+                <a href="{{ path('sn_words_new') }}" class="btn">
+                    {{ 'Create a new list' | trans }}
+                </a>
+            </div>
+        </div>
     </script>
 
     <script type="text/javascript">
