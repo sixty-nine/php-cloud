@@ -11,8 +11,29 @@
     };
 
     SnCloud.fn = {
+
+        /**
+         * Show a confirmation dialog and return a promise that is resolved when the
+         * Yes button is clicked or rejected when the No button is clicked.
+         */
         confirm: function (message) {
             return new SnCloud.Views.ModalConfirmView({message: message}).getPromise();
+        },
+
+        /**
+         * Return a promise that is resolved when the document is ready.
+         */
+        startup: function () {
+            var p = $.Deferred();
+            SnCloud.showSpinner();
+            $(function () {
+                // Add a "then" callback just before resolving the promise so that it is the last one called.
+                p.then(function () {
+                    SnCloud.hideSpinner();
+                });
+                p.resolve();
+            });
+            return p;
         }
     };
 
