@@ -22,7 +22,10 @@ class ImportUrlFormType extends AbstractType
             ->add('url', TextType::class, array(
                 'label' => false,
                 'required' => true,
-                'attr' => array('placeholder' => 'URL')
+                'attr' => array(
+                    'placeholder' => 'URL',
+                    'autofocus' => true,
+                )
             ))
             ->add('changeCaseEnabled', CheckboxType::class, array(
                 'label'    => 'Change case',

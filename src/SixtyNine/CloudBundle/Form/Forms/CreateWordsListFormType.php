@@ -21,7 +21,10 @@ class CreateWordsListFormType extends AbstractType
         $builder
             ->add('name', TextType::class, array(
                 'required' => true,
-                'attr' => array('placeholder' => 'Words list name')
+                'attr' => array(
+                    'placeholder' => 'Words list name',
+                    'autofocus' => true,
+                )
             ))
         ;
     }

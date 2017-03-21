@@ -23,7 +23,10 @@ class AddWordsFormType extends AbstractType
             ->add('text', TextareaType::class, array(
                 'label' => false,
                 'required' => true,
-                'attr' => array('placeholder' => 'Words')
+                'attr' => array(
+                    'placeholder' => 'Words',
+                    'autofocus' => true,
+                )
             ))
         ;
     }
