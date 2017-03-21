@@ -34,7 +34,11 @@ void function (config) {
     SnCloud.Views.ListsView = Mn.CollectionView.extend({
         el: 'table.words-list tbody',
         template: false,
-        childView: SnCloud.Views.ListView
+        childView: SnCloud.Views.ListView,
+        emptyView: Mn.View.extend({
+            tagName: 'tr',
+            template: '#sn-cloud-no-list-template'
+        })
     });
 
 }(SnCloud.config);

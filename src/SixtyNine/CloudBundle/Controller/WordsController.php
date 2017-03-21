@@ -31,14 +31,6 @@ class WordsController extends Controller
         $this->wordsRepo = $this->getRepository('SixtyNineCloudBundle:WordsList');
     }
 
-    public function indexAction()
-    {
-        return $this->render(
-            'SixtyNineCloudBundle:Words:index.html.twig',
-            array()
-        );
-    }
-
     /**
      * List all the word lists of the user.
      * @return \Symfony\Component\HttpFoundation\Response

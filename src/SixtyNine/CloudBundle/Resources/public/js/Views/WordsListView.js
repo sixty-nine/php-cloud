@@ -5,7 +5,7 @@ void function (config) {
 
     SnCloud.Views.WordsList = Mn.View.extend({
 
-        el: 'div.container',
+        el: 'section.container',
         template: false,
 
         ui: {
@@ -154,6 +154,10 @@ void function (config) {
         childViewEvents: {
             'event:render': 'render'
         },
+
+        emptyView: Mn.View.extend({
+            template: '#sn-cloud-no-words-template'
+        }),
 
         onRender: function () {
 

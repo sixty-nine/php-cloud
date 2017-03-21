@@ -1,13 +1,8 @@
 {% extends 'SixtyNineCloudBundle::layout.html.twig' %}
 
 {% set curPage = 'words' %}
-{% set pageTitle = 'View Words Lists' | trans %}
-{% set pageHeader = 'Words List' | trans %}
-{% set pageSubHeader = 'View' | trans %}
-{% set breadcrumb = [
-    { title: 'Home' | trans , url: path('sn_words_home') },
-    { title: 'Words Lists' | trans }
-] %}
+{% set pageTitle = 'View Lists' | trans %}
+{% set pageHeader = 'My Lists' | trans %}
 
 {% block buttons %}
     <a href="{{ path('sn_words_new') }}" class="btn btn-sm">
@@ -47,6 +42,23 @@
                 <button data-role="remove-list" class="btn btn-sm tooltip" data-tooltip="{{ 'Remove list' | trans }}">
                     <i class="fa fa-close"></i>
                 </button>
+            </div>
+        </td>
+    </script>
+
+    <script type="text/template" id="sn-cloud-no-list-template">
+        <td colspan="3">
+            <div class="empty">
+                <div class="empty-icon">
+                    <i class="fa fa-cloud"></i>
+                </div>
+                <h4 class="empty-title">{{ 'You have no lists' | trans }}</h4>
+                <p class="empty-subtitle">{{ 'Click the button to create one' | trans }}</p>
+                <div class="empty-action">
+                    <a href="{{ path('sn_words_new') }}" class="btn">
+                        {{ 'Create a new list' | trans }}
+                    </a>
+                </div>
             </div>
         </td>
     </script>

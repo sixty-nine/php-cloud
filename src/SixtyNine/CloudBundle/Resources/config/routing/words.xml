@@ -4,10 +4,6 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
-    <route id="sn_words_home" path="/" methods="GET">
-        <default key="_controller">SixtyNineCloudBundle:Words:index</default>
-    </route>
-
     <route id="sn_words_list" path="/list" methods="GET">
         <default key="_controller">SixtyNineCloudBundle:Words:list</default>
     </route>

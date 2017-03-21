@@ -3,10 +3,6 @@
 {% set curPage = 'profile' %}
 {% set pageTitle = 'My profile' | trans %}
 {% set pageHeader = 'My Profile' | trans %}
-{% set breadcrumb = [
-    { title: 'Home' | trans , url: path('sn_words_home') },
-    { title: 'My profile' | trans }
-] %}
 
 {% block buttons %}
     <a href="{{ path('fos_user_security_logout') }}" class="btn btn-default">

@@ -5,7 +5,7 @@
 
 {% block css %}
     {% stylesheets
-        'assets/vendor/spectre.css/dist/spectre.css'
+        'assets/my-spectre.css'
         'assets/vendor/font-awesome/css/font-awesome.css'
         'assets/vendor/huebee/dist/huebee.css'
     filter='cssrewrite' %}
@@ -22,14 +22,16 @@
 {%- include 'SixtyNineCloudBundle:Components:navbar.html.twig' -%}
 
     <section class="container grid-960">
-        <h3 class="page-header">
+        <h3 class="page-header float-left">
             {{ pageHeader | default('') }}
             <small>{{ pageSubHeader | default('') }}</small>
         </h3>
 
-        <section class="buttons">
+        <section class="buttons float-right">
             {% block buttons %}{% endblock %}
         </section>
+
+        <div class="clearfix"></div>
 
         {% block body %}{% endblock %}
     </section>
