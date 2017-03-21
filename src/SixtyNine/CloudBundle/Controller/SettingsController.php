@@ -45,33 +45,11 @@ class SettingsController extends Controller
     {
         /** @var FontsManager $manager */
         $manager = $this->get('sn_cloud.fonts_manager');
-        $fonts = $manager->getFontsByName();
-
-        $font = new \Imagine\Gd\Font(
-            $manager->getFullFontPath($fonts[$name]),
-            24,
-            new \Imagine\Image\Color('#FFFFFF')
-        );
-        $font1 = new \Imagine\Gd\Font(
-            $manager->getFullFontPath($fonts['Arial']),
-            12,
-            new \Imagine\Image\Color('#FF2222')
-        );
-
-        $imagine = new \Imagine\Gd\Imagine();
-        $size  = new \Imagine\Image\Box(800, 75);
-        $image = $imagine->create($size, new \Imagine\Image\Color('#000000'));
-        $image->draw()->text(
-            $name,
-            $font1,
-            new \Imagine\Image\Point(10, 8)
-        );
-
-        $image->draw()->text(
-            'The quick brown fox jumps over the lazy dog',
-            $font,
-            new \Imagine\Image\Point(10, 30)
-        );
+        try {
+            $image = $manager->preview($name);
+        } catch (\InvalidArgumentException $ex) {
+            throw  $this->createNotFoundException('Font not found');
+        }
 
         return new Response($image->get('png'), 200, array(
             'Content-type' => 'image/png',
