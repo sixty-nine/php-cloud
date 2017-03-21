@@ -5,6 +5,7 @@ namespace SixtyNine\CloudBundle\Form\Forms;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -27,6 +28,25 @@ class CreateCloudFormType extends AbstractType
                 'required' => true,
                 'label' => 'Background color',
                 'attr' => array('placeholder' => 'Color'),
+            ))
+            ->add('fontSize', ChoiceType::class, array(
+                'choices' => array(
+                    'Linear' => 'linear',
+                    'Boost' => 'boost',
+                    'Dim' => 'dim',
+                ),
+            ))
+            ->add('minSize', IntegerType::class, array(
+                'required' => true,
+                'label' => 'Min. size',
+                'data' => 10,
+                'attr' => array('placeholder' => 'Size'),
+            ))
+            ->add('maxSize', IntegerType::class, array(
+                'required' => true,
+                'label' => 'Max. size',
+                'data' => 80,
+                'attr' => array('placeholder' => 'Size'),
             ))
         ;
     }

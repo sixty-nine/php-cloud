@@ -84,7 +84,7 @@ class CloudManager
         return $cloud;
     }
 
-    public function generateCloudWords(Cloud $cloud, $minFontSize, $maxFontSize)
+    public function generateCloudWords(Cloud $cloud, $minFontSize, $maxFontSize, $generator)
     {
         $this->cloudRepo->deleteWords($cloud);
 
@@ -96,7 +96,17 @@ class CloudManager
 
         $maxCount = $wordRepo->getMaxCount($cloud->getList());
 
-        $sizeGenerator = new BoostFontSizeGenerator($minFontSize, $maxFontSize, $maxCount);
+        switch ($generator) {
+            case 'dim':
+                $sizeGenerator = new DimFontSizeGenerator($minFontSize, $maxFontSize, $maxCount);
+                break;
+            case 'boost':
+                $sizeGenerator = new BoostFontSizeGenerator($minFontSize, $maxFontSize, $maxCount);
+                break;
+            default:
+                $sizeGenerator = new LinearFontSizeGenerator($minFontSize, $maxFontSize, $maxCount);
+        }
+
 
         /** @var Word $word */
         foreach ($words as $word) {

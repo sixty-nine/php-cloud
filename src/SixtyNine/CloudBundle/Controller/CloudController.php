@@ -45,7 +45,12 @@ class CloudController extends Controller
 
             $cloud = $this->cloudManager->createCloud($this->getUser(), $list, $font, $color);
 
-            return $this->redirectToRoute('sn_cloud_generate', array('id' => $cloud->getId()));
+            return $this->redirectToRoute('sn_cloud_generate', array(
+                'id' => $cloud->getId(),
+                'min' => $form->get('minSize')->getData(),
+                'max' => $form->get('maxSize')->getData(),
+                'gen' => $form->get('fontSize')->getData(),
+            ));
         }
 
         return $this->render(
@@ -56,10 +61,13 @@ class CloudController extends Controller
         );
     }
 
-    public function generateAction(Cloud $cloud)
+    public function generateAction(Request $request, Cloud $cloud)
     {
-        // TODO: un-hard-code
-        $this->cloudManager->generateCloudWords($cloud, 10, 60);
+        $minSize = $request->get('minSize', 10);
+        $maxSize = $request->get('maxSize', 100);
+        $generator = $request->get('gen', 'linear');
+
+        $this->cloudManager->generateCloudWords($cloud, $minSize, $maxSize, $generator);
         $this->cloudManager->placeWords($cloud);
 
         return $this->redirectToRoute('sn_cloud_view', array('id' => $cloud->getId()));
