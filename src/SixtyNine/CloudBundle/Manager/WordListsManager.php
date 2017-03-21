@@ -170,6 +170,39 @@ class WordListsManager
         return $list;
     }
 
+    public function duplicateList(WordsList $list)
+    {
+        $newList = new WordsList();
+
+        $newList
+            ->setName('Copy of ' . $list->getName())
+            ->setUser($list->getUser())
+        ;
+
+        $this->em->persist($newList);
+
+        /** @var Word $word */
+        foreach ($list->getWords() as $word) {
+
+            $newWord = new Word();
+            $newWord
+                ->setList($newList)
+                ->setUser($word->getUser())
+                ->setCount($word->getCount())
+                ->setColor($word->getColor())
+                ->setText($word->getText())
+                ->setOrientation($word->getOrientation())
+                ->setPosition($word->getPosition())
+            ;
+
+            $this->em->persist($newWord);
+        }
+
+        $this->em->flush();
+
+        return $newList;
+    }
+
     public function deleteList(WordsList $list)
     {
         $this->em->remove($list);

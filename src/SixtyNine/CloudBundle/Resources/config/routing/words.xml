@@ -8,6 +8,11 @@
         <default key="_controller">SixtyNineCloudBundle:Words:list</default>
     </route>
 
+    <route id="sn_words_duplicate" path="/{id}/duplicate" methods="GET">
+        <default key="_controller">SixtyNineCloudBundle:Words:duplicate</default>
+        <requirement key="id">\d+</requirement>
+    </route>
+
     <route id="sn_words_new" path="/create" methods="GET">
         <default key="_controller">SixtyNineCloudBundle:Words:new</default>
     </route>

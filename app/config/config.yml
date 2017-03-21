@@ -102,4 +102,5 @@ fos_rest:
 fos_js_routing:
     routes_to_expose:
         - sn_words_view
+        - sn_words_duplicate
         - "^cloud_api_.*"

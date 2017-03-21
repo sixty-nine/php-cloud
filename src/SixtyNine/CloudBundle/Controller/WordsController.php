@@ -47,6 +47,12 @@ class WordsController extends Controller
         );
     }
 
+    public function duplicateAction(WordsList $list)
+    {
+        $this->listsManager->duplicateList($list);
+        return $this->redirectToRoute('sn_words_list');
+    }
+
     /**
      * View the detail of a specific word list.
      * @param Request $request
