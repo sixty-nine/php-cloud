@@ -4,6 +4,9 @@ namespace SixtyNine\CloudBundle\Controller;
 
 use SixtyNine\Cloud\TextListFilter\OrientationVisitor;
 use SixtyNine\CloudBundle\Entity\WordsList;
+use SixtyNine\CloudBundle\Form\Forms\AddWordsFormType;
+use SixtyNine\CloudBundle\Form\Forms\CreateWordsListFormType;
+use SixtyNine\CloudBundle\Form\Forms\ImportUrlFormType;
 use SixtyNine\CloudBundle\Manager\WordListsManager;
 use SixtyNine\CloudBundle\Repository\WordRepository;
 use SixtyNine\CloudBundle\Repository\WordsListRepository;
@@ -61,10 +64,10 @@ class WordsController extends Controller
      */
     public function viewAction(Request $request, WordsList $list)
     {
-        $addWordsForm = $this->createForm('SixtyNine\CloudBundle\Form\Forms\AddWordsFormType');
+        $addWordsForm = $this->createForm(AddWordsFormType::class);
         $addWordsForm->handleRequest($request);
 
-        $filtersForm = $this->createForm('SixtyNine\CloudBundle\Form\Forms\ImportUrlFormType');
+        $filtersForm = $this->createForm(ImportUrlFormType::class);
         $filtersForm->handleRequest($request);
 
         return $this->render(
@@ -96,7 +99,7 @@ class WordsController extends Controller
     public function newAction(Request $request)
     {
         $form = $this->createForm(
-            'SixtyNine\CloudBundle\Form\Forms\CreateWordsListFormType',
+            CreateWordsListFormType::class,
             array(
                 'action' => $this->generateUrl('sn_words_create'),
                 'method' => 'POST',
@@ -119,7 +122,7 @@ class WordsController extends Controller
      */
     public function createAction(Request $request)
     {
-        $form = $this->createForm('SixtyNine\CloudBundle\Form\Forms\CreateWordsListFormType');
+        $form = $this->createForm(CreateWordsListFormType::class);
         $form->handleRequest($request);
 
         // TODO: if fails --> goto list
@@ -140,7 +143,7 @@ class WordsController extends Controller
      */
     public function addWordsAction(Request $request, WordsList $list)
     {
-        $form = $this->createForm('SixtyNine\CloudBundle\Form\Forms\AddWordsFormType');
+        $form = $this->createForm(AddWordsFormType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -162,7 +165,7 @@ class WordsController extends Controller
      */
     public function importWordsAction(Request $request, WordsList $list)
     {
-        $form = $this->createForm('SixtyNine\CloudBundle\Form\Forms\ImportUrlFormType');
+        $form = $this->createForm(ImportUrlFormType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

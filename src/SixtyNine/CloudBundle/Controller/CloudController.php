@@ -8,6 +8,7 @@ use Imagine\Image\Point;
 use SixtyNine\CloudBundle\Cloud\Placer\CircularPlacer;
 use SixtyNine\CloudBundle\Cloud\Placer\WordlePlacer;
 use SixtyNine\CloudBundle\Entity\Cloud;
+use SixtyNine\CloudBundle\Form\Forms\CreateCloudFormType;
 use SixtyNine\CloudBundle\Manager\CloudManager;
 use SixtyNine\CloudBundle\Manager\FontsManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -35,7 +36,7 @@ class CloudController extends Controller
     public function createAction(Request $request)
     {
         $form = $this->createForm(
-            'SixtyNine\CloudBundle\Form\Forms\CreateCloudFormType',
+            CreateCloudFormType::class,
             array(),
             array('fonts_manager' => $this->fontsManager)
         );
