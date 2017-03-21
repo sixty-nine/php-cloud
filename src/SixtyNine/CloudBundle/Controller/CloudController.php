@@ -58,7 +58,8 @@ class CloudController extends Controller
 
     public function generateAction(Cloud $cloud)
     {
-        $this->cloudManager->generateCloudWords($cloud, 20, 60);
+        // TODO: un-hard-code
+        $this->cloudManager->generateCloudWords($cloud, 10, 60);
         $this->cloudManager->placeWords($cloud);
 
         return $this->redirectToRoute('sn_cloud_view', array('id' => $cloud->getId()));

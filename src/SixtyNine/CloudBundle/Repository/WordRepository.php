@@ -40,4 +40,17 @@ class WordRepository extends \Doctrine\ORM\EntityRepository
 
         return $qb->getQuery()->execute();
     }
+
+    public function getMaxCount(WordsList $list)
+    {
+        return $this
+            ->createQueryBuilder('w')
+            ->select('MAX(w.count)')
+            ->setMaxResults(1)
+            ->andWhere('w.list = :list')
+            ->setParameter('list', $list)
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
+    }
 }

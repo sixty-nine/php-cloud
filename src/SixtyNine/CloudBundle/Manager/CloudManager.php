@@ -8,16 +8,19 @@ use Imagine\Gd\Imagine;
 use Imagine\Image\Box;
 use Imagine\Image\Color;
 use Imagine\Image\Point;
+use SixtyNine\CloudBundle\Cloud\FontSize\BoostFontSizeGenerator;
+use SixtyNine\CloudBundle\Cloud\FontSize\DimFontSizeGenerator;
+use SixtyNine\CloudBundle\Cloud\FontSize\LinearFontSizeGenerator;
 use SixtyNine\CloudBundle\Cloud\Placer\CircularPlacer;
-use SixtyNine\CloudBundle\Cloud\FontSizeGenerator;
-use SixtyNine\CloudBundle\Cloud\Usher;
 use SixtyNine\CloudBundle\Cloud\Placer\WordlePlacer;
+use SixtyNine\CloudBundle\Cloud\Usher;
 use SixtyNine\CloudBundle\Entity\Account;
 use SixtyNine\CloudBundle\Entity\Cloud;
 use SixtyNine\CloudBundle\Entity\CloudWord;
 use SixtyNine\CloudBundle\Entity\Word;
 use SixtyNine\CloudBundle\Entity\WordsList;
 use SixtyNine\CloudBundle\Repository\CloudRepository;
+use SixtyNine\CloudBundle\Repository\WordRepository;
 use SixtyNine\CloudBundle\Repository\WordsListRepository;
 
 class CloudManager
@@ -85,12 +88,15 @@ class CloudManager
     {
         $this->cloudRepo->deleteWords($cloud);
 
-        $words = $this->em
-            ->getRepository('SixtyNineCloudBundle:Word')
-            ->getWordsOrdered($cloud->getList())
+        /** @var WordRepository $wordRepo */
+        $wordRepo = $this->em->getRepository('SixtyNineCloudBundle:Word');
+
+        $words = $wordRepo->getWordsOrdered($cloud->getList())
         ;
 
-        $sizeGenerator = new FontSizeGenerator($minFontSize, $maxFontSize);
+        $maxCount = $wordRepo->getMaxCount($cloud->getList());
+
+        $sizeGenerator = new BoostFontSizeGenerator($minFontSize, $maxFontSize, $maxCount);
 
         /** @var Word $word */
         foreach ($words as $word) {
