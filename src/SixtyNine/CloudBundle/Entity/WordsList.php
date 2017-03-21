@@ -127,7 +127,7 @@ class WordsList
      */
     public function addWord(Word $word)
     {
-        if ($this->words->contains($word)) {
+        if (!$this->words->contains($word)) {
             $this->words->add($word);
         }
 
