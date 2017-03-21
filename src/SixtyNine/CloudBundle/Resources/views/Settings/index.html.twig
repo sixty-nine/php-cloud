@@ -1,0 +1,21 @@
+{% extends 'SixtyNineCloudBundle::layout.html.twig' %}
+
+{% set curPage = 'palette' %}
+{% set pageTitle = 'Settigns' | trans %}
+{% set pageHeader = 'Settings' | trans %}
+
+{% block body %}
+    <div>
+        <a class="btn btn-link" href="{{ path('sn_settings_fonts') }}">
+            {{ 'Preview fonts' | trans }}
+        </a>
+    </div>
+    <div>
+        <a class="btn btn-link" href="{{ path('sn_settings_palettes') }}">
+            {{ 'View palettes' | trans }}
+        </a>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+{% endblock %}

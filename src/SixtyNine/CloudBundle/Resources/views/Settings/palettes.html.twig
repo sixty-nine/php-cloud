@@ -1,12 +1,12 @@
 {% extends 'SixtyNineCloudBundle::layout.html.twig' %}
 
 {% set curPage = 'palette' %}
-{% set pageTitle = 'Palettes' | trans %}
-{% set pageHeader = 'Palettes' | trans %}
-{% set pageSubHeader = 'Home' | trans %}
+{% set pageTitle = 'Settigns' | trans %}
+{% set pageHeader = 'Settings' | trans %}
+{% set pageSubHeader = 'Palettes' | trans  %}
 
 {% block body %}
-    <div class="row palettes">
+    <section class="palettes">
         {% for palette in palettes %}
             <div class="palette">
                 <div class="name">{{ palette.name }}</div>
@@ -17,8 +17,7 @@
                 </div>
             </div>
         {% endfor %}
-    </div>
-
+    </section>
 {% endblock %}
 
 {% block javascripts %}

@@ -1,0 +1,19 @@
+{% extends 'SixtyNineCloudBundle::layout.html.twig' %}
+
+{% set curPage = 'palette' %}
+{% set pageTitle = 'Settigns' | trans %}
+{% set pageHeader = 'Settings' | trans %}
+{% set pageSubHeader = 'Fonts' | trans  %}
+
+{% block body %}
+    <section class="fonts">
+        {% for font in fonts %}
+            <div class="font">
+                <img src="{{ path('sn_settings_preview_font', {'name': font.name}) }}" />
+            </div>
+        {% endfor %}
+    </section>
+{% endblock %}
+
+{% block javascripts %}
+{% endblock %}

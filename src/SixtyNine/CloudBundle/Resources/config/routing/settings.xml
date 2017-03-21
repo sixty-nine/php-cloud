@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<routes xmlns="http://symfony.com/schema/routing"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
+
+    <route id="sn_settings" path="/" methods="GET">
+        <default key="_controller">SixtyNineCloudBundle:Settings:index</default>
+    </route>
+
+    <route id="sn_settings_fonts" path="/fonts" methods="GET">
+        <default key="_controller">SixtyNineCloudBundle:Settings:fonts</default>
+    </route>
+
+    <route id="sn_settings_palettes" path="/palettes" methods="GET">
+        <default key="_controller">SixtyNineCloudBundle:Settings:palettes</default>
+    </route>
+
+    <route id="sn_settings_preview_font" path="/fonts/preview/{name}" methods="GET">
+        <default key="_controller">SixtyNineCloudBundle:Settings:previewFont</default>
+    </route>
+
+</routes>

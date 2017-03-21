@@ -103,4 +103,5 @@ fos_js_routing:
     routes_to_expose:
         - sn_words_view
         - sn_words_duplicate
+        - sn_settings_preview_font
         - "^cloud_api_.*"
