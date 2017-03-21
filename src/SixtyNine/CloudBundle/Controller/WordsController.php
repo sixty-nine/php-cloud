@@ -3,13 +3,9 @@
 namespace SixtyNine\CloudBundle\Controller;
 
 use SixtyNine\Cloud\TextListFilter\OrientationVisitor;
-use SixtyNine\CloudBundle\Cloud\Filters\ChangeCase;
-use SixtyNine\CloudBundle\Cloud\Filters\Filters;
-use SixtyNine\CloudBundle\Cloud\Filters\RemoveByLength;
-use SixtyNine\CloudBundle\Cloud\Filters\RemoveCharacters;
-use SixtyNine\CloudBundle\Cloud\Filters\RemoveNumbers;
-use SixtyNine\CloudBundle\Cloud\Filters\RemoveTrailingCharacters;
 use SixtyNine\CloudBundle\Entity\WordsList;
+use SixtyNine\CloudBundle\Manager\WordListsManager;
+use SixtyNine\CloudBundle\Repository\WordRepository;
 use SixtyNine\CloudBundle\Repository\WordsListRepository;
 use SixtyNine\CoreBundle\Controller\Controller;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -21,12 +17,18 @@ class WordsController extends Controller
 {
     /** @var WordsListRepository */
     protected $listRepo;
+    /** @var WordListsManager */
+    protected $listsManager;
+    /** @var WordRepository */
+    protected $wordsRepo;
 
     public function setContainer(ContainerInterface $container = null)
     {
         parent::setContainer($container);
 
         $this->listRepo = $this->getRepository('SixtyNineCloudBundle:WordsList');
+        $this->listsManager = $this->get('sn_cloud.word_lists_manager');
+        $this->wordsRepo = $this->getRepository('SixtyNineCloudBundle:WordsList');
     }
 
     public function indexAction()
@@ -146,7 +148,7 @@ class WordsController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
 
             $text = $form->get('text')->getData();
-            $this->get('sn_cloud.word_lists_manager')->importText($list, $text);
+            $this->listsManager->importText($list, $text);
 
             return $this->redirectToRoute('sn_words_view', array('id' => $list->getId()));
         }
@@ -168,34 +170,9 @@ class WordsController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
 
             $url = $form->get('url')->getData();
-            $builder = $this->get('sn_cloud.cloud_builder');
 
-            $filters = new Filters();
-
-            if ($form->get('changeCaseEnabled')->getData()) {
-                $filters->addFilter(
-                    new ChangeCase($form->get('case')->getData())
-                );
-            }
-            if ($form->get('removeNumbersEnabled')) {
-                $filters->addFilter(new RemoveNumbers());
-            }
-            if ($form->get('removeUnwantedCharEnabled')) {
-                $filters->addFilter(new RemoveCharacters());
-            }
-            if ($form->get('removeTrailingCharEnabled')) {
-                $filters->addFilter(new RemoveTrailingCharacters());
-            }
-            if ($form->get('removeByLengthEnabled')) {
-                $min = $form->get('minLength')->getData();
-                $max = $form->get('maxLength')->getData();
-
-                if ($min || $max) {
-                    $filters->addFilter(new RemoveByLength($min, $max));
-                }
-            }
-
-            $this->get('sn_cloud.word_lists_manager')->importUrl($list, $url, 100, $filters);
+            $filters = $this->listsManager->getFiltersFromData($form->getData());
+            $this->listsManager->importUrl($list, $url, 100, $filters);
 
             return $this->redirectToRoute('sn_words_view', array('id' => $list->getId()));
         }
@@ -210,10 +187,7 @@ class WordsController extends Controller
 
     public function randomizeOrientationsAction(WordsList $list, $orientation)
     {
-        $this
-            ->getRepository('SixtyNineCloudBundle:WordsList')
-            ->randomizeWordsOrientation($list, (int)$orientation)
-        ;
+        $this->listRepo->randomizeWordsOrientation($list, (int)$orientation);
         return $this->redirectToRoute('sn_words_view', array('id' => $list->getId()));
     }
 
@@ -232,10 +206,8 @@ class WordsController extends Controller
             throw new NotFoundHttpException('Type not found');
         }
 
-        $this
-            ->getRepository('SixtyNineCloudBundle:WordsList')
-            ->randomizeWordsColors($list, $palette, $type)
-        ;
+        $this->listRepo->randomizeWordsColors($list, $palette, $type);
+
         return $this->redirectToRoute('sn_words_view', array('id' => $list->getId()));
     }
 }

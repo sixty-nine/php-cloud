@@ -4,9 +4,9 @@ namespace SixtyNine\CloudBundle\Cloud;
 
 use Imagine\Image\Box;
 use Imagine\Image\BoxInterface;
-use Imagine\Image\FontInterface;
 use Imagine\Image\Point;
 use Imagine\Image\PointInterface;
+use SixtyNine\CloudBundle\Cloud\Placer\PlacerInterface;
 
 /**
  * Responsible to find a place for the word in the cloud
@@ -22,7 +22,7 @@ class Usher
     /** @var \SixtyNine\CloudBundle\Cloud\Mask */
     protected $mask;
 
-    /** @var \SixtyNine\CloudBundle\Cloud\PlacerInterface */
+    /** @var \SixtyNine\CloudBundle\Cloud\Placer\PlacerInterface */
     protected $placer;
 
     public function __construct($imgWidth, $imgHeight, PlacerInterface $placer, $maxTries = self::DEFAULT_MAX_TRIES)

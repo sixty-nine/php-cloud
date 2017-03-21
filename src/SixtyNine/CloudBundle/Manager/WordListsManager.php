@@ -10,6 +10,11 @@ use SixtyNine\CloudBundle\Entity\Word;
 use SixtyNine\CloudBundle\Entity\WordsList;
 use SixtyNine\CloudBundle\Repository\WordRepository;
 use SixtyNine\CloudBundle\Repository\WordsListRepository;
+use SixtyNine\CloudBundle\Cloud\Filters\ChangeCase;
+use SixtyNine\CloudBundle\Cloud\Filters\RemoveByLength;
+use SixtyNine\CloudBundle\Cloud\Filters\RemoveCharacters;
+use SixtyNine\CloudBundle\Cloud\Filters\RemoveNumbers;
+use SixtyNine\CloudBundle\Cloud\Filters\RemoveTrailingCharacters;
 
 class WordListsManager
 {
@@ -214,5 +219,35 @@ class WordListsManager
         }
 
         $this->em->flush();
+    }
+
+    public function getFiltersFromData($data)
+    {
+        $filters = new Filters();
+
+        if ($data['changeCaseEnabled']) {
+            $filters->addFilter(
+                new ChangeCase($data['case'])
+            );
+        }
+        if (array_key_exists('removeNumbersEnabled', $data)) {
+            $filters->addFilter(new RemoveNumbers());
+        }
+        if (array_key_exists('removeUnwantedCharEnabled', $data)) {
+            $filters->addFilter(new RemoveCharacters());
+        }
+        if (array_key_exists('removeTrailingCharEnabled', $data)) {
+            $filters->addFilter(new RemoveTrailingCharacters());
+        }
+        if (array_key_exists('removeByLengthEnabled', $data)) {
+            $min = $data['minLength'];
+            $max = $data['maxLength'];
+
+            if ($min || $max) {
+                $filters->addFilter(new RemoveByLength($min, $max));
+            }
+        }
+
+        return $filters;
     }
 }

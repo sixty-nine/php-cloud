@@ -1,6 +1,6 @@
 <?php
 
-namespace SixtyNine\CloudBundle\Cloud;
+namespace SixtyNine\CloudBundle\Cloud\Placer;
 
 use Imagine\Image\PointInterface;
 

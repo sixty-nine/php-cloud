@@ -2,11 +2,8 @@
 
 namespace SixtyNine\CloudBundle\Repository;
 
-use SixtyNine\Cloud\Model\Words;
-use SixtyNine\CloudBundle\Builder\CloudBuilder;
 use SixtyNine\CloudBundle\Entity\Account;
 use SixtyNine\CloudBundle\Entity\Cloud;
-use SixtyNine\CloudBundle\Entity\Word;
 
 /**
  * CloudRepository
