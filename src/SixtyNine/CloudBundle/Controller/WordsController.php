@@ -135,6 +135,25 @@ class WordsController extends Controller
         return $this->redirectToRoute('sn_words_view', array('id' => $list->getId()));
     }
 
+    public function editAction(Request $request, WordsList $list)
+    {
+        $form = $this->createForm(CreateWordsListFormType::class, $list);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $this->getDoctrine()->getManager()->flush();
+            return $this->redirectToRoute('sn_words_list');
+        }
+
+        return $this->render(
+            'SixtyNineCloudBundle:Words:edit.html.twig',
+            array(
+                'form' => $form->createView(),
+            )
+        );
+    }
+
     /**
      * Add one or more word to a word list.
      * @param Request $request

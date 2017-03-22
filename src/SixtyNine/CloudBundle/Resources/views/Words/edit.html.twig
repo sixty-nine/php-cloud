@@ -1,0 +1,16 @@
+{% extends 'SixtyNineCloudBundle::layout.html.twig' %}
+
+{% set curPage = 'words' %}
+{% set pageTitle = 'Edit list' | trans  %}
+{% set pageHeader = 'List' | trans  %}
+{% set pageSubHeader = 'Edit' | trans  %}
+
+{% block body %}
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <div class="pull-right">
+        <a href="{{ path('sn_words_list') }}" class="btn btn-default">{{ 'Cancel' | trans }}</a>
+        <input type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}" />
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

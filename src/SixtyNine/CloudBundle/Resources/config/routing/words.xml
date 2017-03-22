@@ -26,6 +26,11 @@
         <requirement key="id">\d+</requirement>
     </route>
 
+    <route id="sn_words_edit" path="/{id}/edit" methods="GET|POST">
+        <default key="_controller">SixtyNineCloudBundle:Words:edit</default>
+        <requirement key="id">\d+</requirement>
+    </route>
+
     <route id="sn_words_add_words" path="/{id}/words/add" methods="POST">
         <default key="_controller">SixtyNineCloudBundle:Words:addWords</default>
         <requirement key="id">\d+</requirement>

@@ -10,18 +10,25 @@ void function (config) {
         ui: {
             viewWordsButton: 'button[data-role="view-words"]',
             duplicateButton: 'button[data-role="duplicate"]',
+            editButton: 'button[data-role="edit"]',
             removeListButton: 'button[data-role="remove-list"]'
         },
 
         events: {
             'click @ui.viewWordsButton': 'viewWords',
             'click @ui.duplicateButton': 'duplicateList',
+            'click @ui.editButton': 'editList',
             'click @ui.removeListButton': 'removeList'
         },
 
         viewWords: function (e) {
             SnCloud.showSpinner();
             location.href = Routing.generate('sn_words_view', {id: this.model.get('id')});
+        },
+
+        editList: function (e) {
+            SnCloud.showSpinner();
+            location.href = Routing.generate('sn_words_edit', {id: this.model.get('id')});
         },
 
         duplicateList: function (e) {
