@@ -8,7 +8,8 @@
 /app/phpunit.xml
 /build/
 /vendor/
-/bin/
+/bin/*
+!bin/spectre-rebuild
 /composer.phar
 
 web/assets/vendor/

@@ -1,0 +1,9 @@
+#!/bin/bash
+BASE_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+
+SPECTRE_DIR=/home/dev/php-word-cloud/spectre.css
+SPECTRE_PATH=${SPECTRE_DIR}/dist/spectre.css
+
+cd $SPECTRE_DIR
+gulp && cp $SPECTRE_PATH $BASE_DIR/../web/assets/my-spectre.css
+cd -
