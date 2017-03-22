@@ -80,6 +80,56 @@ class CloudController extends Controller
         );
     }
 
+    public function editAction(Request $request, Cloud $cloud)
+    {
+        $data = array(
+            'words' => $cloud->getList(),
+            'placer' => $cloud->getPlacer(),
+            'font' => $cloud->getFont(),
+            'color' => $cloud->getBackgroundColor(),
+            'imageWidth' => $cloud->getWidth(),
+            'imageHeight' => $cloud->getHeight(),
+        );
+
+        $form = $this->createForm(
+            CreateCloudFormType::class,
+            $data,
+            array(
+                'fonts_manager' => $this->fontsManager,
+                'placers_manager' => $this->placersManager,
+            )
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $font = $form->get('font')->getData();
+            $color = $form->get('color')->getData();
+            $list = $form->get('words')->getData();
+            $width = $form->get('imageWidth')->getData();
+            $height = $form->get('imageHeight')->getData();
+            $placerName = $form->get('placer')->getData();
+
+            $cloud = $this->cloudManager->saveCloud(
+                $cloud, $list, $font, $color, $placerName, $width, $height
+            );
+
+            return $this->redirectToRoute('sn_cloud_generate', array(
+                'id' => $cloud->getId(),
+                'min' => $form->get('minSize')->getData(),
+                'max' => $form->get('maxSize')->getData(),
+                'gen' => $form->get('fontSize')->getData(),
+            ));
+        }
+
+        return $this->render(
+            'SixtyNineCloudBundle:Cloud:edit.html.twig',
+            array(
+                'form' => $form->createView(),
+            )
+        );
+    }
+
     public function generateAction(Request $request, Cloud $cloud)
     {
         $minSize = $request->get('minSize', 10);

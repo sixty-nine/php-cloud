@@ -108,4 +108,5 @@ fos_js_routing:
         - sn_cloud_view
         - sn_cloud_generate
         - sn_cloud_render
+        - sn_cloud_edit
         - "^cloud_api_.*"

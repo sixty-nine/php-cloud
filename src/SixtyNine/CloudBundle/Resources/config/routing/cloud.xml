@@ -22,6 +22,11 @@
         <requirement key="id">\d+</requirement>
     </route>
 
+    <route id="sn_cloud_edit" path="/{id}/edit" methods="GET|POST">
+        <default key="_controller">SixtyNineCloudBundle:Cloud:edit</default>
+        <requirement key="id">\d+</requirement>
+    </route>
+
     <route id="sn_cloud_render" path="/{id}/render" methods="GET|POST">
         <default key="_controller">SixtyNineCloudBundle:Cloud:render</default>
         <requirement key="id">\d+</requirement>

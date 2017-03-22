@@ -105,6 +105,34 @@ class CloudManager
     }
 
     /**
+     * Update a cloud with new data.
+     * @param Cloud $cloud
+     * @param WordsList $list
+     * @param string $font
+     * @param string $color
+     * @param string $placerName
+     * @param int $width
+     * @param int $height
+     * @return Cloud
+     */
+    public function saveCloud(Cloud $cloud, WordsList $list, $font, $color, $placerName, $width = 800, $height = 600)
+    {
+        $cloud
+            ->setList($list)
+            ->setFont($font)
+            ->setWidth($width)
+            ->setHeight($height)
+            ->setPlacer($placerName)
+            ->setBackgroundColor($color)
+        ;
+
+        $this->em->persist($cloud);
+        $this->em->flush();
+
+        return $cloud;
+    }
+
+    /**
      * Delete a $cloud.
      * @param Cloud $cloud
      */

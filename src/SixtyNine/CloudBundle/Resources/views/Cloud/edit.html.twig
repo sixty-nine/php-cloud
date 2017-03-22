@@ -1,0 +1,38 @@
+{% extends 'SixtyNineCloudBundle::layout.html.twig' %}
+
+{% set curPage = 'cloud' %}
+{% set pageTitle = 'Edit cloud' | trans  %}
+{% set pageHeader = 'Cloud' | trans  %}
+{% set pageSubHeader = 'Edit' | trans  %}
+
+{% block body %}
+<div class="row">
+    <div class="col-sm-12">
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <div class="pull-right">
+            <a href="{{ path('sn_cloud_index') }}" class="btn btn-default">{{ 'Cancel' | trans }}</a>
+            <input type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}" />
+        </div>
+        {{ form_end(form) }}
+    </div>
+</div>
+
+{% endblock %}
+
+
+{% block javascripts %}
+
+    <script type="text/javascript">
+
+        $(function () {
+            new Huebee('#create_cloud_form_color', {
+                setBGColor: true,
+                saturations: 2,
+                notation: 'hex'
+            });
+        });
+
+    </script>
+
+{% endblock %}

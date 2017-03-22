@@ -10,18 +10,25 @@ void function (config) {
         ui: {
             viewButton: 'a[data-role="view"]',
             regenButton: 'a[data-role="regenerate"]',
+            editButton: 'a[data-role="edit"]',
             removeButton: 'a[data-role="remove"]'
         },
 
         events: {
             'click @ui.viewButton': 'viewCloud',
             'click @ui.regenButton': 'regenerateCloud',
+            'click @ui.editButton': 'editCloud',
             'click @ui.removeButton': 'removeCloud'
         },
 
         viewCloud: function () {
             SnCloud.showSpinner();
             location.href = Routing.generate('sn_cloud_view', {id: this.model.get('id')});
+        },
+
+        editCloud: function () {
+            SnCloud.showSpinner();
+            location.href = Routing.generate('sn_cloud_edit', {id: this.model.get('id')});
         },
 
         regenerateCloud: function () {
