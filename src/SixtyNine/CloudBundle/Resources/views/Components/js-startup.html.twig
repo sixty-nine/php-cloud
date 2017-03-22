@@ -25,8 +25,8 @@
          */
         startup: function () {
             var p = $.Deferred();
-            SnCloud.showSpinner();
             $(function () {
+                SnCloud.showSpinner();
                 // Add a "then" callback just before resolving the promise so that it is the last one called.
                 p.then(function () {
                     SnCloud.hideSpinner();

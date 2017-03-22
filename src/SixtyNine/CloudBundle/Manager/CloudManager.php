@@ -98,6 +98,19 @@ class CloudManager
     }
 
     /**
+     * Delete a $cloud.
+     * @param Cloud $cloud
+     */
+    public function deleteCloud(Cloud $cloud)
+    {
+        foreach ($cloud->getWords() as $word) {
+            $this->em->remove($word);
+        }
+        $this->em->remove($cloud);
+        $this->em->flush();
+    }
+
+    /**
      * Generate the words of the $cloud.
      * Set their font size using the given $generator (linear|boost|dim).
      * @param Cloud $cloud

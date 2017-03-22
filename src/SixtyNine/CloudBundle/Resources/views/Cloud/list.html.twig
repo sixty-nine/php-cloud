@@ -11,45 +11,62 @@
 {% endblock %}
 
 {% block body %}
-<section class="clouds">
-    {% for cloud in clouds %}
-    <div class="tile tile-centered">
-        <div class="tile-icon">
-            <div class="example-tile-icon">
-                <a href="{{ path('sn_cloud_view', {'id': cloud.id}) }}">
-                    <img src="{{ path('sn_cloud_render', {'id': cloud.id, 'width': 100, 'height': 100}) }}" />
-                </a>
-            </div>
-        </div>
-        <div class="tile-content">
-            <div class="tile-title">
-                List "{{ cloud.list.name }}" ·
-                {{ cloud.list.words | length }} words
-            </div>
-            <div class="tile-subtitle">Created at {{ cloud.createdAt | date("d-m-Y h:i") }}</div>
-        </div>
-        <div class="tile-action btn-group">
-            <a href="{{ path('sn_cloud_generate', {'id': cloud.id}) }}" class="btn">
-                {{ 'Regenerate' | trans }}
-            </a>
-            <a href="#" class="btn">
-                {{ 'Edit' | trans }}
-            </a>
-            <a href="#" class="btn">
-                {{ 'Delete' | trans }}
-            </a>
-        </div>
-    </div>
-    {% endfor %}
-</section>
+<section class="clouds"></section>
 {% endblock %}
 
 
 {% block javascripts %}
 
+    {%- include 'SixtyNineCloudBundle:Components:js-startup.html.twig' -%}
+
+    <script type="text/template" id="sn-cloud-item-template">
+        <div class="tile tile-centered">
+            <div class="tile-icon">
+                <div class="example-tile-icon">
+                    <a href="#" data-role="view">
+                        <img src="<%= imageUrl %>" />
+                    </a>
+                </div>
+            </div>
+            <div class="tile-content">
+                <div class="tile-title">
+                    List "<%= list %>" ·
+                    <%= words %> words
+                </div>
+                <div class="tile-subtitle">Created at <%= createdAt %></div>
+            </div>
+            <div class="tile-action btn-group">
+                <a href="#" class="btn" data-role="regenerate">
+                {{ 'Regenerate' | trans }}
+            </a>
+                <a href="#" class="btn">
+                {{ 'Edit' | trans }}
+            </a>
+                <a href="#" class="btn" data-role="remove">
+                {{ 'Remove' | trans }}
+            </a>
+            </div>
+        </div>
+    </script>
+
     <script type="text/javascript">
 
-        $(function () {
+        var data = [
+            {% for cloud in clouds -%}
+            {
+                id: {{ cloud.id }},
+                list: '{{ cloud.list.name }}',
+                words: {{ cloud.list.words | length }},
+                createdAt: '{{ cloud.createdAt | date("d-m-Y h:i") }}',
+                imageUrl: '{{ path('sn_cloud_render', {'id': cloud.id, 'width': 100, 'height': 100}) }}'
+            },
+            {% endfor -%}
+        ];
+
+        SnCloud.fn.startup().then(function () {
+            new SnCloud.Views.CloudsView({
+                collection: new SnCloud.Models.CloudCollection(data)
+            }).render();
         });
 
     </script>

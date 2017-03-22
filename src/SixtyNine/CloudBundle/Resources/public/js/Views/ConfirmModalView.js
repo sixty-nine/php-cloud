@@ -1,6 +1,8 @@
 /*global SnCloud, Backbone */
 void function (config) {
 
+    'use strict';
+
     SnCloud.Views.ModalConfirmView = Mn.View.extend({
 
         template: '#sn-cloud-modal-confirm-template',

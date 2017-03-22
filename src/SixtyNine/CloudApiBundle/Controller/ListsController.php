@@ -16,27 +16,13 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 /**
  * @FOS\NamePrefix("cloud_api_")
  */
-class ListsController extends FOSRestController
+class ListsController extends ApiController
 {
-    /** @var \SixtyNine\CloudBundle\Manager\WordListsManager */
-    protected $listsManager;
-
-    /** @var \Symfony\Component\Form\FormFactory */
-    protected $formFactory;
-
-    public function setContainer(ContainerInterface $container = null)
-    {
-        parent::setContainer($container);
-        // TODO DI would be better, but then the controller needs to be a service
-        $this->listsManager = $this->get('sn_cloud.word_lists_manager');
-        $this->formFactory = $this->get('form.factory');
-    }
-
     /**
      * Get word lists of the current user.
      * @return \Symfony\Component\HttpFoundation\Response
      * @ApiDoc(
-     *      section="Word lists",
+     *      section="Lists",
      *      statusCodes={
      *          200="Successful",
      *      }
@@ -51,7 +37,7 @@ class ListsController extends FOSRestController
     /**
      * The the details of a single words list.
      * @ApiDoc(
-     *      section="Word lists",
+     *      section="Lists",
      *      statusCodes={
      *          200="Successful",
      *          403="Not authorized",
@@ -68,7 +54,7 @@ class ListsController extends FOSRestController
     /**
      * Create a new words list.
      * @ApiDoc(
-     *      section="Word lists",
+     *      section="Lists",
      *      statusCodes={
      *          200="Successful",
      *          400="Bad request",
@@ -94,7 +80,7 @@ class ListsController extends FOSRestController
     /**
      * Update an existing words list.
      * @ApiDoc(
-     *      section="Word lists",
+     *      section="Lists",
      *      statusCodes={
      *          200="Successful",
      *          400="Bad request",
@@ -123,7 +109,7 @@ class ListsController extends FOSRestController
     /**
      * Delete a words list.
      * @ApiDoc(
-     *      section="Word lists",
+     *      section="Lists",
      *      statusCodes={
      *          200="Successful",
      *          403="Not authorized",
@@ -159,7 +145,7 @@ class ListsController extends FOSRestController
     /**
      * Sort the words in a words list.
      * @ApiDoc(
-     *      section="Word lists",
+     *      section="Lists",
      *      statusCodes={
      *          200="Successful",
      *          400="Bad request",
@@ -317,7 +303,7 @@ class ListsController extends FOSRestController
     /**
      * Filter the words list.
      * @ApiDoc(
-     *      section="Word lists",
+     *      section="Lists",
      *      statusCodes={
      *          200="Successful",
      *          400="Bad request",
@@ -335,71 +321,5 @@ class ListsController extends FOSRestController
         $list = $this->getMyList($id);
         // TODO: implement
         return $this->handleView($this->view($list, 200));
-    }
-
-    /**
-     * Get the WordsList given by $id.
-     * Throws an exception if the list does not exist or the current user
-     * is not the owner of the list.
-     *
-     * @param int $id
-     * @return null|WordsList
-     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     */
-    protected function getMyList($id)
-    {
-        if (null === $list = $this->listsManager->getList($id)) {
-            throw $this->createNotFoundException('List not found');
-        }
-
-        if ($list->getUser() !== $this->getUser()) {
-            throw $this->createAccessDeniedException();
-        }
-
-        return $list;
-    }
-
-    /**
-     * Get the Word given by $wordId then check it belongs to the WordsList given
-     * by $listId.
-     * Throws an exception if the word does not exist or the current user is not
-     * the owner of the list containing the word.
-     * @param int $listId
-     * @param int $wordId
-     * @return null|Word
-     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
-     * @throws \Symfony\Component\HttpKernel\Exception\BadRequestHttpException
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     */
-    protected function getMyWord($listId, $wordId)
-    {
-        if (null === $word = $this->listsManager->getWord($wordId)) {
-            throw $this->createNotFoundException('Word not found');
-        }
-
-        if ((int)$listId !== $word->getList()->getId()) {
-            throw new BadRequestHttpException('Mismatch');
-        }
-
-        if ($word->getUser() !== $this->getUser()) {
-            throw $this->createAccessDeniedException();
-        }
-
-        return $word;
-    }
-
-    /**
-     * Validate the given $data against the $formType form.
-     * @param $formType
-     * @param $data
-     * @param Request $request
-     * @return bool
-     */
-    protected function isValidData($formType, $data, Request $request)
-    {
-        $form = $this->formFactory->create($formType, $data, array('method' => $request->getMethod()));
-        $form->submit($data);
-        return $form->isValid();
     }
 }
