@@ -6,6 +6,8 @@ use Imagine\Image\Box;
 use Imagine\Image\Color;
 use Imagine\Image\Point;
 use SixtyNine\CloudBundle\Cloud\Placer\CircularPlacer;
+use SixtyNine\CloudBundle\Cloud\Placer\LinearPlacer;
+use SixtyNine\CloudBundle\Cloud\Placer\SpiranglePlacer;
 use SixtyNine\CloudBundle\Cloud\Placer\WordlePlacer;
 use SixtyNine\CloudBundle\Entity\Cloud;
 use SixtyNine\CloudBundle\Form\Forms\CreateCloudFormType;
@@ -111,7 +113,7 @@ class CloudController extends Controller
         $image = $this->cloudManager->render($cloud, $showBoundingBoxes);
 
         if ($showPlacer) {
-            $placer = new WordlePlacer();
+            $placer = new SpiranglePlacer($cloud->getWidth(), $cloud->getHeight());
             $firstPlace = new Point($cloud->getWidth() / 2, $cloud->getHeight() / 2);
             $this->cloudManager->renderUsher($image, $placer, $firstPlace, new Color('#FF0000'));
         }

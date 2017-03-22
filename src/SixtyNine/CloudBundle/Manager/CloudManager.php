@@ -14,6 +14,7 @@ use SixtyNine\CloudBundle\Cloud\FontSize\BoostFontSizeGenerator;
 use SixtyNine\CloudBundle\Cloud\FontSize\DimFontSizeGenerator;
 use SixtyNine\CloudBundle\Cloud\FontSize\LinearFontSizeGenerator;
 use SixtyNine\CloudBundle\Cloud\Placer\CircularPlacer;
+use SixtyNine\CloudBundle\Cloud\Placer\SpiranglePlacer;
 use SixtyNine\CloudBundle\Cloud\Placer\PlacerInterface;
 use SixtyNine\CloudBundle\Cloud\Placer\WordlePlacer;
 use SixtyNine\CloudBundle\Cloud\Usher;
@@ -153,7 +154,7 @@ class CloudManager
      */
     public function placeWords(Cloud $cloud)
     {
-        $placer = new WordlePlacer();
+        $placer = new SpiranglePlacer($cloud->getWidth(), $cloud->getHeight());
         $usher = new Usher($cloud->getWidth(), $cloud->getHeight(), $placer);
 
         /** @var CloudWord $word */
@@ -246,7 +247,7 @@ class CloudManager
         PlacerInterface $placer,
         PointInterface $firstPlace,
         Color $color,
-        $maxIterations = 1000
+        $maxIterations = 5000
     ) {
         $i = 0;
         $cur = $firstPlace;
