@@ -52,6 +52,12 @@ class Cloud
     protected $font;
 
     /**
+     * @var string
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $placer;
+
+    /**
      * @var Account
      * @ORM\ManyToOne(targetEntity="Account")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
@@ -222,6 +228,24 @@ class Cloud
     public function getWidth()
     {
         return $this->width;
+    }
+
+    /**
+     * @param string $placer
+     * @return $this
+     */
+    public function setPlacer($placer)
+    {
+        $this->placer = $placer;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPlacer()
+    {
+        return $this->placer;
     }
 }
 

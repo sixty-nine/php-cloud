@@ -38,15 +38,20 @@ class CloudManager
     /** @var CloudRepository */
     protected $cloudRepo;
 
+    /** @var PlacerManager */
+    protected $placerManager;
+
     /**
      * Constructor
      * @param EntityManagerInterface $em
+     * @param PlacerManager $placerManager
      */
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(EntityManagerInterface $em, PlacerManager $placerManager)
     {
         $this->em = $em;
         $this->listRepo = $em->getRepository('SixtyNineCloudBundle:WordsList');
         $this->cloudRepo = $em->getRepository('SixtyNineCloudBundle:Cloud');
+        $this->placersManager = $placerManager;
     }
 
     /**
@@ -75,11 +80,12 @@ class CloudManager
      * @param WordsList $list
      * @param string $font
      * @param string $color
+     * @param string $placerName
      * @param int $width
      * @param int $height
      * @return Cloud
      */
-    public function createCloud(Account $user, WordsList $list, $font, $color, $width = 800, $height = 600)
+    public function createCloud(Account $user, WordsList $list, $font, $color, $placerName, $width = 800, $height = 600)
     {
         $cloud = new Cloud();
         $cloud
@@ -88,6 +94,7 @@ class CloudManager
             ->setFont($font)
             ->setWidth($width)
             ->setHeight($height)
+            ->setPlacer($placerName)
             ->setBackgroundColor($color)
         ;
 
@@ -141,7 +148,6 @@ class CloudManager
                 $sizeGenerator = new LinearFontSizeGenerator($minFontSize, $maxFontSize, $maxCount);
         }
 
-
         /** @var Word $word */
         foreach ($words as $word) {
             $cloudWord = new CloudWord();
@@ -167,7 +173,8 @@ class CloudManager
      */
     public function placeWords(Cloud $cloud)
     {
-        $placer = new SpiranglePlacer($cloud->getWidth(), $cloud->getHeight());
+        $placer = $this->placersManager->constructPlacer($cloud->getPlacer());
+//        $placer = new SpiranglePlacer($cloud->getWidth(), $cloud->getHeight());
         $usher = new Usher($cloud->getWidth(), $cloud->getHeight(), $placer);
 
         /** @var CloudWord $word */

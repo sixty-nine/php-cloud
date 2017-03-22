@@ -21,6 +21,9 @@ class CreateCloudFormType extends AbstractType
                 'choice_label' => 'name',
                 'required' => true,
             ))
+            ->add('placer', ChoiceType::class, array(
+                'choices' => $options['placers_manager']->getPlacersList(),
+            ))
             ->add('font', ChoiceType::class, array(
                 'choices' => $options['fonts_manager']->getFontsByName(),
             ))
@@ -48,11 +51,24 @@ class CreateCloudFormType extends AbstractType
                 'data' => 80,
                 'attr' => array('placeholder' => 'Size'),
             ))
+            ->add('imageWidth', IntegerType::class, array(
+                'required' => true,
+                'label' => 'Image width',
+                'data' => 800,
+                'attr' => array('placeholder' => 'Width'),
+            ))
+            ->add('imageHeight', IntegerType::class, array(
+                'required' => true,
+                'label' => 'Image height',
+                'data' => 600,
+                'attr' => array('placeholder' => 'Height'),
+            ))
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setRequired('fonts_manager');
+        $resolver->setRequired('placers_manager');
     }
 }

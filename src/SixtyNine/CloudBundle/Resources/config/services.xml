@@ -14,9 +14,12 @@
 
         <service id="sn_cloud.cloud_manager" class="SixtyNine\CloudBundle\Manager\CloudManager">
             <argument type="service" id="doctrine.orm.entity_manager"/>
+            <argument type="service" id="sn_cloud.placers_manager"/>
         </service>
 
         <service id="sn_cloud.fonts_manager" class="SixtyNine\CloudBundle\Manager\FontsManager"/>
+
+        <service id="sn_cloud.placers_manager" class="SixtyNine\CloudBundle\Manager\PlacerManager"/>
 
     </services>
 

@@ -9,22 +9,9 @@ class SpiranglePlacer implements PlacerInterface
 {
     /** @var int */
     protected $increment = 0;
-    /** @var int */
-    protected $imgWidth;
-    /** @var int */
-    protected $imgHeight;
-
-    public function __construct($imgWidth, $imgHeight)
-    {
-        $this->imgWidth = $imgWidth;
-        $this->imgHeight = $imgHeight;
-    }
 
     protected function sign($n) {
         return ($n > 0) - ($n < 0);
-    }
-
-    public function reset() {
     }
 
     public function getNextPlaceToTry(PointInterface $current)
