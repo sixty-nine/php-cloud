@@ -49,6 +49,21 @@
         </div>
     </script>
 
+    <script type="text/template" id="sn-cloud-no-item-template">
+        <div class="empty">
+            <div class="empty-icon">
+                <i class="fa fa-cloud"></i>
+            </div>
+            <h4 class="empty-title">{{ 'You have no clouds' | trans }}</h4>
+            <p class="empty-subtitle">{{ 'Click the button to create one' | trans }}</p>
+            <div class="empty-action">
+                <a href="{{ path('sn_cloud_create') }}" class="btn">
+                    {{ 'Create a new cloud' | trans }}
+                </a>
+            </div>
+        </div>
+    </script>
+
     <script type="text/javascript">
 
         var data = [

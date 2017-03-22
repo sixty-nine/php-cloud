@@ -43,9 +43,9 @@ void function (config) {
         el: 'section.clouds',
         template: false,
         childView: SnCloud.Views.CloudView,
-//        emptyView: Mn.View.extend({
-//            template: '#sn-cloud-no-list-template'
-//        })
+        emptyView: Mn.View.extend({
+            template: '#sn-cloud-no-item-template'
+        })
     });
 
 }(SnCloud.config);
