@@ -183,7 +183,7 @@ class CloudManager
                 ->setCloud($cloud)
                 ->setPosition(array(0, 0))
                 ->setSize($sizeGenerator->calculateFontSize($word->getCount()))
-                ->setAngle($word->getOrientation() === 'vert' ? 90 : 0)
+                ->setAngle($word->getOrientation() === 'vert' ? 270 : 0)
                 ->setColor($word->getColor())
                 ->setText($word->getText())
                 ->setIsVisible(true)
@@ -221,6 +221,14 @@ class CloudManager
             ;
 
             if ($place) {
+
+                if ($word->getAngle() !== 0) {
+                    $place = new Point(
+                        $place->getX() + $box->getWidth(),
+                        $place->getY() + $box->getHeight()
+                    );
+                }
+
                 $word->setPosition(array((int)$place->getX(), (int)$place->getY()));
             }
         }
@@ -269,12 +277,22 @@ class CloudManager
             );
 
             if ($drawBoundingBoxes) {
-                $image->draw()->polygon(array(
-                    new Point($pos[0], $pos[1]),
-                    new Point($pos[0] + $box[0], $pos[1]),
-                    new Point($pos[0] + $box[0], $pos[1] + $box[1]),
-                    new Point($pos[0], $pos[1] + $box[1]),
-                ), new Color(0xFF0000));
+                if ($word->getAngle() === 0) {
+                    $points = array(
+                        new Point($pos[0], $pos[1]),
+                        new Point($pos[0] + $box[0], $pos[1]),
+                        new Point($pos[0] + $box[0], $pos[1] + $box[1]),
+                        new Point($pos[0], $pos[1] + $box[1]),
+                    );
+                } else {
+                    $points = array(
+                        new Point($pos[0], $pos[1]),
+                        new Point($pos[0] - $box[0], $pos[1]),
+                        new Point($pos[0] - $box[0], $pos[1] - $box[1]),
+                        new Point($pos[0], $pos[1] - $box[1]),
+                    );
+                }
+                $image->draw()->polygon($points, new Color(0xFF0000));
             }
         }
 
