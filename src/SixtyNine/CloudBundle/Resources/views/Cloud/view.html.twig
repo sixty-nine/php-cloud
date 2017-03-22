@@ -15,6 +15,9 @@
             <input type="checkbox" data-role="show-placer" />
             <i class="form-icon"></i> {{ 'Show placer path' | trans }}
         </label>
+        <a class="btn btn-sm" href="{{ path('sn_cloud_generate', {'id': cloud.id}) }}">{{ 'Regenerate' | trans }}</a>
+        <a class="btn btn-sm" href="{{ path('sn_cloud_edit', {'id': cloud.id}) }}">{{ 'Edit cloud' | trans }}</a>
+        <a class="btn btn-sm" href="{{ path('sn_words_view', {'id': cloud.list.id}) }}">{{ 'Edit words' | trans }}</a>
     </form>
 {% endblock %}
 
