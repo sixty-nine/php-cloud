@@ -5,23 +5,34 @@
 {% set pageHeader = 'Cloud' | trans  %}
 {% set pageSubHeader = 'Render' | trans  %}
 
-{% block body %}
-<div class="row">
-    <div class="col-sm-12">
-        <div id="cloud">
-            <img src="{{ image }}"/>
-        </div>
-    </div>
-</div>
+{% block buttons %}
+    <form>
+        <label class="form-checkbox">
+            <input type="checkbox" data-role="show-bb" />
+            <i class="form-icon"></i> {{ 'Show bounding boxes' | trans }}
+        </label>
+        <label class="form-checkbox">
+            <input type="checkbox" data-role="show-placer" />
+            <i class="form-icon"></i> {{ 'Show placer path' | trans }}
+        </label>
+    </form>
+{% endblock %}
 
+{% block body %}
+    <div id="cloud">
+        <img src="{{ image }}"/>
+    </div>
 {% endblock %}
 
 
 {% block javascripts %}
 
+    {%- include 'SixtyNineCloudBundle:Components:js-startup.html.twig' -%}
+
     <script type="text/javascript">
 
-        $(function () {
+        SnCloud.fn.startup().then(function () {
+            new SnCloud.Views.ViewCloudView({cloudId: {{ cloud.id }}}).render();
         });
 
     </script>
