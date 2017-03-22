@@ -34,7 +34,7 @@ class Usher
         $this->placer = $placer;
     }
 
-    public function getPlace($text, BoxInterface $box)
+    public function getPlace(BoxInterface $box)
     {
         $bounds = new Box($this->imgWidth, $this->imgHeight);
         $firstPlace = new Point($this->imgWidth / 2, $this->imgHeight / 2);

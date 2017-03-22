@@ -202,7 +202,6 @@ class CloudManager
     public function placeWords(Cloud $cloud)
     {
         $placer = $this->placersManager->constructPlacer($cloud->getPlacer());
-//        $placer = new SpiranglePlacer($cloud->getWidth(), $cloud->getHeight());
         $usher = new Usher($cloud->getWidth(), $cloud->getHeight(), $placer);
 
         /** @var CloudWord $word */
@@ -214,7 +213,7 @@ class CloudManager
             );
 
             $box = $font->box($word->getText(), $word->getAngle());
-            $place = $usher->getPlace($word->getText(), $box);
+            $place = $usher->getPlace($box);
 
             $word
                 ->setIsVisible((bool)$place)
