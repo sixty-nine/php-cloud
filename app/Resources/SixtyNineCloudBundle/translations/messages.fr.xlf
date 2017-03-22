@@ -273,6 +273,106 @@
         <source>Created at</source>
         <target>Crée le</target>
       </trans-unit>
+        <trans-unit id="e6b391a8d2c4d45902a23a8b6585703d" resname="URL">
+            <source>URL</source>
+            <target>URL</target>
+        </trans-unit>
+        <trans-unit id="dc1ff975a46c75335d6d640abdc0c3a6" resname="Lowercase">
+            <source>Lowercase</source>
+            <target>Minuscules</target>
+        </trans-unit>
+        <trans-unit id="621e7b8ece62fecc55e883252ff2fbe7" resname="Uppercase">
+            <source>Uppercase</source>
+            <target>Majuscules</target>
+        </trans-unit>
+        <trans-unit id="766c5aa97489e51a4c8737e1a95d5149" resname="Uppercase first">
+            <source>Uppercase first</source>
+            <target>Capitaliser</target>
+        </trans-unit>
+        <trans-unit id="76af62a0ecb3168abc14fbd6f285f430" resname="Minimal len">
+            <source>Minimal len</source>
+            <target>Longueur minimale</target>
+        </trans-unit>
+        <trans-unit id="385fef58a48a54af8aeb8bf2f914322f" resname="Maximal len">
+            <source>Maximal len</source>
+            <target>Longueur maximale</target>
+        </trans-unit>
+        <trans-unit id="49ee3087348e8d44e1feda1917443987" resname="Name">
+            <source>Name</source>
+            <target>Nom</target>
+        </trans-unit>
+        <trans-unit id="e5d7968eab2746ca55832fa40d3ca05e" resname="Words list name">
+            <source>Words list name</source>
+            <target>Nom de la liste</target>
+        </trans-unit>
+        <trans-unit id="e713a2687cce6e83d4b4a98eeb58cf3b" resname="Placer">
+            <source>Placer</source>
+            <target>Placeur</target>
+        </trans-unit>
+        <trans-unit id="ae2fd93db7a96c6c8eb65aa02dc03217" resname="Circular">
+            <source>Circular</source>
+            <target>Circulaire</target>
+        </trans-unit>
+        <trans-unit id="ceb98c87480049d033333b1aa79ba293" resname="Wordle">
+            <source>Wordle</source>
+            <target>Wordle</target>
+        </trans-unit>
+        <trans-unit id="915a8e996d6a34c98c8389b1fa242885" resname="Spirangle">
+            <source>Spirangle</source>
+            <target>Spirangle</target>
+        </trans-unit>
+        <trans-unit id="194f5394ae2e9c74dc3c441b92862d1d" resname="Font">
+            <source>Font</source>
+            <target>Fonte</target>
+        </trans-unit>
+        <trans-unit id="368d9ac76af05f714092bc808a426bfc" resname="Background color">
+            <source>Background color</source>
+            <target>Couleur de fond</target>
+        </trans-unit>
+        <trans-unit id="c4943062b634c56348c67fdebba808eb" resname="Font size">
+            <source>Font size</source>
+            <target>Taille de la fonte</target>
+        </trans-unit>
+        <trans-unit id="32a843da6ea40ab3b17a3421ccdf671b" resname="Linear">
+            <source>Linear</source>
+            <target>Linéaire</target>
+        </trans-unit>
+        <trans-unit id="43c0b4ec5edcd9385319524f5ddee79e" resname="Boost">
+            <source>Boost</source>
+            <target>Boost</target>
+        </trans-unit>
+        <trans-unit id="8ed64ce6e8032ddb62a463ffa78881d9" resname="Dim">
+            <source>Dim</source>
+            <target>Dim</target>
+        </trans-unit>
+        <trans-unit id="2c68a200039ae07f17a99ecc9eed9a9f" resname="Min. size">
+            <source>Min. size</source>
+            <target>Taille minimale</target>
+        </trans-unit>
+        <trans-unit id="6f6cb72d544962fa333e2e34ce64f719" resname="Size">
+            <source>Size</source>
+            <target>Taille</target>
+        </trans-unit>
+        <trans-unit id="afaf8055f3f2b5a44a914654fbf1e693" resname="Max. size">
+            <source>Max. size</source>
+            <target>Taille maximale</target>
+        </trans-unit>
+        <trans-unit id="6fed80a8c8ded2f5e14a687e4a443abc" resname="Image width">
+            <source>Image width</source>
+            <target>Langeur de l'image</target>
+        </trans-unit>
+        <trans-unit id="32954654ac8fe66a1d09be19001de2d4" resname="Width">
+            <source>Width</source>
+            <target>Largeur</target>
+        </trans-unit>
+        <trans-unit id="2aa3aa9d021c7cfffb5afa08f52fbc51" resname="Image height">
+            <source>Image height</source>
+            <target>Hauteur de l'image</target>
+        </trans-unit>
+        <trans-unit id="eec6c4bdbd339edf8cbea68becb85244" resname="Height">
+            <source>Height</source>
+            <target>Hauteur</target>
+        </trans-unit>
     </body>
   </file>
 </xliff>
