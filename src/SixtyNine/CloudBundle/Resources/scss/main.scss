@@ -15,9 +15,42 @@ div.color-box {
   }
 }
 
+.clouder-logo {
+
+  font-family: 'Baloo Bhaina', cursive;
+  color: white !important;
+  cursor: pointer;
+
+  a.btn.btn-link {
+    font-size: 36px;
+    color: rgb(255, 255, 255);
+    @include logo-shadow();
+    &.btn.btn-link:focus,
+    &.btn.btn-link:hover,
+    &.btn.btn-link:active,
+    &.btn.btn-link.active {
+      color: white;
+    }
+  }
+
+  i.fa-cloud {
+    color: white;
+    font-size: xx-large;
+    @include logo-shadow();
+  }
+}
+
 section.section-header {
+  position: relative;
   background-color: orange;
   margin-bottom: 15px;
+  height: 50px;
+
+  section.navbar-section {
+    position: absolute;
+    bottom: 5px;
+    left: 125px;
+  }
 }
 
 section.buttons {
@@ -97,6 +130,11 @@ form.login {
   div.card {
     width: 50%;
     margin: 50px auto 0 auto;
+
+    div.card-header {
+      height: 75px;
+      background-color: orange;
+    }
   }
   div.error {
     color: red;
