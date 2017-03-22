@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="fr" target-language="fr" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="8cf04a9734132302f96da8e113e80ce5" resname="Home">
+        <source>Home</source>
+        <target>Accueil</target>
+      </trans-unit>
+      <trans-unit id="e124199ae50e6504255deccc2e62e16b" resname="Render cloud">
+        <source>Render cloud</source>
+        <target>Afficher le nuage</target>
+      </trans-unit>
+      <trans-unit id="c8e2277ecfb1427838c488c217f99466" resname="Cloud">
+        <source>Cloud</source>
+        <target>Nuage</target>
+      </trans-unit>
+      <trans-unit id="5e520da5341f2fec6d3bbfe7ef357922" resname="Render">
+        <source>Render</source>
+        <target>Afficher</target>
+      </trans-unit>
+      <trans-unit id="ba180d0ce3b31c8dcd974d7a60bf7556" resname="Show bounding boxes">
+        <source>Show bounding boxes</source>
+        <target>Afficher les rectangles</target>
+      </trans-unit>
+      <trans-unit id="aeccedd8ed0816952192a82006548534" resname="Show placer path">
+        <source>Show placer path</source>
+        <target>Afficher le chemin du placeur</target>
+      </trans-unit>
+      <trans-unit id="936d883202188a1926dfba3776f9e502" resname="Create cloud">
+        <source>Create cloud</source>
+        <target>Créer un nuage</target>
+      </trans-unit>
+      <trans-unit id="686e697538050e4664636337cc3b834f" resname="Create">
+        <source>Create</source>
+        <target>Créer</target>
+      </trans-unit>
+      <trans-unit id="ea4788705e6873b424c65e91c2846b19" resname="Cancel">
+        <source>Cancel</source>
+        <target>Annuler</target>
+      </trans-unit>
+      <trans-unit id="b99e07f4bea810f88b69ecfe1784ab28" resname="List clouds">
+        <source>List clouds</source>
+        <target>Liste des nuages</target>
+      </trans-unit>
+      <trans-unit id="bf1c882a75127780bf8713fd537464a3" resname="My Clouds">
+        <source>My Clouds</source>
+        <target>Mes nuages</target>
+      </trans-unit>
+      <trans-unit id="7a7f02b28712f83b0cde9c4ac54b5ba8" resname="Create a new cloud">
+        <source>Create a new cloud</source>
+        <target>Créer un nouveau nuage</target>
+      </trans-unit>
+      <trans-unit id="b2326c3a3498ee50c8120fbaede6eeed" resname="Regenerate">
+        <source>Regenerate</source>
+        <target>Regénérer</target>
+      </trans-unit>
+      <trans-unit id="7dce122004969d56ae2e0245cb754d35" resname="Edit">
+        <source>Edit</source>
+        <target>Modifier</target>
+      </trans-unit>
+      <trans-unit id="1063e38cb53d94d386f21227fcd84717" resname="Remove">
+        <source>Remove</source>
+        <target>Effacer</target>
+      </trans-unit>
+      <trans-unit id="4204fa9df173f1c881b22479f4249094" resname="You have no clouds">
+        <source>You have no clouds</source>
+        <target>Vous n'avez pas de nuages</target>
+      </trans-unit>
+      <trans-unit id="5f388ada958672028d6eb0f11636f042" resname="Click the button to create one">
+        <source>Click the button to create one</source>
+        <target>Cliquez le bouton pour en créer un</target>
+      </trans-unit>
+      <trans-unit id="199efcee4253508f624447866fa0108b" resname="Edit cloud">
+        <source>Edit cloud</source>
+        <target>Modifier le nuage</target>
+      </trans-unit>
+      <trans-unit id="c9cc8cce247e49bae79f15173ce97354" resname="Save">
+        <source>Save</source>
+        <target>Sauver</target>
+      </trans-unit>
+      <trans-unit id="8150b2971af90902901b99b33b727777" resname="My lists">
+        <source>My lists</source>
+        <target>Mes listes</target>
+      </trans-unit>
+      <trans-unit id="e6ee9800c11c3126779664bcf7acca89" resname="My clouds">
+        <source>My clouds</source>
+        <target>Mes nuages</target>
+      </trans-unit>
+      <trans-unit id="f4f70727dc34561dfde1a3c529b6205c" resname="Settings">
+        <source>Settings</source>
+        <target>Paramètres</target>
+      </trans-unit>
+      <trans-unit id="cce99c598cfdb9773ab041d54c3d973a" resname="Profile">
+        <source>Profile</source>
+        <target>Profil</target>
+      </trans-unit>
+      <trans-unit id="01da36bdc7136ee63b0c6ff9689576c6" resname="Are you sure ?">
+        <source>Are you sure ?</source>
+        <target>Etes-vous sûr ?</target>
+      </trans-unit>
+      <trans-unit id="729a51874fe901b092899e9e8b31c97a" resname="Are you sure?">
+        <source>Are you sure?</source>
+        <target>Etes-vous sûr ?</target>
+      </trans-unit>
+      <trans-unit id="93cba07454f06a4a960172bbd6e2a435" resname="Yes">
+        <source>Yes</source>
+        <target>Oui</target>
+      </trans-unit>
+      <trans-unit id="bafd7322c6e97d25b6299b5d6fe8920b" resname="No">
+        <source>No</source>
+        <target>Non</target>
+      </trans-unit>
+      <trans-unit id="8c64134f32ac05a04138ff2d0a61c811" resname="Settigns">
+        <source>Settigns</source>
+        <target>Paramètres</target>
+      </trans-unit>
+      <trans-unit id="5b9ee9aa42c46ecdbaae966ca84cc8fa" resname="Palettes">
+        <source>Palettes</source>
+        <target>Palettes</target>
+      </trans-unit>
+      <trans-unit id="c4360d722a3021839cf4681e94d5b649" resname="Preview fonts">
+        <source>Preview fonts</source>
+        <target>Prévisualisation des fontes</target>
+      </trans-unit>
+      <trans-unit id="3a8f53f5f46cc0db8694d1a9b75a2cea" resname="View palettes">
+        <source>View palettes</source>
+        <target>Voir les palettes</target>
+      </trans-unit>
+      <trans-unit id="59c4ad3f3cb3d812d68fab7a354d4a63" resname="Fonts">
+        <source>Fonts</source>
+        <target>Fontes</target>
+      </trans-unit>
+      <trans-unit id="2d623e3f7f5124ff374cbe13a980b7c1" resname="View Words">
+        <source>View Words</source>
+        <target>Voir les mots</target>
+      </trans-unit>
+      <trans-unit id="4ee29ca12c7d126654bd0e5275de6135" resname="List">
+        <source>List</source>
+        <target>Liste</target>
+      </trans-unit>
+      <trans-unit id="6f15b8d4b7287d60a8ea3d1c5cbadc84" resname="Words">
+        <source>Words</source>
+        <target>Mots</target>
+      </trans-unit>
+      <trans-unit id="684d0480ef504a075866c19e542a426d" resname="Add words">
+        <source>Add words</source>
+        <target>Ajouter un mot</target>
+      </trans-unit>
+      <trans-unit id="c8c55f55be8cbe3141db7e26ab0a8b4e" resname="Import URL">
+        <source>Import URL</source>
+        <target>Importer une URL</target>
+      </trans-unit>
+      <trans-unit id="6b46ae48421828d9973deec5fa9aa0c3" resname="Sort">
+        <source>Sort</source>
+        <target>Trier</target>
+      </trans-unit>
+      <trans-unit id="abbd64f40c34c537d3a571af068fce29" resname="Orientation">
+        <source>Orientation</source>
+        <target>Orientation</target>
+      </trans-unit>
+      <trans-unit id="cb5feb1b7314637725a2e73bdc9f7295" resname="Color">
+        <source>Color</source>
+        <target>Couleur</target>
+      </trans-unit>
+      <trans-unit id="dbb354251f5d0600bd563755f655d2aa" resname="Import words">
+        <source>Import words</source>
+        <target>Importer des mots</target>
+      </trans-unit>
+      <trans-unit id="d5f9903fe25d9391dbbb001603ff6fa9" resname="Import words from URL">
+        <source>Import words from URL</source>
+        <target>Importer des mots d'une URL</target>
+      </trans-unit>
+      <trans-unit id="72d6d7a1885885bb55a565fd1070581a" resname="Import">
+        <source>Import</source>
+        <target>Importer</target>
+      </trans-unit>
+      <trans-unit id="07ca906cbce9818289ccaa73a92305c6" resname="Randomize orientation">
+        <source>Randomize orientation</source>
+        <target>Orientations au hasard</target>
+      </trans-unit>
+      <trans-unit id="d4d6949921d2da34ff46708e2819cb23" resname="Sort the words">
+        <source>Sort the words</source>
+        <target>Trier les mots</target>
+      </trans-unit>
+      <trans-unit id="a5436609900248ba87dbcd9940aa4af3" resname="Alphabeticaly">
+        <source>Alphabeticaly</source>
+        <target>Alphabetiquement</target>
+      </trans-unit>
+      <trans-unit id="c867597ac6a42c68b60b6d77be3e2084" resname="By angle">
+        <source>By angle</source>
+        <target>Par angle</target>
+      </trans-unit>
+      <trans-unit id="1dc4b3debc0a7c5472a8eaa1929bca7f" resname="By occurrence">
+        <source>By occurrence</source>
+        <target>Par occurrences</target>
+      </trans-unit>
+      <trans-unit id="cf3fb1ff52ea1eed3347ac5401ee7f0c" resname="Ascending">
+        <source>Ascending</source>
+        <target>Ascendant</target>
+      </trans-unit>
+      <trans-unit id="e3cf5ac19407b1a62c6fccaff675a53b" resname="Descending">
+        <source>Descending</source>
+        <target>Descendant</target>
+      </trans-unit>
+      <trans-unit id="9e16d3d8e4f31d155214e2ef9a32b89a" resname="Randomize colors">
+        <source>Randomize colors</source>
+        <target>Couleurs au hasard</target>
+      </trans-unit>
+      <trans-unit id="d08864ed61dd2683b453a4f2619616bc" resname="Iterate through each color of the palette">
+        <source>Iterate through each color of the palette</source>
+        <target>Itérer à travers les couleurs de la palette</target>
+      </trans-unit>
+      <trans-unit id="46e4c9ef8686e58a89edb553aba6d938" resname="Cycle">
+        <source>Cycle</source>
+        <target>Cycle</target>
+      </trans-unit>
+      <trans-unit id="352c47c67f0083e3fda97a6df924e0e0" resname="Pick colors randomly from the palette">
+        <source>Pick colors randomly from the palette</source>
+        <target>Prendre les couleurs au hasard dans la palette</target>
+      </trans-unit>
+      <trans-unit id="64663f4646781c9c0110838b905daa23" resname="Random">
+        <source>Random</source>
+        <target>Au hasard</target>
+      </trans-unit>
+      <trans-unit id="246e0fc5f643e8fd3cd4afb90c3ec43f" resname="This list contains no words">
+        <source>This list contains no words</source>
+        <target>Cette liste ne contient pas de mots</target>
+      </trans-unit>
+      <trans-unit id="08b3b7c33341486a564d85c7217cee65" resname="Add some words or import them using the buttons below">
+        <source>Add some words or import them using the buttons below</source>
+        <target>Ajoutez des mots ou importez-en en utilisant le bouton ci-dessous</target>
+      </trans-unit>
+      <trans-unit id="39e874901eaa3eb49ca252c58657b938" resname="Create list">
+        <source>Create list</source>
+        <target>Créer une liste</target>
+      </trans-unit>
+      <trans-unit id="62cb325945ac265bc5be07a3844f1823" resname="View Lists">
+        <source>View Lists</source>
+        <target>Voir les listes</target>
+      </trans-unit>
+      <trans-unit id="b684e8c32987de7ab26842cf5b97f8e8" resname="My Lists">
+        <source>My Lists</source>
+        <target>Mes listes</target>
+      </trans-unit>
+      <trans-unit id="559909cafad88ab0f424b848947e8a73" resname="Create a new list">
+        <source>Create a new list</source>
+        <target>Créer une nouvelle liste</target>
+      </trans-unit>
+      <trans-unit id="42a5aaa4db6d0f832fb2581055adf2d0" resname="View words">
+        <source>View words</source>
+        <target>Voir les mots</target>
+      </trans-unit>
+      <trans-unit id="ed75712b0eb1913c28a3872731ffd48d" resname="Duplicate">
+        <source>Duplicate</source>
+        <target>Dupliquer</target>
+      </trans-unit>
+      <trans-unit id="3e8fe404b80367667ac90ad50a87145a" resname="You have no lists">
+        <source>You have no lists</source>
+        <target>Vous n'avez pas de liste</target>
+      </trans-unit>
+      <trans-unit id="bba9ecbaf160cc6d9a2dcb23199ef560" resname="Edit list">
+        <source>Edit list</source>
+        <target>Editer la liste</target>
+      </trans-unit>
+      <trans-unit id="89759e1284e2479b991d2669de104942" resname="words">
+        <source>words</source>
+        <target>mots</target>
+      </trans-unit>
+      <trans-unit id="5f2b9345f9bbd74079b99d6fcf461408" resname="Created at">
+        <source>Created at</source>
+        <target>Crée le</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

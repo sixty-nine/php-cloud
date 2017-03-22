@@ -30,10 +30,10 @@
             </div>
             <div class="tile-content">
                 <div class="tile-title">
-                    List "<%= list %>" ·
-                    <%= words %> words
+                    {{ 'List' | trans }} "<%= list %>" ·
+                    <%= words %> {{ 'words' | trans }}
                 </div>
-                <div class="tile-subtitle">Created at <%= createdAt %></div>
+                <div class="tile-subtitle">{{ 'Created at' | trans }} <%= createdAt %></div>
             </div>
             <div class="tile-action btn-group">
                 <a href="#" class="btn" data-role="regenerate">
