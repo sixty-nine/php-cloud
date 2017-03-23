@@ -98,9 +98,12 @@ void function (config) {
         },
 
         removeWord: function (e) {
-            if (SnCloud.fn.confirm(config.translations.areYouSure)) {
-                this.model.destroy({wait: true});
-            }
+            SnCloud.fn.confirm().then(_.bind(function () {
+                SnCloud.showSpinner();
+                this.model.destroy({wait: true}).then(function () {
+                    SnCloud.hideSpinner();
+                });
+            }, this));
         },
 
         toggleOrientation: function (e) {

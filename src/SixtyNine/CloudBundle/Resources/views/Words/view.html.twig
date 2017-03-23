@@ -208,13 +208,14 @@
         <script type="text/template" id="sn-cloud-words-item-template">
             <span class="color" style="background-color: <%= color %>;"></span>
             <span class="orientation">
-            <i class="fa fa-arrows-<%= orientation === 'horiz' ? 'h' : 'v' %>"></i>
+            <i class="tooltip fa fa-arrows-<%= orientation === 'horiz' ? 'h' : 'v' %>"
+                    data-tooltip="{{ 'Orientation, click to toggle' | trans }}"></i>
         </span>
             <span class="text"><%= text %></span>
             <span class="count">
-                <span class="minus">-</span>
+                <span class="minus tooltip" data-tooltip="{{ 'Click to decrease word count' | trans }}">-</span>
                 <%= count %>
-                <span class="plus">+</span>
+                <span class="plus tooltip" data-tooltip="{{ 'Click to increase word count' | trans }}">+</span>
             </span>
             <span class="remove fa fa-close"></span>
         </script>
