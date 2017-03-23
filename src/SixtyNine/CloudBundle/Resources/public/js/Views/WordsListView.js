@@ -77,12 +77,14 @@ void function (config) {
         template: '#sn-cloud-words-item-template',
 
         ui: {
+            colorSpan: 'span.color',
             orientationToggle: 'span.orientation',
             countMinus: 'span.count span.minus',
             countPlus: 'span.count span.plus'
         },
 
         events: {
+            'click @ui.colorSpan': 'pickColor',
             'click @ui.orientationToggle': 'toggleOrientation',
             'click span.remove': 'removeWord',
             'click @ui.countPlus': 'incCount',
@@ -147,6 +149,21 @@ void function (config) {
                 SnCloud.hideSpinner();
                 self.model.set('count', data.count);
             });
+        },
+
+        pickColor: function (e) {
+            new SnCloud.Views
+                .ColorPickerView({
+                    color: $(e.currentTarget).css('backgroundColor')
+                })
+                .getPromise()
+                .then(_.bind(function (color) {
+                    SnCloud.showSpinner();
+                    this.model.set('color', color);
+                    this.model.save().then(function () {
+                        SnCloud.hideSpinner();
+                    });
+                }, this));
         }
 
     });
