@@ -311,9 +311,6 @@ class ListsController extends ApiController
      *          400="Bad request",
      *          403="Not authorized",
      *          404="Not found"
-     *      },
-     *      parameters={
-     *          {"name"="filter", "dataType"="string", "required"=true, "description"="The name of the filter to apply"},
      *      }
      * )
      * @FOS\Post("/lists/{id}/filter")
