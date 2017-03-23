@@ -8,6 +8,10 @@
         <service id="sixty_nine_core.twig.extension" class="SixtyNine\CoreBundle\Twig\SixtyNineExtension">
             <tag name="twig.extension" />
         </service>
+
+        <service id="sixty_nine_core.user_provider.email" class="SixtyNine\CoreBundle\Security\EmailUserProvider" public="false">
+            <argument type="service" id="fos_user.user_manager" />
+        </service>
     </services>
 
 </container>
