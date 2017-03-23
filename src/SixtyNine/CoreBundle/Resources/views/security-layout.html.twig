@@ -1,0 +1,18 @@
+{% extends 'SixtyNineCoreBundle::layout.html.twig' %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% set appTitle = 'Clouder' %}
+
+{% block css %}
+    {% stylesheets
+        'assets/my-spectre.css'
+        'assets/vendor/font-awesome/css/font-awesome.css'
+    filter='cssrewrite' %}
+    <link rel="stylesheet" href="{{ asset_url }}" type="text/css"/>
+    {% endstylesheets %}
+    {% stylesheets filter="scssphp" output="css/style.css" '@SixtyNineCloudBundle/Resources/scss/main.scss' %}
+    <link rel="stylesheet" href="{{ asset_url }}"/>
+    {% endstylesheets %}
+    <link href="https://fonts.googleapis.com/css?family=Baloo+Bhaina" rel="stylesheet">
+{% endblock %}

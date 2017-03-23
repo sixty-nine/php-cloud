@@ -20,10 +20,10 @@ class Account extends BaseUser
      */
     protected $id;
 
-    public function __construct()
+    public function setEmail($email)
     {
-        parent::__construct();
-        // your own logic
+        $email = is_null($email) ? '' : $email;
+        parent::setEmail($email);
+        $this->setUsername($email);
     }
 }
- 

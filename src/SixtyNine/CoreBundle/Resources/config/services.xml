@@ -12,6 +12,10 @@
         <service id="sixty_nine_core.user_provider.email" class="SixtyNine\CoreBundle\Security\EmailUserProvider" public="false">
             <argument type="service" id="fos_user.user_manager" />
         </service>
+
+        <service id="sixty_nine_core.form.registration" class="SixtyNine\CoreBundle\Form\Type\MyRegistrationFormType">
+            <tag name="form.type" alias="sixty_nine_user_registration" />
+        </service>
     </services>
 
 </container>
