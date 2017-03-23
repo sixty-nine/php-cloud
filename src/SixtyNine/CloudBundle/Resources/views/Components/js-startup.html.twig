@@ -43,7 +43,20 @@
                 return ("0" + parseInt(x).toString(16)).slice(-2);
             }
             return "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
+        },
+
+        // From: http://stackoverflow.com/a/11339012
+        getFormData: function ($form){
+            var unindexed_array = $form.serializeArray();
+            var indexed_array = {};
+
+            $.map(unindexed_array, function(n, i){
+                indexed_array[n['name']] = n['value'];
+            });
+
+            return indexed_array;
         }
+
     };
 
 </script>

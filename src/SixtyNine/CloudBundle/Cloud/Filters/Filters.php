@@ -25,9 +25,7 @@ class Filters
     public function addFilters($filters)
     {
         foreach ($filters as $filter) {
-            if ($this->isFilter($filter)) {
-                $this->filters[] = $filter;
-            }
+            $this->filters[] = $filter;
         }
     }
 
@@ -38,27 +36,17 @@ class Filters
      */
     public function addFilter(FilterInterface $filter)
     {
-        if ($this->isFilter($filter) && !in_array($filter, $this->filters)) {
+        if (!in_array($filter, $this->filters)) {
 
             $this->filters[] = $filter;
         }
     }
 
     /**
-     * Is $filter a FilterInterface?
-     * @param $filter
-     * @return bool
-     */
-    protected function isFilter($filter)
-    {
-        return $filter instanceof FilterInterface;
-    }
-
-    /**
      * @param string $word
      * @return bool
      */
-    public function filterWord($word)
+    public function apply($word)
     {
         /** @var FilterInterface $filter*/
         foreach($this->filters as $filter) {

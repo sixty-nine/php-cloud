@@ -67,7 +67,7 @@ class WordListsManager
     public function importWord(WordsList $list, $word, Filters $filters = null)
     {
         if ($filters) {
-            $word = $filters->filterWord($word);
+            $word = $filters->apply($word);
             if (!$word) {
                 return;
             }
@@ -158,7 +158,7 @@ class WordListsManager
     {
         /** @var Word $word */
         foreach ($list->getWords() as $word) {
-            $filtered = $filters->filterWord($word->getText());
+            $filtered = $filters->apply($word->getText());
             if (!$filtered) {
                 $this->em->remove($word);
             }

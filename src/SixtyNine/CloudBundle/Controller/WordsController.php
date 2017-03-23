@@ -6,6 +6,7 @@ use SixtyNine\Cloud\TextListFilter\OrientationVisitor;
 use SixtyNine\CloudBundle\Entity\WordsList;
 use SixtyNine\CloudBundle\Form\Forms\AddWordsFormType;
 use SixtyNine\CloudBundle\Form\Forms\CreateWordsListFormType;
+use SixtyNine\CloudBundle\Form\Forms\FiltersFormType;
 use SixtyNine\CloudBundle\Form\Forms\ImportUrlFormType;
 use SixtyNine\CloudBundle\Manager\WordListsManager;
 use SixtyNine\CloudBundle\Repository\WordRepository;
@@ -67,13 +68,17 @@ class WordsController extends Controller
         $addWordsForm = $this->createForm(AddWordsFormType::class);
         $addWordsForm->handleRequest($request);
 
-        $filtersForm = $this->createForm(ImportUrlFormType::class);
+        $importUrlForm = $this->createForm(ImportUrlFormType::class);
+        $importUrlForm->handleRequest($request);
+
+        $filtersForm = $this->createForm(FiltersFormType::class);
         $filtersForm->handleRequest($request);
 
         return $this->render(
             'SixtyNineCloudBundle:Words:view.html.twig',
             array(
                 'addWordsForm' => $addWordsForm->createView(),
+                'importUrlForm' => $importUrlForm->createView(),
                 'filtersForm' => $filtersForm->createView(),
                 'list' => $list,
                 'orientations' => array(

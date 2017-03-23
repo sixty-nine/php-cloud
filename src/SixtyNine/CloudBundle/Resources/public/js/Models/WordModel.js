@@ -48,6 +48,21 @@ void function (config) {
             });
 
             return deferred;
+        },
+        filterWords: function (data) {
+            var self = this;
+            var deferred = $.Deferred();
+
+            $.post({
+                url: Routing.generate('cloud_api_filter_list', {id: self.listId}),
+                data: data
+            }).then(function () {
+                self.fetch().then(function () {
+                    deferred.resolve(self);
+                });
+            });
+
+            return deferred;
         }
 
     });

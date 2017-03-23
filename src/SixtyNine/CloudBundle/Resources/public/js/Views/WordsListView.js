@@ -17,7 +17,10 @@ void function (config) {
             sortModal: 'div.modal[data-id="sort-words"]',
             sortSubmitButton: 'div.modal[data-id="sort-words"] button[type="submit"]',
             sortModalSortBy: 'div.modal[data-id="sort-words"] select.sort-by',
-            sortModalOrder: 'div.modal[data-id="sort-words"] select.order'
+            sortModalOrder: 'div.modal[data-id="sort-words"] select.order',
+            filterModal: 'div.modal[data-id="filter-words"]',
+            filterModalButton: 'div.modal[data-id="filter-words"] button',
+            filterForm: 'div.modal[data-id="filter-words"] form'
         },
 
         events: {
@@ -25,7 +28,8 @@ void function (config) {
             'click @ui.closeButton': 'closeModal',
             'click div.modal-overlay': 'closeModal',
             'click @ui.colorsSubmitButton': 'changeColors',
-            'click @ui.sortSubmitButton': 'sortWords'
+            'click @ui.sortSubmitButton': 'sortWords',
+            'click @ui.filterModalButton': 'filterWords'
         },
 
         triggerModal: function (e) {
@@ -65,6 +69,20 @@ void function (config) {
                     this.ui.sortModalSortBy.find(':selected').val(),
                     this.ui.sortModalOrder.find(':selected').val()
                 )
+                .then(function () {
+                    SnCloud.hideSpinner();
+                });
+        },
+
+        filterWords: function (e) {
+
+            var data = JSON.stringify(SnCloud.fn.getFormData(this.ui.filterForm));
+
+            SnCloud.showSpinner();
+            this.ui.filterModal.removeClass('active');
+
+            this.collection
+                .filterWords(data)
                 .then(function () {
                     SnCloud.hideSpinner();
                 });

@@ -9,6 +9,8 @@ use SixtyNine\CloudApiBundle\Form\Type\ListFormType;
 use SixtyNine\CloudApiBundle\Form\Type\WordFormType;
 use SixtyNine\CloudBundle\Entity\Word;
 use SixtyNine\CloudBundle\Entity\WordsList;
+use SixtyNine\CloudBundle\Form\Forms\FiltersFormType;
+use SixtyNine\CloudBundle\Form\Forms\ImportUrlFormType;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -314,12 +316,21 @@ class ListsController extends ApiController
      *          {"name"="filter", "dataType"="string", "required"=true, "description"="The name of the filter to apply"},
      *      }
      * )
-     * @FOS\Get("/lists/{id}/filter")
+     * @FOS\Post("/lists/{id}/filter")
      */
-    public function filterListAction($id)
+    public function filterListAction(Request $request, $id)
     {
         $list = $this->getMyList($id);
-        // TODO: implement
-        return $this->handleView($this->view($list, 200));
+
+        $form = $this->createForm(FiltersFormType::class);
+        $form->submit(json_decode($request->getContent(), true));
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $filters = $this->listsManager->getFiltersFromData($form->getData());
+            $this->listsManager->filterWords($list, $filters);
+            return $this->handleView($this->view($list, 200));
+        }
+
+        return $this->handleView($this->view(400));
     }
 }

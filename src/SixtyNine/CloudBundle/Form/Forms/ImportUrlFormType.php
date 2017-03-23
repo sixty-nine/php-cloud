@@ -13,7 +13,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\GreaterThan;
 use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 
-class ImportUrlFormType extends AbstractType
+class ImportUrlFormType extends FiltersFormType
 {
     /** {@inheritdoc} */
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -27,51 +27,8 @@ class ImportUrlFormType extends AbstractType
                     'autofocus' => true,
                 )
             ))
-            ->add('changeCaseEnabled', CheckboxType::class, array(
-                'label'    => 'Change case',
-                'required' => false,
-                'attr' => array('checked'   => 'checked'),
-            ))
-            ->add('case', ChoiceType::class, array(
-                'label' => false,
-                'choices' => array(
-                    'Lowercase' => ChangeCase::LOWERCASE,
-                    'Uppercase' => ChangeCase::UPPERCASE,
-                    'Uppercase first' => ChangeCase::UCFIRST,
-                ),
-            ))
-            ->add('removeNumbersEnabled', CheckboxType::class, array(
-                'label'    => 'Remove numbers',
-                'required' => false,
-                'attr' => array('checked' => 'checked'),
-            ))
-            ->add('removeUnwantedCharEnabled', CheckboxType::class, array(
-                'label'    => 'Remove unwanted characters',
-                'required' => false,
-                'attr' => array('checked' => 'checked'),
-            ))
-            ->add('removeTrailingCharEnabled', CheckboxType::class, array(
-                'label'    => 'Remove trailing characters',
-                'required' => false,
-                'attr' => array('checked' => 'checked'),
-            ))
-            ->add('removeByLengthEnabled', CheckboxType::class, array(
-                'label'    => 'Remove characters by length',
-                'required' => false,
-                'attr' => array('checked' => 'checked'),
-            ))
-            ->add('minLength', IntegerType::class, array(
-                'label' => false,
-                'required' => false,
-                'data' => 4,
-                'attr' => array('placeholder' => 'Minimal len')
-            ))
-            ->add('maxLength', IntegerType::class, array(
-                'label' => false,
-                'required' => false,
-                'data' => 15,
-                'attr' => array('placeholder' => 'Maximal len')
-            ))
         ;
+
+        parent::buildForm($builder, $options);
     }
 }
