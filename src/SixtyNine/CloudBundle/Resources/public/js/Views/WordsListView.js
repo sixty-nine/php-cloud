@@ -19,7 +19,7 @@ void function (config) {
             sortModalSortBy: 'div.modal[data-id="sort-words"] select.sort-by',
             sortModalOrder: 'div.modal[data-id="sort-words"] select.order',
             filterModal: 'div.modal[data-id="filter-words"]',
-            filterModalButton: 'div.modal[data-id="filter-words"] button',
+            filterModalButton: 'div.modal[data-id="filter-words"] .modal-footer button',
             filterForm: 'div.modal[data-id="filter-words"] form'
         },
 
