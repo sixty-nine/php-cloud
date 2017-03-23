@@ -25,21 +25,28 @@ class Usher
     /** @var \SixtyNine\CloudBundle\Cloud\Placer\PlacerInterface */
     protected $placer;
 
-    public function __construct($imgWidth, $imgHeight, PlacerInterface $placer, $maxTries = self::DEFAULT_MAX_TRIES)
-    {
+    /** @var \Imagine\Image\PointInterface */
+    protected $firstPlace;
+
+    public function __construct(
+        $imgWidth,
+        $imgHeight,
+        PlacerInterface $placer,
+        PointInterface $firstPlace,
+        $maxTries = self::DEFAULT_MAX_TRIES
+    ) {
         $this->mask = new Mask();
         $this->imgHeight = $imgHeight;
         $this->imgWidth = $imgWidth;
         $this->maxTries = $maxTries;
         $this->placer = $placer;
+        $this->firstPlace = $firstPlace;
     }
 
     public function getPlace(BoxInterface $box)
     {
         $bounds = new Box($this->imgWidth, $this->imgHeight);
-        $firstPlace = new Point($this->imgWidth / 2, $this->imgHeight / 2);
-
-        $place = $this->searchPlace($bounds, $firstPlace, $box);
+        $place = $this->searchPlace($bounds, $this->firstPlace, $box);
 
         if ($place) {
             $this->mask->add($place, $box);

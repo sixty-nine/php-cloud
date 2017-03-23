@@ -42,7 +42,7 @@ div.color-box {
 
 section.section-header {
   position: relative;
-  background-color: orange;
+  background-color: $orange;
   margin-bottom: 15px;
   height: 50px;
 
@@ -133,7 +133,7 @@ form.login {
 
     div.card-header {
       height: 75px;
-      background-color: orange;
+      background-color: $orange;
     }
   }
   div.error {
@@ -143,4 +143,10 @@ form.login {
 
 div.modal div.modal-container {
   min-width: 50%;
+}
+
+.btn {
+  &:hover {
+    background: $orange-light;
+  }
 }

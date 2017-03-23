@@ -124,6 +124,8 @@ class CloudManager
             ->setHeight($height)
             ->setPlacer($placerName)
             ->setBackgroundColor($color)
+            ->setHeight($height)
+            ->setWidth($width)
         ;
 
         $this->em->persist($cloud);
@@ -202,7 +204,8 @@ class CloudManager
     public function placeWords(Cloud $cloud)
     {
         $placer = $this->placersManager->constructPlacer($cloud->getPlacer());
-        $usher = new Usher($cloud->getWidth(), $cloud->getHeight(), $placer);
+        $firstPlace = $this->getPlacerFirstPlace($cloud);
+        $usher = new Usher($cloud->getWidth(), $cloud->getHeight(), $placer, $firstPlace);
 
         /** @var CloudWord $word */
         foreach ($cloud->getWords() as $word) {
@@ -332,5 +335,10 @@ class CloudManager
                 break;
             }
         }
+    }
+
+    public function getPlacerFirstPlace(Cloud $cloud)
+    {
+        return new Point($cloud->getWidth() / 3, $cloud->getHeight() / 2);
     }
 }

@@ -176,7 +176,8 @@ class CloudController extends Controller
 
         if ($showPlacer) {
             $placer = $this->placersManager->constructPlacer($cloud->getPlacer());
-            $firstPlace = new Point($cloud->getWidth() / 2, $cloud->getHeight() / 2);
+            $firstPlace = $this->cloudManager->getPlacerFirstPlace($cloud);
+
             $this->cloudManager->renderUsher($image, $placer, $firstPlace, new Color('#FF0000'));
         }
 

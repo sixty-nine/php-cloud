@@ -54,13 +54,11 @@ class CreateCloudFormType extends AbstractType
             ->add('imageWidth', IntegerType::class, array(
                 'required' => true,
                 'label' => 'Image width',
-                'data' => 800,
                 'attr' => array('placeholder' => 'Width'),
             ))
             ->add('imageHeight', IntegerType::class, array(
                 'required' => true,
                 'label' => 'Image height',
-                'data' => 600,
                 'attr' => array('placeholder' => 'Height'),
             ))
         ;

@@ -9,8 +9,8 @@
     <section class="palettes">
         {% for palette in palettes %}
             <div class="palette">
-                <div class="name">{{ palette.name }}</div>
-                <div class="colors">
+                <div class="name ">{{ palette.name }}<div>
+                <div class="colors mb-10">
                     {% for color in palette.colors %}
                         <div style="background-color: #{{ color }};"></div>
                     {% endfor %}
