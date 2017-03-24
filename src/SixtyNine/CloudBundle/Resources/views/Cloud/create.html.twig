@@ -6,18 +6,48 @@
 {% set pageSubHeader = 'Create' | trans  %}
 
 {% block body %}
-<div class="row">
-    <div class="col-sm-12">
-        {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <div class="pull-right">
-            <a href="{{ path('sn_cloud_index') }}" class="btn btn-default">{{ 'Cancel' | trans }}</a>
-            <input type="submit" class="btn btn-primary" value="{{ 'Create' | trans }}" />
+    {{ form_start(form) }}
+    <div class="columns">
+        <div class="column col-4">
+            {{ form_row(form.words) }}
         </div>
-        {{ form_end(form) }}
+        <div class="column col-4">
+            {{ form_row(form.placer) }}
+        </div>
+        <div class="column col-4">
+            {{ form_row(form.font) }}
+        </div>
     </div>
-</div>
-
+    <div class="columns">
+        <div class="column col-4">
+            {{ form_row(form.fontSize, {'label' :'Font sizer'}) }}
+            {{ form_widget(form.fontSize) }}
+        </div>
+        <div class="column col-4">
+            {{ form_label(form.minSize, 'Font size') }}
+            {{ form_widget(form.minSize, {'attr': {'class': 'form-input input-tight input-inline'}}) }}
+            &nbsp;-&nbsp;
+            {{ form_widget(form.maxSize, {'attr': {'class': 'form-input input-tight input-inline'}}) }}
+        </div>
+    </div>
+    <div class="columns">
+        <div class="column col-4">
+            {{ form_label(form.color, 'Background') }}
+            {{ form_widget(form.color, {'attr': {'class': 'form-input input-tight'}}) }}
+        </div>
+        <div class="column col-4">
+            {{ form_label(form.imageWidth, 'Image size') }}
+            {{ form_widget(form.imageWidth, {'attr': {'class': 'form-input input-tight input-inline'}}) }}
+            &nbsp;x&nbsp;
+            {{ form_widget(form.imageHeight, {'attr': {'class': 'form-input input-tight input-inline'}}) }}
+        </div>
+    </div>
+    {{ form_rest(form) }}
+    <div class="pull-right">
+        <a href="{{ path('sn_cloud_index') }}" class="btn btn-default">{{ 'Cancel' | trans }}</a>
+        <input type="submit" class="btn btn-primary" value="{{ 'Create' | trans }}" />
+    </div>
+    {{ form_end(form) }}
 {% endblock %}
 
 

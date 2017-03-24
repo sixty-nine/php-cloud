@@ -20,17 +20,29 @@ class CreateCloudFormType extends AbstractType
                 'class' => 'SixtyNineCloudBundle:WordsList',
                 'choice_label' => 'name',
                 'required' => true,
+                'attr' => array(
+                    'title' => 'Select the list of words to use',
+                ),
             ))
             ->add('placer', ChoiceType::class, array(
                 'choices' => $options['placers_manager']->getPlacersList(),
+                'attr' => array(
+                    'title' => 'Select how the words are placed in the cloud',
+                ),
             ))
             ->add('font', ChoiceType::class, array(
                 'choices' => $options['fonts_manager']->getFontsByName(),
+                'attr' => array(
+                    'title' => 'Select the font',
+                ),
             ))
             ->add('color', TextType::class, array(
                 'required' => true,
                 'label' => 'Background color',
-                'attr' => array('placeholder' => 'Color'),
+                'attr' => array(
+                    'placeholder' => 'Color',
+                    'title' => 'Select cloud background color',
+                ),
             ))
             ->add('fontSize', ChoiceType::class, array(
                 'choices' => array(
@@ -38,28 +50,43 @@ class CreateCloudFormType extends AbstractType
                     'Boost' => 'boost',
                     'Dim' => 'dim',
                 ),
+                'attr' => array(
+                    'title' => 'Select how the font size is correlated to the occurrences of the word',
+                ),
             ))
             ->add('minSize', IntegerType::class, array(
                 'required' => true,
                 'label' => 'Min. size',
                 'data' => 10,
-                'attr' => array('placeholder' => 'Size'),
+                'attr' => array(
+                    'placeholder' => 'Size',
+                    'title' => 'The minimal font size',
+                ),
             ))
             ->add('maxSize', IntegerType::class, array(
                 'required' => true,
                 'label' => 'Max. size',
                 'data' => 80,
-                'attr' => array('placeholder' => 'Size'),
+                'attr' => array(
+                    'placeholder' => 'Size',
+                    'title' => 'The maximal font size',
+                ),
             ))
             ->add('imageWidth', IntegerType::class, array(
                 'required' => true,
                 'label' => 'Image width',
-                'attr' => array('placeholder' => 'Width'),
+                'attr' => array(
+                    'placeholder' => 'Width',
+                    'title' => 'The width of the cloud',
+                ),
             ))
             ->add('imageHeight', IntegerType::class, array(
                 'required' => true,
                 'label' => 'Image height',
-                'attr' => array('placeholder' => 'Height'),
+                'attr' => array(
+                    'placeholder' => 'Height',
+                    'title' => 'The height of the cloud',
+                ),
             ))
         ;
     }
