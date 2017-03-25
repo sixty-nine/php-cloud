@@ -203,9 +203,9 @@ class CloudManager
      */
     public function placeWords(Cloud $cloud)
     {
-        $placer = $this->placersManager->constructPlacer($cloud->getPlacer());
-        $firstPlace = $this->getPlacerFirstPlace($cloud);
-        $usher = new Usher($cloud->getWidth(), $cloud->getHeight(), $placer, $firstPlace);
+        $className = $this->placersManager->getPlacerClass($cloud->getPlacer());
+        $placer = new $className;
+        $usher = new Usher($cloud->getWidth(), $cloud->getHeight(), $placer);
 
         /** @var CloudWord $word */
         foreach ($cloud->getWords() as $word) {
@@ -306,23 +306,25 @@ class CloudManager
      * Render the path used to find the words places by the given $placer in the $image.
      * @param ImageInterface $image
      * @param PlacerInterface $placer
-     * @param PointInterface $firstPlace
      * @param Color $color
+     * @param int $imgWidth
+     * @param int $imgHeight
      * @param int $maxIterations
      */
     public function renderUsher(
         ImageInterface $image,
         PlacerInterface $placer,
-        PointInterface $firstPlace,
         Color $color,
+        $imgWidth,
+        $imgHeight,
         $maxIterations = 5000
     ) {
         $i = 0;
-        $cur = $firstPlace;
+        $cur = $placer->getFirstPlaceToTry($imgWidth, $imgHeight);
 
         while($cur) {
 
-            $next = $placer->getNextPlaceToTry($cur);
+            $next = $placer->getNextPlaceToTry($cur, $imgWidth, $imgHeight);
 
             if ($next) {
                 $image->draw()->line($cur, $next, $color);
@@ -335,10 +337,5 @@ class CloudManager
                 break;
             }
         }
-    }
-
-    public function getPlacerFirstPlace(Cloud $cloud)
-    {
-        return new Point($cloud->getWidth() / 3, $cloud->getHeight() / 2);
     }
 }

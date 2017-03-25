@@ -7,8 +7,17 @@ use Imagine\Image\PointInterface;
 interface PlacerInterface
 {
     /**
-     * @param PointInterface $current
+     * @param int $imgWidth
+     * @param int $imgHeight
      * @return PointInterface
      */
-    function getNextPlaceToTry(PointInterface $current);
+    function getFirstPlaceToTry($imgWidth, $imgHeight);
+
+    /**
+     * @param PointInterface $current
+     * @param int $imgWidth
+     * @param int $imgHeight
+     * @return PointInterface
+     */
+    function getNextPlaceToTry(PointInterface $current, $imgWidth, $imgHeight);
 }

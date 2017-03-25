@@ -25,14 +25,10 @@ class Usher
     /** @var \SixtyNine\CloudBundle\Cloud\Placer\PlacerInterface */
     protected $placer;
 
-    /** @var \Imagine\Image\PointInterface */
-    protected $firstPlace;
-
     public function __construct(
         $imgWidth,
         $imgHeight,
         PlacerInterface $placer,
-        PointInterface $firstPlace,
         $maxTries = self::DEFAULT_MAX_TRIES
     ) {
         $this->mask = new Mask();
@@ -40,13 +36,12 @@ class Usher
         $this->imgWidth = $imgWidth;
         $this->maxTries = $maxTries;
         $this->placer = $placer;
-        $this->firstPlace = $firstPlace;
     }
 
     public function getPlace(BoxInterface $box)
     {
         $bounds = new Box($this->imgWidth, $this->imgHeight);
-        $place = $this->searchPlace($bounds, $this->firstPlace, $box);
+        $place = $this->searchPlace($bounds, $box);
 
         if ($place) {
             $this->mask->add($place, $box);
@@ -59,14 +54,13 @@ class Usher
     /**
      * Search a free place for a new box.
      * @param \Imagine\Image\Box $bounds
-     * @param \Imagine\Image\PointInterface $first
      * @param \Imagine\Image\Box|\Imagine\Image\BoxInterface $box $box
      * @return bool|PointInterface
      */
-    protected function searchPlace(Box $bounds, PointInterface $first, BoxInterface $box)
+    protected function searchPlace(Box $bounds, BoxInterface $box)
     {
         $place_found = false;
-        $current = $first;
+        $current = $this->placer->getFirstPlaceToTry($this->imgWidth, $this->imgHeight);
         $curTry = 1;
 
         while (!$place_found) {
@@ -85,7 +79,7 @@ class Usher
                 break;
             }
 
-            $current = $this->placer->getNextPlaceToTry($current);
+            $current = $this->placer->getNextPlaceToTry($current, $this->imgWidth, $this->imgHeight);
             $curTry++;
         }
 

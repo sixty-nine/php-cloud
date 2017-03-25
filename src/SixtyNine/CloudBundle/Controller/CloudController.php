@@ -175,10 +175,15 @@ class CloudController extends Controller
         $image = $this->cloudManager->render($cloud, $showBoundingBoxes);
 
         if ($showPlacer) {
-            $placer = $this->placersManager->constructPlacer($cloud->getPlacer());
-            $firstPlace = $this->cloudManager->getPlacerFirstPlace($cloud);
-
-            $this->cloudManager->renderUsher($image, $placer, $firstPlace, new Color('#FF0000'));
+            $className = $this->placersManager->getPlacerClass($cloud->getPlacer());
+            $placer = new $className;
+            $this->cloudManager->renderUsher(
+                $image,
+                $placer,
+                new Color('#FF0000'),
+                $cloud->getWidth(),
+                $cloud->getHeight()
+            );
         }
 
         $width = $request->get('width');

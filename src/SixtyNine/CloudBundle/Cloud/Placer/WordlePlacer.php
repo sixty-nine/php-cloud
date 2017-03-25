@@ -5,11 +5,11 @@ namespace SixtyNine\CloudBundle\Cloud\Placer;
 use Imagine\Image\Point;
 use Imagine\Image\PointInterface;
 
-class WordlePlacer implements PlacerInterface
+class WordlePlacer extends AbstractPlacer
 {
     protected $increment = 0;
 
-    public function getNextPlaceToTry(PointInterface $current)
+    public function getNextPlaceToTry(PointInterface $current, $imgWidth, $imgHeight)
     {
         $i = $this->increment;
         $this->increment += 0.75;

@@ -5,11 +5,11 @@ namespace SixtyNine\CloudBundle\Cloud\Placer;
 use Imagine\Image\Point;
 use Imagine\Image\PointInterface;
 
-class CircularPlacer implements PlacerInterface
+class CircularPlacer extends AbstractPlacer
 {
     protected $increment = 0;
 
-    public function getNextPlaceToTry(PointInterface $current)
+    public function getNextPlaceToTry(PointInterface $current, $imgWidth, $imgHeight)
     {
         $a = 0;
         $b = 0.05;

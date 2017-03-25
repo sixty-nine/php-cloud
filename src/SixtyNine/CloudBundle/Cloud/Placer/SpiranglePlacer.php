@@ -5,7 +5,7 @@ namespace SixtyNine\CloudBundle\Cloud\Placer;
 use Imagine\Image\Point;
 use Imagine\Image\PointInterface;
 
-class SpiranglePlacer implements PlacerInterface
+class SpiranglePlacer extends AbstractPlacer
 {
     /** @var int */
     protected $increment = 0;
@@ -14,7 +14,7 @@ class SpiranglePlacer implements PlacerInterface
         return ($n > 0) - ($n < 0);
     }
 
-    public function getNextPlaceToTry(PointInterface $current)
+    public function getNextPlaceToTry(PointInterface $current, $imgWidth, $imgHeight)
     {
         $r = 0.1;
         $x = $current->getX() + $this->sign(cos($this->increment)) * $r * $this->increment;
