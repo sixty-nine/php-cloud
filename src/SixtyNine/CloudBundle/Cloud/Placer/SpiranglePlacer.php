@@ -14,7 +14,7 @@ class SpiranglePlacer extends AbstractPlacer
         return ($n > 0) - ($n < 0);
     }
 
-    public function getNextPlaceToTry(PointInterface $current, $imgWidth, $imgHeight)
+    public function getNextPlaceToTry(PointInterface $current)
     {
         $r = 0.1;
         $x = $current->getX() + $this->sign(cos($this->increment)) * $r * $this->increment;

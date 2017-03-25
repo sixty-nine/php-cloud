@@ -60,7 +60,7 @@ class Usher
     protected function searchPlace(Box $bounds, BoxInterface $box)
     {
         $place_found = false;
-        $current = $this->placer->getFirstPlaceToTry($this->imgWidth, $this->imgHeight);
+        $current = $this->placer->getFirstPlaceToTry();
         $curTry = 1;
 
         while (!$place_found) {
@@ -79,7 +79,7 @@ class Usher
                 break;
             }
 
-            $current = $this->placer->getNextPlaceToTry($current, $this->imgWidth, $this->imgHeight);
+            $current = $this->placer->getNextPlaceToTry($current);
             $curTry++;
         }
 

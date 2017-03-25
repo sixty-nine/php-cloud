@@ -6,8 +6,24 @@ use Imagine\Image\Point;
 
 abstract class AbstractPlacer implements PlacerInterface
 {
-    function getFirstPlaceToTry($imgWidth, $imgHeight)
+    /** @var int */
+    protected $imgWidth;
+    /** @var int */
+    protected $imgHeight;
+
+    /**
+     * @param int $imgWidth
+     * @param int $imgHeight
+     */
+    public function __construct($imgWidth, $imgHeight)
     {
-        return new Point($imgWidth / 3, $imgHeight / 2);
+        $this->imgWidth = $imgWidth;
+        $this->imgHeight = $imgHeight;
+    }
+
+    /** {@inheritdoc} */
+    function getFirstPlaceToTry()
+    {
+        return new Point($this->imgWidth / 3, $this->imgHeight / 2);
     }
 }

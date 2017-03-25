@@ -9,7 +9,7 @@ class CircularPlacer extends AbstractPlacer
 {
     protected $increment = 0;
 
-    public function getNextPlaceToTry(PointInterface $current, $imgWidth, $imgHeight)
+    public function getNextPlaceToTry(PointInterface $current)
     {
         $a = 0;
         $b = 0.05;

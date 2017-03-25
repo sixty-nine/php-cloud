@@ -9,7 +9,7 @@ class WordlePlacer extends AbstractPlacer
 {
     protected $increment = 0;
 
-    public function getNextPlaceToTry(PointInterface $current, $imgWidth, $imgHeight)
+    public function getNextPlaceToTry(PointInterface $current)
     {
         $i = $this->increment;
         $this->increment += 0.75;

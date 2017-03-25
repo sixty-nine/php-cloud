@@ -3,10 +3,11 @@
 namespace SixtyNine\CloudBundle\Manager;
 
 use SixtyNine\CloudBundle\Cloud\Placer\CircularPlacer;
-use SixtyNine\CloudBundle\Cloud\Placer\LinearPlacer;
+use SixtyNine\CloudBundle\Cloud\Placer\LinearHorizontalPlacer;
+use SixtyNine\CloudBundle\Cloud\Placer\LinearVerticalPlacer;
+use SixtyNine\CloudBundle\Cloud\Placer\LissajouPlacer;
 use SixtyNine\CloudBundle\Cloud\Placer\SpiranglePlacer;
 use SixtyNine\CloudBundle\Cloud\Placer\WordlePlacer;
-use SixtyNine\CloudBundle\Entity\Cloud;
 
 class PlacerManager
 {
@@ -14,7 +15,9 @@ class PlacerManager
         'Circular' => CircularPlacer::class,
         'Wordle' => WordlePlacer::class,
         'Spirangle' => SpiranglePlacer::class,
-        'Linear' => LinearPlacer::class,
+        'Linear Horizontal' => LinearHorizontalPlacer::class,
+        'Linear Vertical' => LinearVerticalPlacer::class,
+        'Lissajou' => LissajouPlacer::class,
     );
 
     public function getPlacersList()

@@ -5,24 +5,24 @@ namespace SixtyNine\CloudBundle\Cloud\Placer;
 use Imagine\Image\Point;
 use Imagine\Image\PointInterface;
 
-class LinearPlacer extends AbstractPlacer
+class LinearHorizontalPlacer extends AbstractPlacer
 {
-    public function getNextPlaceToTry(PointInterface $current, $imgWidth, $imgHeight)
+    public function getNextPlaceToTry(PointInterface $current)
     {
         $increment = 10;
 
-        if ($current->getX() < $imgWidth) {
+        if ($current->getX() < $this->imgWidth) {
             return new Point($current->getX() + $increment, $current->getY());
         }
 
-        if ($current->getY() < $imgHeight) {
+        if ($current->getY() < $this->imgHeight) {
             return new Point(0, $current->getY() + $increment);
         }
 
         return false;
     }
 
-    function getFirstPlaceToTry($imgWidth, $imgHeight)
+    function getFirstPlaceToTry()
     {
         return new Point(0, 0);
     }

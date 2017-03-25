@@ -204,7 +204,7 @@ class CloudManager
     public function placeWords(Cloud $cloud)
     {
         $className = $this->placersManager->getPlacerClass($cloud->getPlacer());
-        $placer = new $className;
+        $placer = new $className($cloud->getWidth(), $cloud->getHeight());
         $usher = new Usher($cloud->getWidth(), $cloud->getHeight(), $placer);
 
         /** @var CloudWord $word */
@@ -307,24 +307,20 @@ class CloudManager
      * @param ImageInterface $image
      * @param PlacerInterface $placer
      * @param Color $color
-     * @param int $imgWidth
-     * @param int $imgHeight
      * @param int $maxIterations
      */
     public function renderUsher(
         ImageInterface $image,
         PlacerInterface $placer,
         Color $color,
-        $imgWidth,
-        $imgHeight,
         $maxIterations = 5000
     ) {
         $i = 0;
-        $cur = $placer->getFirstPlaceToTry($imgWidth, $imgHeight);
+        $cur = $placer->getFirstPlaceToTry();
 
         while($cur) {
 
-            $next = $placer->getNextPlaceToTry($cur, $imgWidth, $imgHeight);
+            $next = $placer->getNextPlaceToTry($cur);
 
             if ($next) {
                 $image->draw()->line($cur, $next, $color);
