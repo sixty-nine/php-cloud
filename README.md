@@ -18,12 +18,22 @@ This repository does not contain TTF fonts. You will have to use your own.
    * Add them in the `$knownFonts` array
    * Update the path to the fonts in the constructor
 
-## Users
+## Initialize the app
 
 ```bash
+# Create the DB
+app/console doctrine:schema:create
+
+# Load default palettes
+app/console sn:palettes:load-default
+
+# Create a user
 app/console fos:user:create admin admin@localhost 123
 app/console fos:user:activate admin
 app/console fos:user:promote admin ROLE_ADMIN
+
+# Cleanup
+app/console cache:clear
 ```
 
 ## Example
