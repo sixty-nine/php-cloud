@@ -2,23 +2,14 @@
 
 *This is experimental work in progress*.
 
-## Install
+### Install
 
 ```
 composer install
 bower install
 ```
 
-## Fonts
-
-This repository does not contain TTF fonts. You will have to use your own.
-
- * Place them in somewhere in the project tree (a good place would be `src/SixtyNine/CloudBundle/Resources/fonts`
- * Reference them in the `SixtyNine\CloudBundle\Manager\FontsManager`
-   * Add them in the `$knownFonts` array
-   * Update the path to the fonts in the constructor
-
-## Initialize the app
+### Initialize the app
 
 ```bash
 # Create the DB
@@ -36,10 +27,19 @@ app/console fos:user:promote admin ROLE_ADMIN
 app/console cache:clear
 ```
 
-## Example
+### Fonts
+
+This repository does not contain TTF fonts. You will have to use your own.
+
+ * Place them in somewhere in the project tree (a good place would be `src/SixtyNine/CloudBundle/Resources/fonts`
+ * Reference them in the `SixtyNine\CloudBundle\Manager\FontsManager`
+   * Add them in the `$knownFonts` array
+   * Update the path to the fonts in the constructor
+
+### Example
 
 ![Cloud example](https://github.com/sixty-nine/php-cloud/blob/master/doc/cloud.png)
 
-## License
+### License
 
 This source file is subject to the MIT license that is bundled  with this source code in the file `doc\LICENCE`.
