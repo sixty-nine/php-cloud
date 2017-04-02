@@ -2,16 +2,9 @@
 
 namespace SixtyNine\CloudBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Blameable\Traits\BlameableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
-/**
- * Palette
- *
- * @ORM\Table(name="palette")
- * @ORM\Entity(repositoryClass="SixtyNine\CloudBundle\Repository\PaletteRepository")
- */
 class Palette
 {
     use TimestampableEntity;
@@ -19,29 +12,21 @@ class Palette
 
     /**
      * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
      * @var string
-     * @ORM\Column(type="string")
      */
     protected $name;
 
     /**
      * @var string
-     * @ORM\Column(type="array")
      */
     protected $colors;
 
     /**
      * @var Account
-     * @ORM\ManyToOne(targetEntity="Account")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true)
      */
     protected $user;
 

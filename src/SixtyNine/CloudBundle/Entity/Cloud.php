@@ -7,12 +7,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Blameable\Traits\BlameableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
-/**
- * Cloud
- *
- * @ORM\Table(name="cloud")
- * @ORM\Entity(repositoryClass="SixtyNine\CloudBundle\Repository\CloudRepository")
- */
 class Cloud
 {
     use TimestampableEntity;
@@ -20,60 +14,46 @@ class Cloud
 
     /**
      * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
 
     /**
      * @var string
-     * @ORM\Column(type="string")
      */
     protected $backgroundColor;
 
     /**
      * @var int
-     * @ORM\Column(type="integer")
      */
     protected $width;
 
     /**
      * @var int
-     * @ORM\Column(type="integer")
      */
     protected $height;
 
     /**
      * @var string
-     * @ORM\Column(type="string")
      */
     protected $font;
 
     /**
      * @var string
-     * @ORM\Column(type="string", nullable=true)
      */
     protected $placer;
 
     /**
      * @var Account
-     * @ORM\ManyToOne(targetEntity="Account")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
      */
     protected $user;
 
     /**
      * @var WordsList
-     * @ORM\ManyToOne(targetEntity="WordsList")
-     * @ORM\JoinColumn(name="list_id", referencedColumnName="id", nullable=false)
      */
     protected $list;
 
     /**
      * @var ArrayCollection
-     * @ORM\OneToMany(targetEntity="CloudWord", mappedBy="cloud")
      */
     protected $words;
 

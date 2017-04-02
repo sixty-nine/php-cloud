@@ -3,16 +3,11 @@
 namespace SixtyNine\CloudBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Blameable\Traits\BlameableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use JMS\Serializer\Annotation as JMS;
 
 /**
- * Cloud
- *
- * @ORM\Table(name="words_list")
- * @ORM\Entity(repositoryClass="SixtyNine\CloudBundle\Repository\WordsListRepository")
  * @JMS\ExclusionPolicy("all")
  */
 class WordsList
@@ -22,32 +17,23 @@ class WordsList
 
     /**
      * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      * @JMS\Expose
      */
     private $id;
 
     /**
      * @var string
-     * @ORM\Column(type="string")
      * @JMS\Expose
      */
     protected $name;
 
     /**
      * @var Account
-     * @ORM\ManyToOne(targetEntity="Account")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true)
      */
     protected $user;
 
     /**
      * @var ArrayCollection
-     * @ORM\OneToMany(targetEntity="Word", mappedBy="list", cascade={"remove"})
-     * @ORM\OrderBy({"position" = "ASC"})
      */
     protected $words;
 

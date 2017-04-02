@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="SixtyNine\CloudBundle\Entity\Account" table="account">
+        <unique-constraints>
+            <unique-constraint name="UNIQ_7D3656A492FC23A8" columns="username_canonical"/>
+            <unique-constraint name="UNIQ_7D3656A4A0D96FBF" columns="email_canonical"/>
+            <unique-constraint name="UNIQ_7D3656A4C05FB297" columns="confirmation_token"/>
+        </unique-constraints>
+        <id name="id" type="integer" column="id">
+            <generator strategy="IDENTITY"/>
+        </id>
+    </entity>
+</doctrine-mapping>

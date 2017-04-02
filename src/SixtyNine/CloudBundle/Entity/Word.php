@@ -9,10 +9,6 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
 use JMS\Serializer\Annotation as JMS;
 
 /**
- * Word
- *
- * @ORM\Table(name="word")
- * @ORM\Entity(repositoryClass="SixtyNine\CloudBundle\Repository\WordRepository")
  * @JMS\ExclusionPolicy("all")
  */
 class Word
@@ -22,9 +18,6 @@ class Word
 
     /**
      * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      * @JMS\Expose
      */
@@ -32,35 +25,30 @@ class Word
 
     /**
      * @var string
-     * @ORM\Column(type="string")
      * @JMS\Expose
      */
     protected $text;
 
     /**
      * @var int
-     * @ORM\Column(type="integer")
      * @JMS\Expose
      */
     protected $count;
 
     /**
      * @var string
-     * @ORM\Column(type="string")
      * @JMS\Expose
      */
     protected $orientation = \SixtyNine\Cloud\Model\Word::DIR_HORIZONTAL;
 
     /**
      * @var string
-     * @ORM\Column(type="string")
      * @JMS\Expose
      */
     protected $color = '000000';
 
     /**
      * @var int
-     * @ORM\Column(name="position", type="integer")
      * @Gedmo\SortablePosition
      * @JMS\Expose
      */
@@ -68,15 +56,11 @@ class Word
 
     /**
      * @var Account
-     * @ORM\ManyToOne(targetEntity="Account")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true)
      */
     protected $user;
 
     /**
      * @var WordsList
-     * @ORM\ManyToOne(targetEntity="WordsList", inversedBy="words")
-     * @ORM\JoinColumn(name="list_id", referencedColumnName="id", nullable=false)
      */
     protected $list;
 

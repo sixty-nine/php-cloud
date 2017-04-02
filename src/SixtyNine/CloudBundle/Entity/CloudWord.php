@@ -2,72 +2,50 @@
 
 namespace SixtyNine\CloudBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-
-/**
- * CloudWord
- *
- * @ORM\Table(name="cloud_word")
- * @ORM\Entity(repositoryClass="SixtyNine\CloudBundle\Repository\CloudWordRepository")
- */
 class CloudWord
 {
     /**
      * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
 
     /**
      * @var int
-     *
-     * @ORM\Column(name="size", type="integer")
      */
     protected $size;
 
     /**
      * @var int
-     * @ORM\Column(type="integer")
      */
     protected $angle;
 
     /**
      * @var string
-     * @ORM\Column(type="string")
      */
     protected $color;
 
     /**
      * @var string
-     * @ORM\Column(type="string")
      */
     protected $text;
 
     /**
      * @var array
-     * @ORM\Column(type="array")
      */
     protected $position;
 
     /**
      * @var array
-     * @ORM\Column(type="array")
      */
     protected $box;
 
     /**
      * @var bool
-     * @ORM\Column(name="is_visible", type="boolean")
      */
     protected $isVisible;
 
     /**
      * @var Cloud
-     * @ORM\ManyToOne(targetEntity="Cloud", inversedBy="words")
-     * @ORM\JoinColumn(name="cloud_id", referencedColumnName="id", nullable=false)
      */
     protected $cloud;
 
