@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xmlns:gedmo="http://gediminasm.org/schemas/orm/doctrine-extensions-mapping"
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
     <entity name="SixtyNine\CloudBundle\Entity\Palette" table="palette"
             repository-class="SixtyNine\CloudBundle\Repository\PaletteRepository">
@@ -20,18 +21,19 @@
                 <option name="fixed"/>
             </options>
         </field>
-        <field name="createdAt" type="datetime" column="created_at" nullable="false"/>
-        <field name="updatedAt" type="datetime" column="updated_at" nullable="false"/>
-        <field name="createdBy" type="string" column="created_by" length="255" nullable="true">
-            <options>
-                <option name="fixed"/>
-            </options>
+        <field name="createdAt" type="datetime">
+            <gedmo:timestampable on="create"/>
         </field>
-        <field name="updatedBy" type="string" column="updated_by" length="255" nullable="true">
-            <options>
-                <option name="fixed"/>
-            </options>
+        <field name="updatedAt" type="datetime">
+            <gedmo:timestampable on="update"/>
         </field>
+        <field name="createdBy" type="string" nullable="true">
+            <gedmo:blameable on="create"/>
+        </field>
+        <field name="updatedBy" type="string" nullable="true">
+            <gedmo:blameable on="update"/>
+        </field>
+
         <many-to-one field="user" target-entity="Account" fetch="LAZY">
             <join-columns>
                 <join-column name="user_id" referenced-column-name="id"/>

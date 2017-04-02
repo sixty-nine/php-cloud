@@ -80,7 +80,7 @@ class WordListsManager
                 ->setList($list)
                 ->setText($word)
                 ->setUser($list->getUser())
-                ->setOrientation('horiz')
+                ->setOrientation(\SixtyNine\Cloud\Model\Word::DIR_HORIZONTAL)
                 ->setColor('#000000')
             ;
             $list->addWord($entity);
@@ -312,7 +312,7 @@ class WordListsManager
     public function toggleWordOrientation(Word $word)
     {
         $word->setOrientation(
-            $word->getOrientation() === Text::DIR_VERTICAL
+            $word->getOrientation() === \SixtyNine\Cloud\Model\Word::DIR_VERTICAL
                 ? \SixtyNine\Cloud\Model\Word::DIR_HORIZONTAL
                 : \SixtyNine\Cloud\Model\Word::DIR_VERTICAL
         );

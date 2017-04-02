@@ -2,7 +2,8 @@
 
 namespace SixtyNine\CloudBundle\Controller;
 
-use SixtyNine\Cloud\TextListFilter\OrientationVisitor;
+use SixtyNine\Cloud\Builder\PalettesBuilder;
+use SixtyNine\Cloud\Color\RandomColorGenerator;
 use SixtyNine\CloudBundle\Entity\WordsList;
 use SixtyNine\CloudBundle\Form\Forms\AddWordsFormType;
 use SixtyNine\CloudBundle\Form\Forms\CreateWordsListFormType;
@@ -82,11 +83,11 @@ class WordsController extends Controller
                 'filtersForm' => $filtersForm->createView(),
                 'list' => $list,
                 'orientations' => array(
-                    100 => 'Horizontal',
-                    75 => 'Mainly horizontal',
+                    0 => 'Horizontal',
+                    25 => 'Mainly horizontal',
                     50 => 'Mixed',
-                    25 => 'Mainly vertical',
-                    0 => 'Vertical',
+                    75 => 'Mainly vertical',
+                    100 => 'Vertical',
                 ),
                 'palettes' => $this
                     ->getDoctrine()

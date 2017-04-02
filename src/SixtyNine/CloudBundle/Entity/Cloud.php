@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Blameable\Traits\BlameableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
-class Cloud
+class Cloud extends \SixtyNine\Cloud\Model\Cloud
 {
     use TimestampableEntity;
     use BlameableEntity;
@@ -16,26 +16,6 @@ class Cloud
      * @var int
      */
     protected $id;
-
-    /**
-     * @var string
-     */
-    protected $backgroundColor;
-
-    /**
-     * @var int
-     */
-    protected $width;
-
-    /**
-     * @var int
-     */
-    protected $height;
-
-    /**
-     * @var string
-     */
-    protected $font;
 
     /**
      * @var string
@@ -51,16 +31,6 @@ class Cloud
      * @var WordsList
      */
     protected $list;
-
-    /**
-     * @var ArrayCollection
-     */
-    protected $words;
-
-    function __construct()
-    {
-        $this->words = new ArrayCollection();
-    }
 
     /**
      * Get id
@@ -91,42 +61,6 @@ class Cloud
     }
 
     /**
-     * @param string $backgroundColor
-     * @return $this
-     */
-    public function setBackgroundColor($backgroundColor)
-    {
-        $this->backgroundColor = $backgroundColor;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getBackgroundColor()
-    {
-        return $this->backgroundColor;
-    }
-
-    /**
-     * @param string $font
-     * @return $this
-     */
-    public function setFont($font)
-    {
-        $this->font = $font;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getFont()
-    {
-        return $this->font;
-    }
-
-    /**
      * @param \SixtyNine\CloudBundle\Entity\WordsList $list
      * @return $this
      */
@@ -142,72 +76,6 @@ class Cloud
     public function getList()
     {
         return $this->list;
-    }
-
-    /**
-     * @param CloudWord $word
-     * @return $this
-     */
-    public function addWord(CloudWord $word)
-    {
-        if (!$this->words->contains($word)) {
-            $this->words->add($word);
-        }
-        return $this;
-    }
-
-    /**
-     * @param CloudWord $word
-     * @return $this
-     */
-    public function removeWord(CloudWord $word)
-    {
-        $this->words->remove($word);
-        return $this;
-    }
-
-    /**
-     * @return ArrayCollection
-     */
-    public function getWords()
-    {
-        return $this->words;
-    }
-
-    /**
-     * @param int $height
-     * @return $this
-     */
-    public function setHeight($height)
-    {
-        $this->height = $height;
-        return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getHeight()
-    {
-        return $this->height;
-    }
-
-    /**
-     * @param int $width
-     * @return $this
-     */
-    public function setWidth($width)
-    {
-        $this->width = $width;
-        return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getWidth()
-    {
-        return $this->width;
     }
 
     /**

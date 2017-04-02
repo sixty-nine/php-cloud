@@ -5,7 +5,7 @@ namespace SixtyNine\CloudBundle\Entity;
 use Gedmo\Blameable\Traits\BlameableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
-class Palette
+class Palette extends \SixtyNine\Cloud\Model\Palette
 {
     use TimestampableEntity;
     use BlameableEntity;
@@ -14,16 +14,6 @@ class Palette
      * @var int
      */
     private $id;
-
-    /**
-     * @var string
-     */
-    protected $name;
-
-    /**
-     * @var string
-     */
-    protected $colors;
 
     /**
      * @var Account
@@ -42,24 +32,6 @@ class Palette
     }
 
     /**
-     * @param string $name
-     * @return $this
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
      * @param \SixtyNine\CloudBundle\Entity\Account $user
      * @return $this
      */
@@ -75,24 +47,6 @@ class Palette
     public function getUser()
     {
         return $this->user;
-    }
-
-    /**
-     * @param string $colors
-     * @return $this
-     */
-    public function setColors($colors)
-    {
-        $this->colors = $colors;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getColors()
-    {
-        return $this->colors;
     }
 }
 

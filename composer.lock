@@ -2449,12 +2449,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sixty-nine/php-cloud-lib.git",
-                "reference": "245c3416d3a3c82d07ba765d85a29c7e8562d64c"
+                "reference": "1bac020556da6b122ae8d01868b451b30b3adce0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sixty-nine/php-cloud-lib/zipball/245c3416d3a3c82d07ba765d85a29c7e8562d64c",
-                "reference": "245c3416d3a3c82d07ba765d85a29c7e8562d64c",
+                "url": "https://api.github.com/repos/sixty-nine/php-cloud-lib/zipball/1bac020556da6b122ae8d01868b451b30b3adce0",
+                "reference": "1bac020556da6b122ae8d01868b451b30b3adce0",
                 "shasum": ""
             },
             "require": {
@@ -2486,7 +2486,7 @@
             "keywords": [
                 "cloud"
             ],
-            "time": "2017-04-02 16:58:48"
+            "time": "2017-04-02 18:13:16"
         },
         {
             "name": "stof/doctrine-extensions-bundle",

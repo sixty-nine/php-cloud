@@ -2,6 +2,7 @@
 
 namespace SixtyNine\CloudBundle\Repository;
 
+use SixtyNine\Cloud\Builder\PalettesBuilder;
 use SixtyNine\Cloud\Color\RandomColorGenerator;
 use SixtyNine\Cloud\Color\RotateColorGenerator;
 use SixtyNine\CloudBundle\Entity\Account;
@@ -42,32 +43,19 @@ class WordsListRepository extends \Doctrine\ORM\EntityRepository
 
     public function randomizeWordsOrientation(WordsList $list, $verticalProbability = 50)
     {
-        /** @var \SixtyNine\CloudBundle\Entity\Word $word */
-        foreach ($list->getWords() as $word) {
-
-            $orientation = random_int(0, 100) <= $verticalProbability
-                ? \SixtyNine\Cloud\Model\Word::DIR_VERTICAL
-                : \SixtyNine\Cloud\Model\Word::DIR_HORIZONTAL
-            ;
-
-            $word->setOrientation($orientation);
-        }
-
+        $list->randomizeOrientation($verticalProbability);
         $this->_em->flush();
     }
 
     public function randomizeWordsColors(WordsList $list, Palette $palette, $type)
     {
-
+        $palette = PalettesBuilder::create()->getPalette($palette->getColors());
         $colorGenerator = $type == 'random'
-            ? new RandomColorGenerator($palette->getColors())
-            : new RotateColorGenerator($palette->getColors())
+            ? new RandomColorGenerator($palette)
+            : new RotateColorGenerator($palette)
         ;
 
-        /** @var \SixtyNine\CloudBundle\Entity\Word $word */
-        foreach ($list->getWords() as $word) {
-            $word->setColor('#' . $colorGenerator->getNextColor());
-        }
+        $list->randomizeColors($colorGenerator);
 
         $this->_em->flush();
     }
