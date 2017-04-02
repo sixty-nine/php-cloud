@@ -7,7 +7,6 @@ use Gedmo\Blameable\Traits\BlameableEntity;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use JMS\Serializer\Annotation as JMS;
-use SixtyNine\Cloud\Model\Text;
 
 /**
  * Word
@@ -50,7 +49,7 @@ class Word
      * @ORM\Column(type="string")
      * @JMS\Expose
      */
-    protected $orientation = Text::DIR_HORIZONTAL;
+    protected $orientation = \SixtyNine\Cloud\Model\Word::DIR_HORIZONTAL;
 
     /**
      * @var string
@@ -70,7 +69,7 @@ class Word
     /**
      * @var Account
      * @ORM\ManyToOne(targetEntity="Account")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true)
      */
     protected $user;
 

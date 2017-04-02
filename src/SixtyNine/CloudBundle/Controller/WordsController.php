@@ -82,11 +82,11 @@ class WordsController extends Controller
                 'filtersForm' => $filtersForm->createView(),
                 'list' => $list,
                 'orientations' => array(
-                    OrientationVisitor::WORDS_HORIZONTAL => 'Horizontal',
-                    OrientationVisitor::WORDS_MAINLY_HORIZONTAL => 'Mainly horizontal',
-                    OrientationVisitor::WORDS_MIXED => 'Mixed',
-                    OrientationVisitor::WORDS_MAINLY_VERTICAL => 'Mainly vertical',
-                    OrientationVisitor::WORDS_VERTICAL => 'Vertical',
+                    100 => 'Horizontal',
+                    75 => 'Mainly horizontal',
+                    50 => 'Mixed',
+                    25 => 'Mainly vertical',
+                    0 => 'Vertical',
                 ),
                 'palettes' => $this
                     ->getDoctrine()

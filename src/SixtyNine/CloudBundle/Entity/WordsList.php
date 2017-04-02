@@ -40,7 +40,7 @@ class WordsList
     /**
      * @var Account
      * @ORM\ManyToOne(targetEntity="Account")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true)
      */
     protected $user;
 

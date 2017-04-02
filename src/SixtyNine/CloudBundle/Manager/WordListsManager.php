@@ -3,7 +3,6 @@
 namespace SixtyNine\CloudBundle\Manager;
 
 use Doctrine\ORM\EntityManagerInterface;
-use SixtyNine\Cloud\Model\Text;
 use SixtyNine\CloudBundle\Cloud\Filters\Filters;
 use SixtyNine\CloudBundle\Entity\Account;
 use SixtyNine\CloudBundle\Entity\Word;
@@ -314,8 +313,8 @@ class WordListsManager
     {
         $word->setOrientation(
             $word->getOrientation() === Text::DIR_VERTICAL
-                ? Text::DIR_HORIZONTAL
-                : Text::DIR_VERTICAL
+                ? \SixtyNine\Cloud\Model\Word::DIR_HORIZONTAL
+                : \SixtyNine\Cloud\Model\Word::DIR_VERTICAL
         );
         $this->em->flush();
     }
