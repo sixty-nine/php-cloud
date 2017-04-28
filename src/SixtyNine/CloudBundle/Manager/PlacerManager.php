@@ -2,12 +2,12 @@
 
 namespace SixtyNine\CloudBundle\Manager;
 
-use SixtyNine\CloudBundle\Cloud\Placer\CircularPlacer;
-use SixtyNine\CloudBundle\Cloud\Placer\LinearHorizontalPlacer;
-use SixtyNine\CloudBundle\Cloud\Placer\LinearVerticalPlacer;
-use SixtyNine\CloudBundle\Cloud\Placer\LissajouPlacer;
-use SixtyNine\CloudBundle\Cloud\Placer\SpiranglePlacer;
-use SixtyNine\CloudBundle\Cloud\Placer\WordlePlacer;
+use SixtyNine\Cloud\Placer\CircularPlacer;
+use SixtyNine\Cloud\Placer\LinearHorizontalPlacer;
+use SixtyNine\Cloud\Placer\LinearVerticalPlacer;
+use SixtyNine\Cloud\Placer\LissajouPlacer;
+use SixtyNine\Cloud\Placer\SpiranglePlacer;
+use SixtyNine\Cloud\Placer\WordlePlacer;
 
 class PlacerManager
 {

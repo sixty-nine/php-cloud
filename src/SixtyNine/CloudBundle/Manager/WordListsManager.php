@@ -3,17 +3,17 @@
 namespace SixtyNine\CloudBundle\Manager;
 
 use Doctrine\ORM\EntityManagerInterface;
-use SixtyNine\CloudBundle\Cloud\Filters\Filters;
+use SixtyNine\Cloud\Filters\Filters;
 use SixtyNine\CloudBundle\Entity\Account;
 use SixtyNine\CloudBundle\Entity\Word;
 use SixtyNine\CloudBundle\Entity\WordsList;
 use SixtyNine\CloudBundle\Repository\WordRepository;
 use SixtyNine\CloudBundle\Repository\WordsListRepository;
-use SixtyNine\CloudBundle\Cloud\Filters\ChangeCase;
-use SixtyNine\CloudBundle\Cloud\Filters\RemoveByLength;
-use SixtyNine\CloudBundle\Cloud\Filters\RemoveCharacters;
-use SixtyNine\CloudBundle\Cloud\Filters\RemoveNumbers;
-use SixtyNine\CloudBundle\Cloud\Filters\RemoveTrailingCharacters;
+use SixtyNine\Cloud\Filters\ChangeCase;
+use SixtyNine\Cloud\Filters\RemoveByLength;
+use SixtyNine\Cloud\Filters\RemoveCharacters;
+use SixtyNine\Cloud\Filters\RemoveNumbers;
+use SixtyNine\Cloud\Filters\RemoveTrailingCharacters;
 
 class WordListsManager
 {

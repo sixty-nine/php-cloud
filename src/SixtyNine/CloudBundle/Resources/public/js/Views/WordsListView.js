@@ -20,7 +20,9 @@ void function (config) {
             sortModalOrder: 'div.modal[data-id="sort-words"] select.order',
             filterModal: 'div.modal[data-id="filter-words"]',
             filterModalButton: 'div.modal[data-id="filter-words"] .modal-footer button',
-            filterForm: 'div.modal[data-id="filter-words"] form'
+            filterForm: 'div.modal[data-id="filter-words"] form',
+            saveOkButton: 'div.modal[data-id="save"] div.modal-footer button[class="btn"]',
+            saveContent: 'div.modal[data-id="save"] div.modal-body div.content'
         },
 
         events: {
@@ -29,13 +31,18 @@ void function (config) {
             'click div.modal-overlay': 'closeModal',
             'click @ui.colorsSubmitButton': 'changeColors',
             'click @ui.sortSubmitButton': 'sortWords',
-            'click @ui.filterModalButton': 'filterWords'
+            'click @ui.filterModalButton': 'filterWords',
+            'click @ui.saveOkButton': 'closeModal'
         },
 
         triggerModal: function (e) {
             var target = $(e.currentTarget).data('trigger');
             var $modal = $('div.modal[data-id="' + target + '"]');
             $modal.addClass('active');
+
+            if (target === 'save') {
+                this.showJson();
+            }
         },
 
         closeModal: function (e) {
@@ -86,6 +93,12 @@ void function (config) {
                 .then(function () {
                     SnCloud.hideSpinner();
                 });
+        },
+
+        showJson: function () {
+            $(this.ui.saveContent).append(
+                JSON.stringify(this.collection.toJSON())
+            );
         }
     });
 

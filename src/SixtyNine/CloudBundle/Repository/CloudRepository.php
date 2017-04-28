@@ -40,8 +40,10 @@ class CloudRepository extends \Doctrine\ORM\EntityRepository
 
     public function deleteWords(Cloud $cloud)
     {
-        foreach ($cloud->getWords() as $word) {
-            $this->_em->remove($word);
+        if ($cloud->getWords()) {
+            foreach ($cloud->getWords() as $word) {
+                $this->_em->remove($word);
+            }
         }
 
         $this->_em->flush();

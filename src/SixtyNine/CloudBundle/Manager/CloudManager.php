@@ -10,14 +10,19 @@ use Imagine\Image\Color;
 use Imagine\Image\ImageInterface;
 use Imagine\Image\Point;
 use Imagine\Image\PointInterface;
-use SixtyNine\CloudBundle\Cloud\FontSize\BoostFontSizeGenerator;
-use SixtyNine\CloudBundle\Cloud\FontSize\DimFontSizeGenerator;
-use SixtyNine\CloudBundle\Cloud\FontSize\LinearFontSizeGenerator;
-use SixtyNine\CloudBundle\Cloud\Placer\CircularPlacer;
-use SixtyNine\CloudBundle\Cloud\Placer\SpiranglePlacer;
-use SixtyNine\CloudBundle\Cloud\Placer\PlacerInterface;
-use SixtyNine\CloudBundle\Cloud\Placer\WordlePlacer;
-use SixtyNine\CloudBundle\Cloud\Usher;
+use SixtyNine\Cloud\Builder\CloudBuilder;
+use SixtyNine\Cloud\Builder\WordsListBuilder;
+use SixtyNine\Cloud\Factory\FontsFactory;
+use SixtyNine\Cloud\Factory\PlacerFactory;
+use SixtyNine\Cloud\FontSize\BoostFontSizeGenerator;
+use SixtyNine\Cloud\FontSize\DimFontSizeGenerator;
+use SixtyNine\Cloud\FontSize\LinearFontSizeGenerator;
+use SixtyNine\Cloud\Placer\CircularPlacer;
+use SixtyNine\Cloud\Placer\SpiranglePlacer;
+use SixtyNine\Cloud\Placer\PlacerInterface;
+use SixtyNine\Cloud\Placer\WordlePlacer;
+use SixtyNine\Cloud\Renderer\CloudRenderer;
+use SixtyNine\Cloud\Usher\Usher;
 use SixtyNine\CloudBundle\Entity\Account;
 use SixtyNine\CloudBundle\Entity\Cloud;
 use SixtyNine\CloudBundle\Entity\CloudWord;
@@ -26,6 +31,7 @@ use SixtyNine\CloudBundle\Entity\WordsList;
 use SixtyNine\CloudBundle\Repository\CloudRepository;
 use SixtyNine\CloudBundle\Repository\WordRepository;
 use SixtyNine\CloudBundle\Repository\WordsListRepository;
+use SixtyNine\CoreBundle\Helper\AssertHelper as Assert;
 
 class CloudManager
 {
@@ -77,25 +83,35 @@ class CloudManager
     /**
      * Create a new cloud entity.
      * @param Account $user
-     * @param WordsList $list
-     * @param string $font
-     * @param string $color
-     * @param string $placerName
-     * @param int $width
-     * @param int $height
+     * @param array $options
      * @return Cloud
      */
-    public function createCloud(Account $user, WordsList $list, $font, $color, $placerName, $width = 800, $height = 600)
+    public function createCloud(Account $user, array $options)
     {
+        Assert::parameters($options, array(
+            'words' => WordsList::class,
+            'font' => 'string',
+            'color' => 'string',
+            'placer' => 'string',
+            'imageWidth' => 'integer',
+            'imageHeight' => 'integer',
+            'fontSize' => 'string',
+            'minSize' => 'integer',
+            'maxSize' => 'integer',
+        ));
+
         $cloud = new Cloud();
         $cloud
             ->setUser($user)
-            ->setList($list)
-            ->setFont($font)
-            ->setWidth($width)
-            ->setHeight($height)
-            ->setPlacer($placerName)
-            ->setBackgroundColor($color)
+            ->setList($options['words'])
+            ->setFont($options['font'])
+            ->setWidth($options['imageWidth'])
+            ->setHeight($options['imageHeight'])
+            ->setPlacer($options['placer'])
+            ->setBackgroundColor($options['color'])
+            ->setFontSizeGenerator($options['fontSize'])
+            ->setMinFontSize($options['minSize'])
+            ->setMaxFontSize($options['maxSize'])
         ;
 
         $this->em->persist($cloud);
@@ -107,25 +123,33 @@ class CloudManager
     /**
      * Update a cloud with new data.
      * @param Cloud $cloud
-     * @param WordsList $list
-     * @param string $font
-     * @param string $color
-     * @param string $placerName
-     * @param int $width
-     * @param int $height
+     * @param array $options
      * @return Cloud
      */
-    public function saveCloud(Cloud $cloud, WordsList $list, $font, $color, $placerName, $width = 800, $height = 600)
+    public function saveCloud(Cloud $cloud, array $options)
     {
+        Assert::parameters($options, array(
+            'words' => WordsList::class,
+            'font' => 'string',
+            'color' => 'string',
+            'placer' => 'string',
+            'imageWidth' => 'integer',
+            'imageHeight' => 'integer',
+            'fontSize' => 'string',
+            'minSize' => 'integer',
+            'maxSize' => 'integer',
+        ));
+
         $cloud
-            ->setList($list)
-            ->setFont($font)
-            ->setWidth($width)
-            ->setHeight($height)
-            ->setPlacer($placerName)
-            ->setBackgroundColor($color)
-            ->setHeight($height)
-            ->setWidth($width)
+            ->setList($options['words'])
+            ->setFont($options['font'])
+            ->setWidth($options['imageWidth'])
+            ->setHeight($options['imageHeight'])
+            ->setPlacer($options['placer'])
+            ->setBackgroundColor($options['color'])
+            ->setFontSizeGenerator($options['fontSize'])
+            ->setMinFontSize($options['minSize'])
+            ->setMaxFontSize($options['maxSize'])
         ;
 
         $this->em->persist($cloud);
@@ -162,81 +186,69 @@ class CloudManager
         /** @var WordRepository $wordRepo */
         $wordRepo = $this->em->getRepository('SixtyNineCloudBundle:Word');
 
-        $words = $wordRepo->getWordsOrdered($cloud->getList())
-        ;
+        $words = $wordRepo->getWordsOrdered($cloud->getList());
 
         $maxCount = $wordRepo->getMaxCount($cloud->getList());
 
         switch ($generator) {
             case 'dim':
-                $sizeGenerator = new DimFontSizeGenerator($minFontSize, $maxFontSize, $maxCount);
+                $fontSizeGenerator = new DimFontSizeGenerator();
                 break;
             case 'boost':
-                $sizeGenerator = new BoostFontSizeGenerator($minFontSize, $maxFontSize, $maxCount);
+                $fontSizeGenerator = new BoostFontSizeGenerator();
                 break;
             default:
-                $sizeGenerator = new LinearFontSizeGenerator($minFontSize, $maxFontSize, $maxCount);
+                $fontSizeGenerator = new LinearFontSizeGenerator();
         }
 
-        /** @var Word $word */
+//        /** @var \SixtyNine\Cloud\Model\WordsList $list */
+//        $list = WordsListBuilder::create()
+//            ->importWords(join(' ', array_map(function ($w) {
+//                return $w->getText();
+//            }, $words)))
+//            ->build('foobar')
+//        ;
+        $list = new \SixtyNine\Cloud\Model\WordsList();
+        $list->setName('temporary');
         foreach ($words as $word) {
+            $list->addWord($word);
+        }
+
+        $factory = FontsFactory::create(__DIR__ . '/../Resources/fonts');
+
+        /** @var \SixtyNine\Cloud\Model\Cloud $cloud */
+        $cloudModel = CloudBuilder::create($factory)
+            ->setBackgroundColor($cloud->getBackgroundColor())
+            ->setDimension($cloud->getWidth(), $cloud->getHeight())
+            ->setFont($cloud->getFont())
+            ->setSizeGenerator($fontSizeGenerator)
+            ->setFontSizes($cloud->getMinFontSize(), $cloud->getMaxFontSize())
+            ->setPlacer(PlacerFactory::PLACER_CIRCULAR)
+            ->useList($list)
+            ->build()
+        ;
+
+        /** @var \SixtyNine\Cloud\Model\CloudWord $word */
+        foreach ($cloudModel->getWords() as $word) {
             $cloudWord = new CloudWord();
             $cloudWord
                 ->setCloud($cloud)
-                ->setPosition(array(0, 0))
-                ->setSize($sizeGenerator->calculateFontSize($word->getCount()))
-                ->setAngle($word->getOrientation() === 'vert' ? 270 : 0)
+                ->setPosition($word->getPosition())
+                ->setSize($word->getSize())
+                ->setAngle($word->getAngle())
                 ->setColor($word->getColor())
                 ->setText($word->getText())
-                ->setIsVisible(true)
+                ->setIsVisible($word->getIsVisible())
+                ->setPosition($word->getPosition())
+                ->setBox($word->getBox())
             ;
+
             $cloud->addWord($cloudWord);
             $this->em->persist($cloudWord);
         }
 
         $this->em->flush();
-    }
 
-    /**
-     * Find the place of the words in the $cloud.
-     * @param Cloud $cloud
-     */
-    public function placeWords(Cloud $cloud)
-    {
-        $className = $this->placersManager->getPlacerClass($cloud->getPlacer());
-        $placer = new $className($cloud->getWidth(), $cloud->getHeight());
-        $usher = new Usher($cloud->getWidth(), $cloud->getHeight(), $placer);
-
-        /** @var CloudWord $word */
-        foreach ($cloud->getWords() as $word) {
-            $font = new Font(
-                __DIR__ . '/../Resources/fonts/' . $cloud->getFont(),
-                $word->getSize(),
-                new Color($word->getColor())
-            );
-
-            $box = $font->box($word->getText(), $word->getAngle());
-            $place = $usher->getPlace($box);
-
-            $word
-                ->setIsVisible((bool)$place)
-                ->setBox(array($box->getWidth(), $box->getHeight()))
-            ;
-
-            if ($place) {
-
-                if ($word->getAngle() !== 0) {
-                    $place = new Point(
-                        $place->getX() + $box->getWidth(),
-                        $place->getY() + $box->getHeight()
-                    );
-                }
-
-                $word->setPosition(array((int)$place->getX(), (int)$place->getY()));
-            }
-        }
-
-        $this->em->flush();
     }
 
     /**
@@ -246,58 +258,24 @@ class CloudManager
      * @param bool $drawBoundingBoxes
      * @return \Imagine\Gd\Image|\Imagine\Image\ImageInterface
      */
-    public function render(Cloud $cloud, $drawBoundingBoxes = false)
+    public function render(Cloud $cloud, $drawBoundingBoxes = false, $showPlacer = false)
     {
-        $imagine = new Imagine();
-        $size  = new Box($cloud->getWidth(), $cloud->getHeight());
-        $image = $imagine->create(
-            $size,
-            new Color($cloud->getBackgroundColor())
-        );
+        $factory = FontsFactory::create(__DIR__ . '/../Resources/fonts');
+        $renderer = new CloudRenderer($cloud, $factory);
+        $renderer->renderCloud();
 
-        /** @var \SixtyNine\CloudBundle\Entity\CloudWord $word */
-        foreach ($cloud->getWords() as $word) {
-
-            if (!$word->getIsVisible()) {
-                continue;
-            }
-
-            $font = new Font(
-                __DIR__ . '/../Resources/fonts/' . $cloud->getFont(),
-                $word->getSize(),
-                new Color($word->getColor())
-            );
-
-            $angle = $word->getAngle();
-            $pos = $word->getPosition();
-            $box =$word->getBox();
-
-            $image->draw()->text(
-                $word->getText(),
-                $font,
-                new Point($pos[0], $pos[1]),
-                $angle
-            );
-
-            if ($drawBoundingBoxes) {
-                if ($word->getAngle() === 0) {
-                    $points = array(
-                        new Point($pos[0], $pos[1]),
-                        new Point($pos[0] + $box[0], $pos[1]),
-                        new Point($pos[0] + $box[0], $pos[1] + $box[1]),
-                        new Point($pos[0], $pos[1] + $box[1]),
-                    );
-                } else {
-                    $points = array(
-                        new Point($pos[0], $pos[1]),
-                        new Point($pos[0] - $box[0], $pos[1]),
-                        new Point($pos[0] - $box[0], $pos[1] - $box[1]),
-                        new Point($pos[0], $pos[1] - $box[1]),
-                    );
-                }
-                $image->draw()->polygon($points, new Color(0xFF0000));
-            }
+        if ($drawBoundingBoxes) {
+            $renderer->renderBoundingBoxes();
         }
+
+        if ($showPlacer) {
+            $className = $this->placersManager->getPlacerClass($cloud->getPlacer());
+            $placer = new $className($cloud->getWidth(), $cloud->getWidth());
+            $renderer->renderUsher($placer);
+        }
+
+        /** @var \Imagine\Gd\Image $image */
+        $image = $renderer->getImage();
 
         return $image;
     }
@@ -306,16 +284,17 @@ class CloudManager
      * Render the path used to find the words places by the given $placer in the $image.
      * @param ImageInterface $image
      * @param PlacerInterface $placer
-     * @param Color $color
+     * @param string $color
      * @param int $maxIterations
      */
     public function renderUsher(
         ImageInterface $image,
         PlacerInterface $placer,
-        Color $color,
+        $color,
         $maxIterations = 5000
     ) {
         $i = 0;
+        $color = new Color($color);
         $cur = $placer->getFirstPlaceToTry();
 
         while($cur) {

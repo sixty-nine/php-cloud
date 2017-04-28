@@ -32,7 +32,7 @@
                 <option name="fixed"/>
             </options>
         </field>
-        <field name="position" type="integer" column="position" nullable="false">
+        <field name="position" type="integer" column="position" nullable="true">
             <options>
                 <option name="unsigned"/>
             </options>

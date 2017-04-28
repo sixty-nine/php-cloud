@@ -53,23 +53,10 @@ class CloudController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $font = $form->get('font')->getData();
-            $color = $form->get('color')->getData();
-            $list = $form->get('words')->getData();
-            $width = $form->get('imageWidth')->getData();
-            $height = $form->get('imageHeight')->getData();
-            $placerName = $form->get('placer')->getData();
 
-            $cloud = $this->cloudManager->createCloud(
-                $this->getUser(), $list, $font, $color, $placerName, $width, $height
-            );
+            $cloud = $this->cloudManager->createCloud($this->getUser(), $form->getData());
 
-            return $this->redirectToRoute('sn_cloud_generate', array(
-                'id' => $cloud->getId(),
-                'min' => $form->get('minSize')->getData(),
-                'max' => $form->get('maxSize')->getData(),
-                'gen' => $form->get('fontSize')->getData(),
-            ));
+            return $this->redirectToRoute('sn_cloud_generate', array('id' => $cloud->getId()));
         }
 
         return $this->render(
@@ -82,18 +69,16 @@ class CloudController extends Controller
 
     public function editAction(Request $request, Cloud $cloud)
     {
-        $data = array(
-            'words' => $cloud->getList(),
-            'placer' => $cloud->getPlacer(),
-            'font' => $cloud->getFont(),
-            'color' => $cloud->getBackgroundColor(),
-            'imageWidth' => $cloud->getWidth(),
-            'imageHeight' => $cloud->getHeight(),
-        );
-
         $form = $this->createForm(
             CreateCloudFormType::class,
-            $data,
+            array(
+                'words' => $cloud->getList(),
+                'placer' => $cloud->getPlacer(),
+                'font' => $cloud->getFont(),
+                'color' => $cloud->getBackgroundColor(),
+                'imageWidth' => $cloud->getWidth(),
+                'imageHeight' => $cloud->getHeight(),
+            ),
             array(
                 'fonts_manager' => $this->fontsManager,
                 'placers_manager' => $this->placersManager,
@@ -103,23 +88,10 @@ class CloudController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $font = $form->get('font')->getData();
-            $color = $form->get('color')->getData();
-            $list = $form->get('words')->getData();
-            $width = $form->get('imageWidth')->getData();
-            $height = $form->get('imageHeight')->getData();
-            $placerName = $form->get('placer')->getData();
 
-            $cloud = $this->cloudManager->saveCloud(
-                $cloud, $list, $font, $color, $placerName, $width, $height
-            );
+            $cloud = $this->cloudManager->saveCloud($cloud, $form->getData());
 
-            return $this->redirectToRoute('sn_cloud_generate', array(
-                'id' => $cloud->getId(),
-                'min' => $form->get('minSize')->getData(),
-                'max' => $form->get('maxSize')->getData(),
-                'gen' => $form->get('fontSize')->getData(),
-            ));
+            return $this->redirectToRoute('sn_cloud_generate', array('id' => $cloud->getId()));
         }
 
         return $this->render(
@@ -137,7 +109,6 @@ class CloudController extends Controller
         $generator = $request->get('gen', 'linear');
 
         $this->cloudManager->generateCloudWords($cloud, $minSize, $maxSize, $generator);
-        $this->cloudManager->placeWords($cloud);
 
         return $this->redirectToRoute('sn_cloud_view', array('id' => $cloud->getId()));
     }
@@ -172,17 +143,7 @@ class CloudController extends Controller
         $showBoundingBoxes = $request->get('show-bb', false);
         $showPlacer = $request->get('show-placer', false);
 
-        $image = $this->cloudManager->render($cloud, $showBoundingBoxes);
-
-        if ($showPlacer) {
-            $className = $this->placersManager->getPlacerClass($cloud->getPlacer());
-            $placer = new $className($cloud->getWidth(), $cloud->getWidth());
-            $this->cloudManager->renderUsher(
-                $image,
-                $placer,
-                new Color('#FF0000')
-            );
-        }
+        $image = $this->cloudManager->render($cloud, $showBoundingBoxes, $showPlacer);
 
         $width = $request->get('width');
         $height = $request->get('height');

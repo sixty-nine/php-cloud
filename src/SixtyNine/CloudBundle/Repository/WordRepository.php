@@ -1,8 +1,8 @@
 <?php
 
 namespace SixtyNine\CloudBundle\Repository;
+
 use SixtyNine\CloudBundle\Entity\WordsList;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * WordRepository
@@ -12,6 +12,12 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
  */
 class WordRepository extends \Doctrine\ORM\EntityRepository
 {
+    /**
+     * @param WordsList $list
+     * @param null $sortBy
+     * @param string $order
+     * @return \SixtyNine\CloudBundle\Entity\Word[]
+     */
     public function getWordsOrdered(WordsList $list, $sortBy = null, $order = 'ASC')
     {
         if (!in_array(strtoupper($order), array('ASC', 'DESC'))) {

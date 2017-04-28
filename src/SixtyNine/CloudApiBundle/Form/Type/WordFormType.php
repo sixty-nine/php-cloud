@@ -2,6 +2,7 @@
 
 namespace SixtyNine\CloudApiBundle\Form\Type;
 
+use SixtyNine\Cloud\Model\Word;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -19,7 +20,10 @@ class WordFormType extends AbstractType
             ->add('text', TextType::class, array('required' => true))
             ->add('count', IntegerType::class, array('required' => true))
             ->add('orientation',  ChoiceType::class, array(
-                'choices'   => array('horiz' => 'horiz', 'vert' => 'vert'),
+                'choices'   => array(
+                    Word::DIR_HORIZONTAL => Word::DIR_HORIZONTAL,
+                    Word::DIR_VERTICAL => Word::DIR_VERTICAL
+                ),
                 'required'  => true,
             ))
             ->add('color', TextType::class, array('required' => true))

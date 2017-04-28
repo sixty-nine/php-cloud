@@ -40,7 +40,7 @@
             </options>
         </field>
         <field name="isVisible" type="boolean" column="is_visible" nullable="false"/>
-        <many-to-one field="cloud" target-entity="Cloud" fetch="LAZY">
+        <many-to-one field="cloud" target-entity="Cloud" fetch="LAZY" inversed-by="words">
             <join-columns>
                 <join-column name="cloud_id" referenced-column-name="id" nullable="false"/>
             </join-columns>
